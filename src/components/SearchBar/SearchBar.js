@@ -13,16 +13,20 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="search-bar">
-      <input
-        type="text"
-        className="search-input"
-        value={searchValue}
-        placeholder="Search Notes..."
-        onChange={handleInput}
-      />
-      <p>Searching for: {searchValue}</p>
-      <button onClick={clearSearchInput}>X</button>
+    <div>
+      <div className="search-bar">
+        <input
+          type="text"
+          className="search-bar__input"
+          value={searchValue}
+          placeholder="Search Notes..."
+          onChange={handleInput}
+        />
+        <button className="search-bar__clear-button" onClick={clearSearchInput}>
+          X
+        </button>
+      </div>
+      <p className="search-bar__result">Searching for: {searchValue}</p>
     </div>
   );
 };

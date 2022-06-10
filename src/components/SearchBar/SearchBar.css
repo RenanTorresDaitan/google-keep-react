@@ -1,9 +1,33 @@
 .search-bar {
-  font-size: 2rem;
-  color: red;
+  --height: 2.5rem;
+  --margin: 0.25rem;
+  display: flex;
+  position: relative;
+  height: var(--height);
 }
 
-.search-input {
+.search-bar__clear-button {
+  display: block;
+  background-color: #999;
+  border: none;
+  border-radius: 50%;
+  height: calc(var(--height) - var(--margin) * 2);
+  aspect-ratio: 1;
+  margin: var(--margin);
+  right:0;
+  position: absolute;
+}
+
+.search-bar__input {
+  width: 100%;
   font-size: 1rem;
   font-family: sans-serif;
+  border-radius: 100vh;
+  padding-inline: 1rem;
+}
+
+.search-bar__result {
+  font-size: 2rem;
+  color: red;
+  margin: 0;
 }
