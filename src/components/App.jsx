@@ -1,15 +1,18 @@
+import React from 'react';
 import Content from './Content/Content';
 import Header from './Header/Header';
 import SideBar from './SideBar/SideBar';
 
-function App() {
+import DBManager from '../models/DBManager';
+
+export default function App() {
+  const APP_NAME = 'Keep Notes';
+
   return (
-    <div className="App">
+    <div className="app">
       <Header />
       <SideBar />
       <Content />
     </div>
   );
 }
-
-export default App;

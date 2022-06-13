@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import './SearchBar.css';
 
-const SearchBar = () => {
+function SearchBar() {
   const [searchValue, setSearchValue] = useState('');
 
   const handleInput = (event) => {
     setSearchValue(event.target.value);
   };
-
   const clearSearchInput = () => {
     setSearchValue('');
   };
@@ -22,13 +21,14 @@ const SearchBar = () => {
           placeholder="Search Notes..."
           onChange={handleInput}
         />
-        <button className="search-bar__clear-button" onClick={clearSearchInput}>
-          X
-        </button>
+        <button type="button" className="search-bar__clear-button" onClick={clearSearchInput}>X</button>
       </div>
-      <p className="search-bar__result">Searching for: {searchValue}</p>
+      <p className="search-bar__result">
+        Searching for:
+        {' '}
+        {searchValue}
+      </p>
     </div>
   );
-};
-
+}
 export default SearchBar;
