@@ -20,14 +20,14 @@ export default function ColorBallContainer({ id }) {
 
   function handleColorChange() {}
 
-  function createColorBall(color, index) {
+  function createColorBall(color) {
     return (
       <span
         aria-label={color}
         className="color-ball"
         role="button"
         tabIndex={0}
-        key={index}
+        key={color}
         data-color={color}
         onClick={handleColorChange}
         onKeyDown={handleColorChange}
@@ -36,7 +36,7 @@ export default function ColorBallContainer({ id }) {
   }
   return (
     <div className="color-ball__container">
-      {colors.map((color, index, array) => createColorBall(array[index], color))}
+      {colors.map((color) => createColorBall(color))}
     </div>
   );
 }

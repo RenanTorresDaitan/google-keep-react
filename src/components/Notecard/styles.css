@@ -4,8 +4,8 @@
   display: block;
   border-radius: 0.5rem;
   overflow: hidden;
-  border: 1px solid var(--c-gray);
-  background-color: var(--c-white);
+  border-width: 1px;
+  border-style: solid;
   width: 267px;
   height: 100%;
   margin-top: 0.625rem;
@@ -46,14 +46,14 @@
 }
 
 .pin-button {
-  background-image: url(../../assets/notecard/pin-icon.svg);
+  background-image: url(../../assets/svg/notecard/pin-icon.svg);
 }
 .menu-button {
   background-size: 24px 24px;
-  background-image: url(../../assets/notecard/menu-circles-icon.svg);
+  background-image: url(../../assets/svg/notecard/menu-circles-icon.svg);
 }
 .color-button {
-  background-image: url(../../assets/notecard/drop-icon.svg);
+  background-image: url(../../assets/svg/notecard/drop-icon.svg);
 }
 
 .notecard__menu-panel {
@@ -175,6 +175,7 @@
   font-weight: bold;
   outline: 0;
   position: absolute;
+  padding: 0.25rem 0.5rem;
 }
 .notecard__done-button:hover,
 .notecard__done-button:focus {

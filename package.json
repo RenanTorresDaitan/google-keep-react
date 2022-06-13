@@ -25,7 +25,8 @@
       "react-app/jest"
     ],
     "rules": {
-      "no-underscore-dangle": "off"
+      "no-underscore-dangle": "off",
+      "object-curly-newline": "off"
     }
   },
   "browserslist": {
