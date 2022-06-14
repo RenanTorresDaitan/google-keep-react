@@ -1,13 +1,19 @@
 import React from 'react';
-import Notecard from '../Notecard';
-import NewNoteComponent from '../NewNoteComponent';
+import PropTypes from 'prop-types';
 
-export default function Content() {
+import NewNoteComponent from '../NewNoteComponent';
+import NoteListItems from '../NoteListItems';
+import DBManager from '../../models/DBManager';
+
+export default function Content({ db }) {
   return (
     <div className="main-content">
       <NewNoteComponent />
-      {/* <NoteListItems /> */}
-      <Notecard title="Title" id="123" color="blue" isArchived={false} isPinned={false} />
+      <NoteListItems itemsList={db.noteItemsList} />
     </div>
   );
 }
+
+Content.propTypes = {
+  db: PropTypes.instanceOf(DBManager).isRequired,
+};

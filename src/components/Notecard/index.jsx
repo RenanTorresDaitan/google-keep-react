@@ -3,12 +3,26 @@ import PropTypes from 'prop-types';
 import './styles.css';
 import ColorBallContainer from './ColorBallContainer';
 import MenuPanel from './MenuPanel';
+import NoteItemModel from '../../models/NoteItemModel';
 
-export default function Notecard({ title, id, color, isArchived, isPinned }) {
+export default function Notecard({ noteItem }) {
+  const {
+    _id,
+    noteTime,
+    noteTitle,
+    color,
+    isArchived,
+    isPinned,
+    isReminder,
+    isToDoList,
+    isTrashed,
+    noteDescription,
+    toDoItems,
+  } = noteItem;
   const [displayColorContainer, setDisplayColorContainer] = useState(false);
   const [displayMenuPanel, setDisplayMenuPanel] = useState(false);
   const [doneBtnVisible, setDoneBtnVisible] = useState(false);
-  const [noteTitle, setNoteTitle] = useState(title);
+  const [displayedTitle, setDisplayedTitle] = useState(noteTitle);
 
   function handleColorChange() {
     setDisplayColorContainer(true);
@@ -21,18 +35,18 @@ export default function Notecard({ title, id, color, isArchived, isPinned }) {
     setDisplayMenuPanel(false);
   }
   function handleTitleChange(event) {
-    setNoteTitle(event.target.value);
+    setDisplayedTitle(event.target.value);
     setDoneBtnVisible(true);
   }
 
   return (
     <div
       className="notecard"
-      aria-label={`Keep's Note ${title}`}
-      data-note-id={id}
+      aria-label={`Keep's Note ${displayedTitle}`}
+      data-note-id={_id}
       data-color={color}
     >
-      {displayColorContainer && <ColorBallContainer id={1} />}
+      {displayColorContainer && <ColorBallContainer id={_id} />}
       {displayMenuPanel && <MenuPanel isArchived={isArchived} />}
       <div className="notecard__buttons-container">
         <div
@@ -75,7 +89,7 @@ export default function Notecard({ title, id, color, isArchived, isPinned }) {
         <img className="svg-icon-large" alt="" />
       </div>
       <div className="notecard__title">
-        <span>{noteTitle}</span>
+        <span>{displayedTitle}</span>
         <textarea
           name="note-title"
           className="notecard__title-textarea"
@@ -84,7 +98,7 @@ export default function Notecard({ title, id, color, isArchived, isPinned }) {
           maxLength="999"
           placeholder="Title"
           style={{ height: '1rem' }}
-          value={noteTitle}
+          value={displayedTitle}
           onChange={handleTitleChange}
         />
       </div>
@@ -101,9 +115,5 @@ export default function Notecard({ title, id, color, isArchived, isPinned }) {
   );
 }
 Notecard.propTypes = {
-  title: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-  isArchived: PropTypes.bool.isRequired,
-  isPinned: PropTypes.bool.isRequired,
+  noteItem: PropTypes.instanceOf(NoteItemModel).isRequired,
 };
