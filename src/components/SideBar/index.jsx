@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import SideBarItem from './SideBarItem';
 import lampIcon from '../../assets/svg/lamp-icon.svg';
@@ -8,10 +7,8 @@ import pencilIcon from '../../assets/svg/pencil-icon.svg';
 import boxIcon from '../../assets/svg/box-icon.svg';
 import trashIcon from '../../assets/svg/trash-icon.svg';
 import './styles.css';
-import DBManager from '../../models/DBManager';
 
-export default function SideBar({ db }) {
-  db.loadNotesFromLocalStorage();
+export default function SideBar() {
   return (
     <div className="sidebar__container">
       <SideBarItem active="true" icon={lampIcon} label="Notes" />
@@ -22,7 +19,3 @@ export default function SideBar({ db }) {
     </div>
   );
 }
-
-SideBar.propTypes = {
-  db: PropTypes.instanceOf(DBManager).isRequired,
-};

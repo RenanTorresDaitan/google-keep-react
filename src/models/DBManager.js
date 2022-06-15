@@ -1,9 +1,9 @@
 import NoteListModel from './NoteListModel';
 import NoteItemModel from './NoteItemModel';
 
-export default class DBManager {
-  constructor(appName) {
-    this.APP_NAME = appName;
+class DBManager {
+  constructor() {
+    this.APP_NAME = 'Keep-Notes';
     this.noteItemsList = new NoteListModel();
     this.loadNotesFromLocalStorage();
   }
@@ -17,6 +17,10 @@ export default class DBManager {
       this.noteItemsList.addNoteToList(new NoteItemModel(note));
     });
     this.deleteOldNotes();
+  }
+
+  getInstance() {
+    return this;
   }
 
   deleteOldNotes() {
@@ -37,3 +41,7 @@ export default class DBManager {
     this.updateNotesOnLocalStorage();
   }
 }
+
+const db = new DBManager();
+Object.freeze(db);
+export default db;

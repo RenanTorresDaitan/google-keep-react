@@ -4,11 +4,13 @@ import './styles.css';
 import ColorBallContainer from './ColorBallContainer';
 import MenuPanel from './MenuPanel';
 import NoteItemModel from '../../models/NoteItemModel';
+import NoteItemController from '../../controllers/NoteItemController';
+import IconButton from './IconButton';
+import InputField from './InputField';
 
 export default function Notecard({ noteItem }) {
   const {
-    _id,
-    noteTime,
+    id,
     noteTitle,
     color,
     isArchived,
@@ -19,64 +21,62 @@ export default function Notecard({ noteItem }) {
     noteDescription,
     toDoItems,
   } = noteItem;
-  const [displayColorContainer, setDisplayColorContainer] = useState(false);
-  const [displayMenuPanel, setDisplayMenuPanel] = useState(false);
-  const [doneBtnVisible, setDoneBtnVisible] = useState(false);
-  const [displayedTitle, setDisplayedTitle] = useState(noteTitle);
 
-  function handleColorChange() {
-    setDisplayColorContainer(true);
-  }
-  function handleMenuPanel() {
-    setDisplayMenuPanel(true);
-  }
-  function handleBlur() {
+  const [displayColorContainer, setDisplayColorContainer] = useState(false);
+  const handleColorChange = () => setDisplayColorContainer(true);
+
+  const [displayMenuPanel, setDisplayMenuPanel] = useState(false);
+  const handleMenuPanel = () => setDisplayMenuPanel(true);
+
+  const handleBlur = () => {
     setDisplayColorContainer(false);
     setDisplayMenuPanel(false);
-  }
-  function handleTitleChange(event) {
-    setDisplayedTitle(event.target.value);
-    setDoneBtnVisible(true);
-  }
+  };
+
+  const [doneBtnVisible, setDoneBtnVisible] = useState(false);
+
+  const [dataColor, setDataColor] = useState(color);
+
+  const handlePinNote = () => new NoteItemController().pinNote(id);
 
   return (
     <div
       className="notecard"
-      aria-label={`Keep's Note ${displayedTitle}`}
-      data-note-id={_id}
-      data-color={color}
+      aria-label={`Keep's Note ${noteTitle}`}
+      data-note-id={id}
+      data-color={dataColor}
     >
-      {displayColorContainer && <ColorBallContainer id={_id} />}
+      {displayColorContainer && (
+        <ColorBallContainer
+          id={id}
+          changeToColor={(c) => {
+            setDataColor(c);
+            handleBlur();
+          }}
+        />
+      )}
       {displayMenuPanel && <MenuPanel isArchived={isArchived} />}
       <div className="notecard__buttons-container">
-        <div
-          role="button"
-          className="notecard__button color-button"
-          aria-label="Change Note Color"
-          data-tooltip-text="Change Note Color"
-          tabIndex="0"
-          onClick={handleColorChange}
-          onKeyDown={handleColorChange}
-          onBlur={handleBlur}
+        <IconButton
+          className="color-button"
+          label="Change Note Color"
+          click={() => {
+            handleColorChange();
+          }}
         />
-        <div
-          role="button"
-          className="notecard__button menu-button"
-          aria-label="Menu"
-          data-tooltip-text="Menu"
-          tabIndex="0"
-          onClick={handleMenuPanel}
-          onKeyDown={handleMenuPanel}
-          onBlur={handleBlur}
+        <IconButton
+          className="menu-button"
+          label="Menu"
+          click={() => {
+            handleMenuPanel();
+          }}
         />
-        <div
-          role="button"
-          className={`notecard__button pin-button ${
-            isPinned ? 'note-pinned' : ''
-          }`}
-          aria-label="Fix note"
-          data-tooltip-text="Fix note"
-          tabIndex="0"
+        <IconButton
+          className={`pin-button ${isPinned ? 'note-pinned' : ''}`}
+          label="Fix Note"
+          click={() => {
+            handlePinNote();
+          }}
         />
       </div>
       <div
@@ -88,28 +88,21 @@ export default function Notecard({ noteItem }) {
       >
         <img className="svg-icon-large" alt="" />
       </div>
-      <div className="notecard__title">
-        <span>{displayedTitle}</span>
-        <textarea
-          name="note-title"
-          className="notecard__title-textarea"
-          id="title-textarea"
-          rows="1"
-          maxLength="999"
-          placeholder="Title"
-          style={{ height: '1rem' }}
-          value={displayedTitle}
-          onChange={handleTitleChange}
-        />
-      </div>
+      <InputField
+        text={noteTitle}
+        className="notecard__title"
+        displayDone={() => setDoneBtnVisible(true)}
+      />
       {doneBtnVisible && (
-        <button
-          type="button"
+        <IconButton
           className="notecard__done-button"
-          style={{ userSelect: 'none' }}
-        >
-          Done
-        </button>
+          click={() => {
+            setDoneBtnVisible(false);
+            new NoteItemController().updateNote(id);
+          }}
+          label="Done"
+          btnText="Done"
+        />
       )}
     </div>
   );
