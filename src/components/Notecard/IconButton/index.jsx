@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../../../styles/styles.css';
 
-function IconButton({ className, label, click, btnText }) {
+function IconButton({ className, label, handleClick, btnText }) {
   return (
     <div
       role="button"
@@ -10,8 +10,8 @@ function IconButton({ className, label, click, btnText }) {
       aria-label={label}
       data-tooltip-text={label}
       tabIndex={0}
-      onClick={() => click()}
-      onKeyDown={() => click()}
+      onClick={handleClick}
+      onKeyDown={handleClick}
     >
       {btnText}
     </div>
@@ -28,5 +28,5 @@ IconButton.propTypes = {
   className: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   btnText: PropTypes.string,
-  click: PropTypes.func.isRequired,
+  handleClick: PropTypes.func.isRequired,
 };

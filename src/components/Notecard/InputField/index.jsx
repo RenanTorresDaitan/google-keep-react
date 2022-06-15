@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-function InputField({ text, className, displayDone }) {
+function InputField({ text, className, handleShowDoneBtn }) {
   const [displayedText, setDisplayedText] = useState(text);
   const handleTitleChange = (event) => {
     setDisplayedText(event.target.value);
@@ -16,7 +16,7 @@ function InputField({ text, className, displayDone }) {
     <div
       role="textbox"
       className={className}
-      onKeyDown={() => displayDone()}
+      onKeyDown={handleShowDoneBtn}
       tabIndex={0}
       onClick={handleShowText}
     >
@@ -42,6 +42,6 @@ export default InputField;
 
 InputField.propTypes = {
   text: PropTypes.string.isRequired,
-  displayDone: PropTypes.func.isRequired,
+  handleShowDoneBtn: PropTypes.func.isRequired,
   className: PropTypes.string.isRequired,
 };

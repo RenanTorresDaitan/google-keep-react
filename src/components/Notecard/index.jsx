@@ -60,23 +60,17 @@ export default function Notecard({ noteItem }) {
         <IconButton
           className="color-button"
           label="Change Note Color"
-          click={() => {
-            handleColorChange();
-          }}
+          handleClick={handleColorChange}
         />
         <IconButton
           className="menu-button"
           label="Menu"
-          click={() => {
-            handleMenuPanel();
-          }}
+          handleClick={handleMenuPanel}
         />
         <IconButton
           className={`pin-button ${isPinned ? 'note-pinned' : ''}`}
           label="Fix Note"
-          click={() => {
-            handlePinNote();
-          }}
+          handleClick={handlePinNote}
         />
       </div>
       <div
@@ -91,12 +85,17 @@ export default function Notecard({ noteItem }) {
       <InputField
         text={noteTitle}
         className="notecard__title"
-        displayDone={() => setDoneBtnVisible(true)}
+        handleShowDoneBtn={() => setDoneBtnVisible(true)}
+      />
+      <InputField
+        text={noteDescription}
+        className="notecard__desc"
+        handleShowDoneBtn={() => setDoneBtnVisible(true)}
       />
       {doneBtnVisible && (
         <IconButton
           className="notecard__done-button"
-          click={() => {
+          handleClick={() => {
             setDoneBtnVisible(false);
             new NoteItemController().updateNote(id);
           }}
