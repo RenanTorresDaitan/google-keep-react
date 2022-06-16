@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import SideBarItem from './SideBarItem';
 import lampIcon from '../../assets/svg/lamp-icon.svg';
@@ -8,14 +9,23 @@ import boxIcon from '../../assets/svg/box-icon.svg';
 import trashIcon from '../../assets/svg/trash-icon.svg';
 import './styles.css';
 
-export default function SideBar() {
+export default function SideBar({ changeSidebar }) {
   return (
     <div className="sidebar__container">
-      <SideBarItem active="true" icon={lampIcon} label="Notes" />
-      <SideBarItem icon={bellIcon} label="Reminders" />
-      <SideBarItem icon={pencilIcon} label="Edit label" />
-      <SideBarItem icon={boxIcon} label="Archive" />
-      <SideBarItem icon={trashIcon} label="Trash" />
+      <SideBarItem
+        active="true"
+        icon={lampIcon}
+        label="Notes"
+        click={changeSidebar}
+      />
+      <SideBarItem icon={bellIcon} label="Reminders" click={changeSidebar} />
+      <SideBarItem icon={pencilIcon} label="Edit label" click={changeSidebar} />
+      <SideBarItem icon={boxIcon} label="Archive" click={changeSidebar} />
+      <SideBarItem icon={trashIcon} label="Trash" click={changeSidebar} />
     </div>
   );
 }
+
+SideBar.propTypes = {
+  changeSidebar: PropTypes.func.isRequired,
+};

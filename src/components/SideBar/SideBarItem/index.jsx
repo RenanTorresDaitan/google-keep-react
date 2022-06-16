@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function SideBarItem({ active, icon, label }) {
+function SideBarItem({ active, icon, label, click }) {
   return (
     <div
       role="button"
       tabIndex={0}
       className="sidebar-item"
       active={active}
+      onClick={() => click(label.toUpperCase())}
+      onKeyDown={(event) => (event.code === 'Enter' ? click : null)}
     >
       <div className="sidebar-item__icon">
         <img alt="" className="svg-icon-large" src={icon} />
@@ -25,6 +27,7 @@ SideBarItem.propTypes = {
   active: PropTypes.string,
   icon: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  click: PropTypes.func.isRequired,
 };
 
 export default SideBarItem;

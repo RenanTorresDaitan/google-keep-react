@@ -61,34 +61,13 @@ export default class NoteItemController {
     }
   }
 
-  updateNote(id) {
-    const noteCard = document.querySelector(`[data-note-id="${id}"]`);
-    const noteItem = {
+  updateNote(id, noteItem) {
+    const updatedNoteItem = {
       ...this.dbManager.noteItemsList.getNoteById(id),
-      noteTitle: noteCard.querySelector('#title-textarea').value,
-      isPinned: noteCard
-        .querySelector('.pin-button')
-        .classList.contains('note-pinned'),
-      noteTime: { creationDate: Date.now() },
-      color: noteCard.getAttribute('data-color'),
+      ...noteItem,
     };
-    if (noteCard.querySelector('#description-textarea') != null) {
-      noteItem.noteDescription = noteCard.querySelector(
-        '#description-textarea',
-      ).value;
-    }
-    const toDoItems = noteCard.querySelectorAll('.to-do-item');
-    if (toDoItems != null) {
-      noteItem.toDoItems = Array.from(toDoItems).map((item, index) => ({
-        id: index,
-        label: item.querySelector('.to-do-item-label').textContent,
-        isChecked:
-          item.querySelector('.to-do-item-checkbox').getAttribute('checked')
-          === 'true',
-      }));
-    }
     this.dbManager.noteItemsList.removeNoteFromList(id);
-    this.dbManager.createNewNoteItem(noteItem);
+    this.dbManager.createNewNoteItem(updatedNoteItem);
     this.updateNotes();
   }
 
@@ -121,7 +100,9 @@ export default class NoteItemController {
 
   deleteTrashedNotes() {
     this.dbManager.noteItemsList.getList().forEach((item) => {
-      if (item.isTrashed) { this.dbManager.noteItemsList.removeNoteFromList(item.id); }
+      if (item.isTrashed) {
+        this.dbManager.noteItemsList.removeNoteFromList(item.id);
+      }
     });
     this.updateNotes();
   }

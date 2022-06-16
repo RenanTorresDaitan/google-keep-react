@@ -1,17 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function InputField({ text, className, handleShowDoneBtn }) {
-  const [displayedText, setDisplayedText] = useState(text);
-  const handleTitleChange = (event) => {
-    setDisplayedText(event.target.value);
-  };
+function InputField({ text, placeHolder, className, handleChange, handleShowDoneBtn }) {
+  const [showText, setShowText] = useState(true);
+  const textarea = useRef();
 
-  const handleShowText = (event) => {
+  const handleShowText = () => {
     setShowText((prevState) => !prevState);
   };
 
-  const [showText, setShowText] = useState(true);
+  useEffect(() => {
+    if (!showText) {
+      textarea.current.focus();
+      textarea.current.setSelectionRange(
+        textarea.current.value.length,
+        textarea.current.value.length,
+      );
+    }
+  }, [showText]);
+
   return (
     <div
       role="textbox"
@@ -20,18 +27,19 @@ function InputField({ text, className, handleShowDoneBtn }) {
       tabIndex={0}
       onClick={handleShowText}
     >
-      {showText && <span>{displayedText}</span>}
-      {!showText && (
+      {showText ? (
+        <span>{text}</span>
+      ) : (
         <textarea
-          name="note-title"
-          className="notecard__title-textarea"
-          id="title-textarea"
+          className={`${className}-textarea`}
+          id={`${className}-textarea`}
+          ref={textarea}
           rows="1"
           maxLength="999"
-          placeholder="Title"
+          placeholder={placeHolder}
           style={{ height: '1rem' }}
-          value={displayedText}
-          onChange={handleTitleChange}
+          value={text}
+          onChange={handleChange}
         />
       )}
     </div>
@@ -42,6 +50,8 @@ export default InputField;
 
 InputField.propTypes = {
   text: PropTypes.string.isRequired,
-  handleShowDoneBtn: PropTypes.func.isRequired,
   className: PropTypes.string.isRequired,
+  placeHolder: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleShowDoneBtn: PropTypes.func.isRequired,
 };

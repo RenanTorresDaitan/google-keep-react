@@ -12,6 +12,7 @@ export default function Notecard({ noteItem }) {
   const {
     id,
     noteTitle,
+    noteTime,
     color,
     isArchived,
     isPinned,
@@ -23,26 +24,32 @@ export default function Notecard({ noteItem }) {
   } = noteItem;
 
   const [displayColorContainer, setDisplayColorContainer] = useState(false);
-  const handleColorChange = () => setDisplayColorContainer(true);
-
   const [displayMenuPanel, setDisplayMenuPanel] = useState(false);
-  const handleMenuPanel = () => setDisplayMenuPanel(true);
+  const [doneBtnVisible, setDoneBtnVisible] = useState(false);
+  const [dataColor, setDataColor] = useState(color);
 
+  const [displayedTitle, setDisplayedTitle] = useState(noteTitle);
+  const [displayedDescription, setDisplayedDescription] = useState(noteDescription);
+
+  const handleColorChange = () => setDisplayColorContainer(true);
+  const handleMenuPanel = () => setDisplayMenuPanel(true);
+  const handlePinNote = () => new NoteItemController().pinNote(id);
   const handleBlur = () => {
     setDisplayColorContainer(false);
     setDisplayMenuPanel(false);
   };
 
-  const [doneBtnVisible, setDoneBtnVisible] = useState(false);
-
-  const [dataColor, setDataColor] = useState(color);
-
-  const handlePinNote = () => new NoteItemController().pinNote(id);
+  const handleTitleChange = (event) => {
+    setDisplayedTitle(event.target.value);
+  };
+  const handleDescriptionChange = (event) => {
+    setDisplayedDescription(event.target.value);
+  };
 
   return (
     <div
       className="notecard"
-      aria-label={`Keep's Note ${noteTitle}`}
+      aria-label={`Keep's Note ${displayedTitle}`}
       data-note-id={id}
       data-color={dataColor}
     >
@@ -55,7 +62,7 @@ export default function Notecard({ noteItem }) {
           }}
         />
       )}
-      {displayMenuPanel && <MenuPanel isArchived={isArchived} />}
+      {displayMenuPanel && <MenuPanel id={id} isArchived={isArchived} />}
       <div className="notecard__buttons-container">
         <IconButton
           className="color-button"
@@ -83,21 +90,34 @@ export default function Notecard({ noteItem }) {
         <img className="svg-icon-large" alt="" />
       </div>
       <InputField
-        text={noteTitle}
+        text={displayedTitle}
         className="notecard__title"
+        placeHolder="Title"
+        handleChange={(e) => handleTitleChange(e)}
         handleShowDoneBtn={() => setDoneBtnVisible(true)}
       />
-      <InputField
-        text={noteDescription}
-        className="notecard__desc"
-        handleShowDoneBtn={() => setDoneBtnVisible(true)}
-      />
+      {isToDoList ? (
+        ''
+      ) : (
+        <InputField
+          text={displayedDescription}
+          className="notecard__desc"
+          placeHolder="Take a note..."
+          handleChange={(e) => handleDescriptionChange(e)}
+          handleShowDoneBtn={() => setDoneBtnVisible(true)}
+        />
+      )}
       {doneBtnVisible && (
         <IconButton
           className="notecard__done-button"
           handleClick={() => {
             setDoneBtnVisible(false);
-            new NoteItemController().updateNote(id);
+            handleBlur();
+            new NoteItemController().updateNote(id, {
+              noteTitle: displayedTitle,
+              noteDescription: displayedDescription,
+              isToDoList,
+            });
           }}
           label="Done"
           btnText="Done"
