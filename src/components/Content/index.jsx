@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import NewNoteComponent from '../NewNoteComponent';
+import TakeNewNotesHeader from '../TakeNewNotesHeader';
 import NoteListItems from '../NoteListItems';
 import DBManager from '../../models/DBManager';
 
 import './styles.css';
+import Notecard from '../Notecard';
+import NoteItemModel from '../../models/NoteItemModel';
 
 export default function Content({ sidebarSelected }) {
   const [notesToRender, setNotesToRender] = useState([]);
+  const [displayHeader, setDisplayHeader] = useState(true);
+
+  const handleDisplayHeader = () => setDisplayHeader((prevState) => !prevState);
+
   useEffect(() => {
     const notesList = DBManager.noteItemsList
       .getList()
@@ -44,7 +50,11 @@ export default function Content({ sidebarSelected }) {
 
   return (
     <div className="content">
-      <NewNoteComponent />
+      {displayHeader ? (
+        <TakeNewNotesHeader handleDisplayHeader={handleDisplayHeader} />
+      ) : (
+        <Notecard noteItem={new NoteItemModel()} />
+      )}
       {sidebarSelected === 'TRASH' && (
         <div className="trash-header">
           Notes in Trash are deleted after 7 days.

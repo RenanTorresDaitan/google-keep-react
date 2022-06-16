@@ -37,6 +37,31 @@ body {
   flex-wrap: nowrap;
 }
 
+.icon-size {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+.lower-toolbar-button,
+.icon-button {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.lower-toolbar-button {
+  padding: 0.375rem;
+  margin-inline: 0.25rem;
+}
+.icon-button {
+  padding: 1.25rem;
+}
+.lower-toolbar-button:hover,
+.notecard-pin-button:hover,
+.icon-button:hover {
+  background-color: var(--c-light-gray);
+}
+
 [data-color='red'] {
   background: #f28b82;
   border-color: #f28b82;

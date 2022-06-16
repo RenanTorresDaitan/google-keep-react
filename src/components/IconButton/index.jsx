@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../../../styles/styles.css';
+import '../../styles/styles.css';
 
 function IconButton({ className, label, handleClick, btnText }) {
   return (
     <div
       role="button"
-      className={`notecard__button ${className}`}
+      className={className}
       aria-label={label}
       data-tooltip-text={label}
       tabIndex={0}
       onClick={handleClick}
-      onKeyDown={handleClick}
+      onKeyDown={(e) => (e.code === 'Enter' ? handleClick() : null)}
+      style={{ userSelect: 'none' }}
     >
       {btnText}
     </div>

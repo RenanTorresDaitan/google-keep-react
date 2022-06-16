@@ -23,9 +23,9 @@ function InputField({ text, placeHolder, className, handleChange, handleShowDone
     <div
       role="textbox"
       className={className}
+      onClick={handleShowText}
       onKeyDown={handleShowDoneBtn}
       tabIndex={0}
-      onClick={handleShowText}
     >
       {showText ? (
         <span>{text}</span>

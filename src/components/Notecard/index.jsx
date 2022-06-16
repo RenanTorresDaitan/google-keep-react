@@ -5,14 +5,13 @@ import ColorBallContainer from './ColorBallContainer';
 import MenuPanel from './MenuPanel';
 import NoteItemModel from '../../models/NoteItemModel';
 import NoteItemController from '../../controllers/NoteItemController';
-import IconButton from './IconButton';
+import IconButton from '../IconButton';
 import InputField from './InputField';
 
 export default function Notecard({ noteItem }) {
   const {
     id,
     noteTitle,
-    noteTime,
     color,
     isArchived,
     isPinned,
@@ -65,17 +64,17 @@ export default function Notecard({ noteItem }) {
       {displayMenuPanel && <MenuPanel id={id} isArchived={isArchived} />}
       <div className="notecard__buttons-container">
         <IconButton
-          className="color-button"
+          className="notecard__button color-button"
           label="Change Note Color"
           handleClick={handleColorChange}
         />
         <IconButton
-          className="menu-button"
+          className="notecard__button menu-button"
           label="Menu"
           handleClick={handleMenuPanel}
         />
         <IconButton
-          className={`pin-button ${isPinned ? 'note-pinned' : ''}`}
+          className={`notecard__button pin-button ${isPinned ? 'note-pinned' : ''}`}
           label="Fix Note"
           handleClick={handlePinNote}
         />

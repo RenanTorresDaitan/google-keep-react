@@ -9,7 +9,7 @@ function SideBarItem({ active, icon, label, click }) {
       className="sidebar-item"
       active={active}
       onClick={() => click(label.toUpperCase())}
-      onKeyDown={(event) => (event.code === 'Enter' ? click : null)}
+      onKeyDown={(e) => (e.code === 'Enter' ? click(label.toUpperCase()) : null)}
     >
       <div className="sidebar-item__icon">
         <img alt="" className="svg-icon-large" src={icon} />

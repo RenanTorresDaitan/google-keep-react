@@ -11,7 +11,8 @@ export default function MenuPanel({ id, isArchived }) {
         data-button="archive-button"
         tabIndex={0}
         onClick={new NoteItemController().archiveNote(id)}
-        onKeyDown={new NoteItemController().archiveNote(id)}
+        onKeyDown={(e) => (e.code === 'Enter'
+          ? new NoteItemController().archiveNote(id) : null)}
       >
         Archive
       </div>
@@ -21,7 +22,8 @@ export default function MenuPanel({ id, isArchived }) {
         data-button="delete-button"
         tabIndex={0}
         onClick={new NoteItemController().trashNote(id)}
-        onKeyDown={new NoteItemController().trashNote(id)}
+        onKeyDown={(e) => (e.code === 'Enter'
+          ? new NoteItemController().trashNote(id) : null)}
       >
         Delete
       </div>

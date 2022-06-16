@@ -33,7 +33,7 @@ export default function ColorBallContainer({ id, changeToColor }) {
       key={color}
       data-color={color}
       onClick={() => handleColorChange(color)}
-      onKeyDown={() => handleColorChange(color)}
+      onKeyDown={(e) => (e.code === 'Enter' ? handleColorChange(color) : null)}
     />
   );
 

@@ -1,11 +1,38 @@
 @import url(../../styles/styles.css);
 
-.newnote {
+.newnote__header {
   display: flex;
   flex-direction: row;
   padding: 0.5rem 1rem 0 0.5rem;
 }
-.newnote[editing="true"] {
+
+.newnote__take-a-note {
+  border-radius: 3rem;
+  color: var(--tc-gray-2);
+  cursor: pointer;
+  display: flex;
+  flex: 1 0 auto;
+  align-items: center;
+  font-family: var(--ff-google);
+  font-size: 14px;
+  font-weight: 500;
+}
+.newnote__take-a-note:hover {
+  background-color: var(--c-off-white-1);
+}
+
+.newnote__new-list {
+  background-image: url(../../assets/svg/new-list-icon.svg);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  opacity: 0.6;
+}
+
+/*//////////////*/
+
+.newnote[editing='true'] {
   display: flex;
   align-self: center;
   border-radius: 0.5rem;
@@ -18,7 +45,7 @@
   padding: 0 0 1rem 0;
   position: relative;
 }
-.newnote[editing="true"]:hover {
+.newnote[editing='true']:hover {
   box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
 }
 .editing-note {
@@ -158,23 +185,10 @@
 .newnote-card-done-button:hover {
   background-color: var(--c-light-gray);
 }
-#new-note-button {
-  border-radius: 3rem;
-  color: var(--tc-gray-2);
-  cursor: pointer;
-  display: flex;
-  flex: 1 0 auto;
-  align-items: center;
-  font-family: var(--ff-google);
-  font-size: 14px;
-  font-weight: 500;
-}
-#new-note-button:hover {
-  background-color: var(--c-off-white-1);
-}
-.newnote[editing="true"] #new-note-button,
-.newnote[editing="true"] #new-list-button,
-.newnote[editing="true"] ~ .no-notes-found {
+
+.newnote[editing='true'] #new-note-button,
+.newnote[editing='true'] #new-list-button,
+.newnote[editing='true'] ~ .no-notes-found {
   display: none;
 }
 .newnote-to-do-item {
@@ -197,13 +211,13 @@
 .newnote-to-do-item-checkbox:hover {
   opacity: 0.8;
 }
-.newnote-to-do-item-checkbox[checked="false"] {
+.newnote-to-do-item-checkbox[checked='false'] {
   background-image: url(../../assets/svg/checkbox-unchecked.svg);
 }
-.newnote-to-do-item-checkbox[checked="true"] {
+.newnote-to-do-item-checkbox[checked='true'] {
   background-image: url(../../assets/svg/checkbox-checked.svg);
 }
-.newnote-to-do-item-checkbox[checked="true"]
+.newnote-to-do-item-checkbox[checked='true']
   ~ .newnote-item-placeholder-textarea {
   text-decoration: line-through;
   user-select: none;
@@ -231,4 +245,49 @@
 .newnote-to-do-item:hover .newnote-to-do-item-delete:hover {
   background-color: var(--c-light-gray);
   opacity: 1;
+}
+.completed-items-area {
+  display: block;
+}
+.completed-items-separator {
+  border-top: 1px solid var(--c-gray);
+  margin: 0.5rem 0rem 0 0.5rem;
+  width: 95%;
+}
+.completed-items-div {
+  display: flex;
+  padding: 0.625rem 0.3125rem 0rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.completed-items-btn {
+  cursor: pointer;
+  background-image: url(../../assets/svg/list-arrow-icon.svg);
+  opacity: 0.5;
+  border: 1px solid transparent;
+  background-position: center;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: transform 150ms;
+}
+.completed-items-btn:hover,
+.completed-items-btn:focus {
+  background-color: var(--c-gray);
+}
+.completed-items-label {
+  cursor: pointer;
+  user-select: none;
+  font-family: var(--ff-roboto);
+  font-size: 13px;
+  color: var(--tc-gray-1);
+}
+.completed-items-label:hover,
+.completed-items-label:focus {
+  color: var(--tc-dark-gray);
+}
+.completed-items-list {
+  display: flex;
+  flex-direction: column;
 }
