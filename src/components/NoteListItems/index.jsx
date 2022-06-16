@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import NoteListModel from '../../models/NoteListModel';
+import NoteItemModel from '../../models/NoteItemModel';
 import Notecard from '../Notecard';
 import './styles.css';
 
 function NoteListItems({ itemsList }) {
-  const notecards = itemsList
-    .getList()
-    .map((item) => <Notecard key={item.id} noteItem={item} />);
+  const notecards = itemsList.map((item) => (
+    <Notecard key={item.id} noteItem={item} />
+  ));
 
   return <section className="notes-area">{notecards}</section>;
 }
@@ -15,5 +15,5 @@ function NoteListItems({ itemsList }) {
 export default NoteListItems;
 
 NoteListItems.propTypes = {
-  itemsList: PropTypes.instanceOf(NoteListModel).isRequired,
+  itemsList: PropTypes.arrayOf(PropTypes.instanceOf(NoteItemModel)).isRequired,
 };

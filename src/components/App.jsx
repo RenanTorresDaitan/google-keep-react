@@ -13,7 +13,7 @@ export default function App() {
       <Header />
       <section className="main-section">
         <SideBar changeSidebar={(label) => handleSidebarChange(label)} />
-        <Content notes={0} sidebarSelected={sidebarSelected} />
+        <Content sidebarSelected={sidebarSelected} />
       </section>
     </div>
   );
