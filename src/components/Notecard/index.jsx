@@ -8,8 +8,10 @@ import NoteItemController from '../../controllers/NoteItemController';
 import IconButton from '../IconButton';
 import InputField from './InputField';
 import LowerToolbar from './LowerToolbar';
+import ToDoItemsContainer from './ToDoItemsContainer';
+import DBManager from '../../models/DBManager';
 
-export default function Notecard({ noteItem }) {
+export default function Notecard({ noteItem, isCreating }) {
   const {
     id,
     noteTitle,
@@ -36,9 +38,7 @@ export default function Notecard({ noteItem }) {
   });
 
   const handleColorChange = () => setDisplayColorContainer(true);
-  const handleMenuPanel = (e) => {
-    setDisplayMenuPanel(true);
-  };
+  const handleMenuPanel = () => setDisplayMenuPanel(true);
   const handlePinNote = () => new NoteItemController().pinNote(id);
   const handleBlur = () => {
     setDisplayColorContainer(false);
@@ -109,7 +109,7 @@ export default function Notecard({ noteItem }) {
         handleShowDoneBtn={() => setDoneBtnVisible(true)}
       />
       {isToDoList ? (
-        ''
+        <ToDoItemsContainer toDoitems={noteData.toDoItems} />
       ) : (
         <InputField
           text={noteData.noteDescription}
@@ -119,24 +119,27 @@ export default function Notecard({ noteItem }) {
           handleShowDoneBtn={() => setDoneBtnVisible(true)}
         />
       )}
-      <LowerToolbar
-        id={id}
-        isArchived={noteData.isArchived}
-        isTrashed={noteData.isTrashed}
-        handleChangeColor={handleColorChange}
-        handleOpenMenu={handleMenuPanel}
-      />
+      {!isCreating && (
+        <LowerToolbar
+          id={id}
+          isArchived={noteData.isArchived}
+          isTrashed={noteData.isTrashed}
+          handleChangeColor={handleColorChange}
+          handleOpenMenu={handleMenuPanel}
+        />
+      )}
       {doneBtnVisible && (
         <IconButton
           className="notecard__done-button"
           handleClick={() => {
             setDoneBtnVisible(false);
             handleBlur();
-            new NoteItemController().updateNote(id, {
-              noteTitle: noteData.noteTitle,
-              noteDescription: noteData.noteDescription,
-              isToDoList,
-            });
+            if (isCreating) {
+              DBManager.createNewNoteItem(noteData);
+              return;
+            }
+            new NoteItemController().updateNote(id, noteData);
+            DBManager.updateNotesOnLocalStorage();
           }}
           label="Done"
           btnText="Done"
@@ -147,4 +150,5 @@ export default function Notecard({ noteItem }) {
 }
 Notecard.propTypes = {
   noteItem: PropTypes.instanceOf(NoteItemModel).isRequired,
+  isCreating: PropTypes.bool.isRequired,
 };

@@ -16,6 +16,14 @@ export default function Content({ sidebarSelected }) {
   const [displayHeader, setDisplayHeader] = useState(true);
 
   const handleDisplayHeader = () => setDisplayHeader((prevState) => !prevState);
+  const noteToCreate = (type) => {
+    const newNoteItem = new NoteItemModel();
+    if (type === 'list') {
+      newNoteItem.isToDoList = true;
+      return <Notecard noteItem={newNoteItem} isCreating />;
+    }
+    return <Notecard noteItem={newNoteItem} isCreating />;
+  };
 
   useEffect(() => {
     const noteItems = DBManager.noteItemsList.getList();
@@ -48,9 +56,12 @@ export default function Content({ sidebarSelected }) {
   return (
     <div className="content">
       {displayHeader ? (
-        <TakeNewNotesHeader handleDisplayHeader={handleDisplayHeader} />
+        <TakeNewNotesHeader
+          handleDisplayHeader={handleDisplayHeader}
+          noteToCreate={noteToCreate}
+        />
       ) : (
-        <Notecard noteItem={new NoteItemModel()} />
+        <Notecard noteItem={new NoteItemModel()} isCreating />
       )}
       {sidebarSelected === 'TRASH' && (
         <div className="trash-header">

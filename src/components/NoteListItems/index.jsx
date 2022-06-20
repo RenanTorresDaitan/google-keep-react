@@ -6,7 +6,7 @@ import './styles.css';
 
 function NoteListItems({ itemsList }) {
   const notecards = itemsList.map((item) => (
-    <Notecard key={item.id} noteItem={item} />
+    <Notecard key={item.id} noteItem={item} isCreating={false} />
   ));
 
   return <section className="notes-area">{notecards}</section>;

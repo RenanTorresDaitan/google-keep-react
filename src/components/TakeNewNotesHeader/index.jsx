@@ -4,12 +4,14 @@ import plusIcon from '../../assets/svg/notecard/plus-icon.svg';
 import IconButton from '../IconButton';
 import './styles.css';
 
-function TakeNewNotesHeader({ handleDisplayHeader }) {
+function TakeNewNotesHeader({ handleDisplayHeader, noteToCreate }) {
   const handleNewList = () => {
     handleDisplayHeader();
+    noteToCreate('list');
   };
   const handleNewNote = () => {
     handleDisplayHeader();
+    noteToCreate('note');
   };
 
   return (
@@ -20,7 +22,7 @@ function TakeNewNotesHeader({ handleDisplayHeader }) {
         tabIndex={0}
         style={{ padding: '0 1rem', userSelect: 'none' }}
         onClick={handleNewNote}
-        onKeyDown={(e) => ((e.code === 'Enter' || e.code === 'Space') ? handleNewNote() : null)}
+        onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space' ? handleNewNote() : null)}
       >
         <img className="icon-size" src={plusIcon} alt="" />
         <span>Take a note…</span>
@@ -38,4 +40,5 @@ export default TakeNewNotesHeader;
 
 TakeNewNotesHeader.propTypes = {
   handleDisplayHeader: PropTypes.func.isRequired,
+  noteToCreate: PropTypes.func.isRequired,
 };

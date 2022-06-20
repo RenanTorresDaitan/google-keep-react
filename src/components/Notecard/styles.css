@@ -188,9 +188,11 @@
 }
 
 @media screen and (min-width: 900px) {
+  .notecard {
+    padding-bottom: 0.15rem;
+  }
   .note-lower-toolbar {
     display: flex;
-    padding: 0.25rem 1rem;
   }
   .notecard:hover .note-lower-toolbar {
     opacity: 1;
