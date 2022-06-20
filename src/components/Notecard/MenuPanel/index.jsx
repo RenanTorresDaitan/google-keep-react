@@ -10,8 +10,8 @@ export default function MenuPanel({ id, isArchived }) {
         className={`notecard__menu-panel-option ${isArchived ? 'hide' : ''}`}
         data-button="archive-button"
         tabIndex={0}
-        onClick={new NoteItemController().archiveNote(id)}
-        onKeyDown={(e) => (e.code === 'Enter'
+        onClick={() => new NoteItemController().archiveNote(id)}
+        onKeyDown={(e) => ((e.code === 'Enter' || e.code === 'Space')
           ? new NoteItemController().archiveNote(id) : null)}
       >
         Archive
@@ -21,8 +21,8 @@ export default function MenuPanel({ id, isArchived }) {
         className="notecard__menu-panel-option"
         data-button="delete-button"
         tabIndex={0}
-        onClick={new NoteItemController().trashNote(id)}
-        onKeyDown={(e) => (e.code === 'Enter'
+        onClick={() => new NoteItemController().trashNote(id)}
+        onKeyDown={(e) => ((e.code === 'Enter' || e.code === 'Space')
           ? new NoteItemController().trashNote(id) : null)}
       >
         Delete

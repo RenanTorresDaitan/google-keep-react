@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import plusIcon from '../../assets/svg/notecard/plus-icon.svg';
 import IconButton from '../IconButton';
@@ -20,7 +20,7 @@ function TakeNewNotesHeader({ handleDisplayHeader }) {
         tabIndex={0}
         style={{ padding: '0 1rem', userSelect: 'none' }}
         onClick={handleNewNote}
-        onKeyDown={(e) => (e.code === 'Enter' ? handleNewNote() : null)}
+        onKeyDown={(e) => ((e.code === 'Enter' || e.code === 'Space') ? handleNewNote() : null)}
       >
         <img className="icon-size" src={plusIcon} alt="" />
         <span>Take a note…</span>

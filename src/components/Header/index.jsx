@@ -36,7 +36,7 @@ export default function Header() {
           aria-label="Search"
           tabIndex={0}
           onClick={handleShowSearch}
-          onKeyDown={(e) => (e.code === 'Enter' ? handleShowSearch() : null)}
+          onKeyDown={(e) => ((e.code === 'Enter' || e.code === 'Space') ? handleShowSearch() : null)}
         >
           <img className="svg-icon" src={searchIcon} alt="" />
         </div>

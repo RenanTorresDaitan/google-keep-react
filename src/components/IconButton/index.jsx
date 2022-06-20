@@ -11,7 +11,7 @@ function IconButton({ className, label, handleClick, btnText }) {
       data-tooltip-text={label}
       tabIndex={0}
       onClick={handleClick}
-      onKeyDown={(e) => (e.code === 'Enter' ? handleClick() : null)}
+      onKeyDown={(e) => ((e.code === 'Enter' || e.code === 'Space') ? handleClick() : null)}
       style={{ userSelect: 'none' }}
     >
       {btnText}

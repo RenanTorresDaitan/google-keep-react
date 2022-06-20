@@ -25,13 +25,19 @@ export default function Notecard({ noteItem }) {
   const [displayColorContainer, setDisplayColorContainer] = useState(false);
   const [displayMenuPanel, setDisplayMenuPanel] = useState(false);
   const [doneBtnVisible, setDoneBtnVisible] = useState(false);
-  const [dataColor, setDataColor] = useState(color);
 
-  const [displayedTitle, setDisplayedTitle] = useState(noteTitle);
-  const [displayedDescription, setDisplayedDescription] = useState(noteDescription);
+  const [noteData, setNoteData] = useState({
+    noteTitle,
+    noteDescription,
+    color,
+    isArchived,
+    isTrashed,
+  });
 
   const handleColorChange = () => setDisplayColorContainer(true);
-  const handleMenuPanel = () => setDisplayMenuPanel(true);
+  const handleMenuPanel = (e) => {
+    setDisplayMenuPanel(true);
+  };
   const handlePinNote = () => new NoteItemController().pinNote(id);
   const handleBlur = () => {
     setDisplayColorContainer(false);
@@ -39,46 +45,50 @@ export default function Notecard({ noteItem }) {
   };
 
   const handleTitleChange = (event) => {
-    setDisplayedTitle(event.target.value);
+    setNoteData({ ...noteData, noteTitle: event.target.value });
   };
   const handleDescriptionChange = (event) => {
-    setDisplayedDescription(event.target.value);
+    setNoteData({ ...noteData, noteDescription: event.target.value });
   };
 
   return (
     <div
       className="notecard"
-      aria-label={`Keep's Note ${displayedTitle}`}
+      aria-label={`Keep's Note ${noteData.noteTitle}`}
       data-note-id={id}
-      data-color={dataColor}
+      data-color={noteData.color}
     >
       {displayColorContainer && (
         <ColorBallContainer
           id={id}
           changeToColor={(c) => {
-            setDataColor(c);
+            setNoteData({ ...noteData, color: c });
             handleBlur();
           }}
         />
       )}
-      {displayMenuPanel && <MenuPanel id={id} isArchived={isArchived} />}
-      <div className="notecard__buttons-container">
-        <IconButton
-          className="notecard__button color-button"
-          label="Change Note Color"
-          handleClick={handleColorChange}
-        />
-        <IconButton
-          className="notecard__button menu-button"
-          label="Menu"
-          handleClick={handleMenuPanel}
-        />
-        <IconButton
-          className={`notecard__button pin-button ${isPinned ? 'note-pinned' : ''}`}
-          label="Fix Note"
-          handleClick={handlePinNote}
-        />
-      </div>
+      {displayMenuPanel && <MenuPanel id={id} isArchived={noteData.isArchived} />}
+      {!noteData.isTrashed && (
+        <div className="notecard__buttons-container">
+          <IconButton
+            className="notecard__button color-button"
+            label="Change Note Color"
+            handleClick={handleColorChange}
+          />
+          <IconButton
+            className="notecard__button menu-button"
+            label="Menu"
+            handleClick={handleMenuPanel}
+          />
+          <IconButton
+            className={`notecard__button pin-button ${
+              isPinned ? 'note-pinned' : ''
+            }`}
+            label="Fix Note"
+            handleClick={handlePinNote}
+          />
+        </div>
+      )}
       <div
         role="button"
         className={`notecard-pin-button ${isPinned ? 'note-pinned' : ''}`}
@@ -89,7 +99,7 @@ export default function Notecard({ noteItem }) {
         <img className="svg-icon-large" alt="" />
       </div>
       <InputField
-        text={displayedTitle}
+        text={noteData.noteTitle}
         className="notecard__title"
         placeHolder="Title"
         handleChange={(e) => handleTitleChange(e)}
@@ -99,7 +109,7 @@ export default function Notecard({ noteItem }) {
         ''
       ) : (
         <InputField
-          text={displayedDescription}
+          text={noteData.noteDescription}
           className="notecard__desc"
           placeHolder="Take a note..."
           handleChange={(e) => handleDescriptionChange(e)}
@@ -113,8 +123,8 @@ export default function Notecard({ noteItem }) {
             setDoneBtnVisible(false);
             handleBlur();
             new NoteItemController().updateNote(id, {
-              noteTitle: displayedTitle,
-              noteDescription: displayedDescription,
+              noteTitle: noteData.noteTitle,
+              noteDescription: noteData.noteDescription,
               isToDoList,
             });
           }}

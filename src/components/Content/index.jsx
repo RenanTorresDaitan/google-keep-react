@@ -8,6 +8,7 @@ import DBManager from '../../models/DBManager';
 import './styles.css';
 import Notecard from '../Notecard';
 import NoteItemModel from '../../models/NoteItemModel';
+import NoteItemController from '../../controllers/NoteItemController';
 
 export default function Content({ sidebarSelected }) {
   const [notesToRender, setNotesToRender] = useState([]);
@@ -16,31 +17,26 @@ export default function Content({ sidebarSelected }) {
   const handleDisplayHeader = () => setDisplayHeader((prevState) => !prevState);
 
   useEffect(() => {
-    const notesList = DBManager.noteItemsList
-      .getList()
-      .filter((item) => !item.isTrashed && !item.isArchived);
-    const remindersList = DBManager.noteItemsList
-      .getList()
-      .filter((item) => !item.isTrashed && item.isReminder);
-    const archiveList = DBManager.noteItemsList
-      .getList()
-      .filter((item) => !item.isTrashed && item.isArchived);
-    const trashList = DBManager.noteItemsList
-      .getList()
-      .filter((item) => item.isTrashed);
+    const noteItems = DBManager.noteItemsList.getList();
     switch (sidebarSelected) {
       case 'NOTES':
       case 'EDIT LABEL':
-        setNotesToRender(notesList);
+        setNotesToRender(
+          noteItems.filter((item) => !item.isTrashed && !item.isArchived),
+        );
         break;
       case 'REMINDERS':
-        setNotesToRender(remindersList);
+        setNotesToRender(
+          noteItems.filter((item) => !item.isTrashed && item.isReminder),
+        );
         break;
       case 'ARCHIVE':
-        setNotesToRender(archiveList);
+        setNotesToRender(
+          noteItems.filter((item) => !item.isTrashed && item.isArchived),
+        );
         break;
       case 'TRASH':
-        setNotesToRender(trashList);
+        setNotesToRender(noteItems.filter((item) => item.isTrashed));
         break;
       default:
         setNotesToRender([]);
@@ -64,6 +60,10 @@ export default function Content({ sidebarSelected }) {
             aria-hidden="false"
             tabIndex={0}
             style={{ userSelect: 'none' }}
+            onClick={() => new NoteItemController().deleteTrashedNotes()}
+            onKeyDown={(e) => ((e.code === 'Enter' || e.code === 'Space')
+              ? new NoteItemController().deleteTrashedNotes()
+              : null)}
           >
             Empty Trash
           </div>
