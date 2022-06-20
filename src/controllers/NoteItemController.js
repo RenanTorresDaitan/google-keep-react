@@ -89,7 +89,8 @@ export default class NoteItemController {
   }
 
   archiveNote(id) {
-    this.dbManager.noteItemsList.getNoteById(id).isArchived = true;
+    const noteFromDB = this.dbManager.noteItemsList.getNoteById(id);
+    noteFromDB.isArchived = !noteFromDB.isArchived;
     this.updateNotes();
   }
 
@@ -117,11 +118,6 @@ export default class NoteItemController {
     const noteToTrash = this.dbManager.noteItemsList.getNoteById(id);
     noteToTrash.isTrashed = true;
     noteToTrash.noteTime.deletionDate = Date.now() + this.SEVEN_DAYS_IN_MILLISECONDS;
-    this.updateNotes();
-  }
-
-  unarchiveNote(id) {
-    this.dbManager.noteItemsList.getNoteById(id).isArchived = false;
     this.updateNotes();
   }
 

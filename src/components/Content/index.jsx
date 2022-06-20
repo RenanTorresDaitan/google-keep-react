@@ -9,6 +9,7 @@ import './styles.css';
 import Notecard from '../Notecard';
 import NoteItemModel from '../../models/NoteItemModel';
 import NoteItemController from '../../controllers/NoteItemController';
+import SideBarHeader from '../SideBarHeader';
 
 export default function Content({ sidebarSelected }) {
   const [notesToRender, setNotesToRender] = useState([]);
@@ -61,7 +62,7 @@ export default function Content({ sidebarSelected }) {
             tabIndex={0}
             style={{ userSelect: 'none' }}
             onClick={() => new NoteItemController().deleteTrashedNotes()}
-            onKeyDown={(e) => ((e.code === 'Enter' || e.code === 'Space')
+            onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space'
               ? new NoteItemController().deleteTrashedNotes()
               : null)}
           >
@@ -70,33 +71,33 @@ export default function Content({ sidebarSelected }) {
         </div>
       )}
       {sidebarSelected === 'NOTES' && notesToRender.length === 0 && (
-        <div className="no-notes-found">
-          <div className="no-notes-img" />
-          <h2>No notes yet</h2>
-          <h4>Your notes from Google Keep will show up here.</h4>
-        </div>
+        <SideBarHeader
+          notesClass="no-notes-found no-notes-found-label"
+          imageClass="no-notes-img"
+          title="No notes yet"
+          subtitle="Your notes from Google Keep will show up here."
+        />
       )}
       {sidebarSelected === 'REMINDERS' && notesToRender.length === 0 && (
-        <div className="no-reminders-found">
-          <div className="no-reminders-img" />
-          <div className="no-reminders-label">
-            Notes with upcoming reminders appear here
-          </div>
-        </div>
+        <SideBarHeader
+          notesClass="no-reminders-found no-reminders-label"
+          imageClass="no-reminders-img"
+          title="Notes with upcoming reminders appear here"
+        />
       )}
       {sidebarSelected === 'ARCHIVE' && notesToRender.length === 0 && (
-        <div className="no-archived-found">
-          <div className="no-archived-img" />
-          <div className="no-archived-label">
-            Your archived notes appear here
-          </div>
-        </div>
+        <SideBarHeader
+          notesClass="no-archived-found no-archived-label"
+          imageClass="no-archived-img"
+          title="Your archived notes appear here"
+        />
       )}
       {sidebarSelected === 'TRASH' && notesToRender.length === 0 && (
-        <div className="no-trashed-found">
-          <div className="no-trashed-img" />
-          <div className="no-trashed-label">No notes in Trash</div>
-        </div>
+        <SideBarHeader
+          notesClass="no-trashed-found no-trashed-label"
+          imageClass="no-trashed-img"
+          title="No notes in Trash"
+        />
       )}
       <NoteListItems itemsList={notesToRender} />
     </div>

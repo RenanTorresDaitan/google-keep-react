@@ -1,5 +1,6 @@
 @import url(../../styles/styles.css);
 
+
 .notecard {
   display: block;
   border-radius: 0.5rem;
@@ -185,3 +186,19 @@
 .hide {
   display: none;
 }
+
+@media screen and (min-width: 900px) {
+  .note-lower-toolbar {
+    display: flex;
+    padding: 0.25rem 1rem;
+  }
+  .notecard:hover .note-lower-toolbar {
+    opacity: 1;
+  }
+
+  .notecard__buttons-container {
+    display: none;
+  }
+}
+
+

@@ -7,6 +7,7 @@ import NoteItemModel from '../../models/NoteItemModel';
 import NoteItemController from '../../controllers/NoteItemController';
 import IconButton from '../IconButton';
 import InputField from './InputField';
+import LowerToolbar from './LowerToolbar';
 
 export default function Notecard({ noteItem }) {
   const {
@@ -67,7 +68,9 @@ export default function Notecard({ noteItem }) {
           }}
         />
       )}
-      {displayMenuPanel && <MenuPanel id={id} isArchived={noteData.isArchived} />}
+      {displayMenuPanel && (
+        <MenuPanel id={id} isArchived={noteData.isArchived} />
+      )}
       {!noteData.isTrashed && (
         <div className="notecard__buttons-container">
           <IconButton
@@ -116,6 +119,13 @@ export default function Notecard({ noteItem }) {
           handleShowDoneBtn={() => setDoneBtnVisible(true)}
         />
       )}
+      <LowerToolbar
+        id={id}
+        isArchived={noteData.isArchived}
+        isTrashed={noteData.isTrashed}
+        handleChangeColor={handleColorChange}
+        handleOpenMenu={handleMenuPanel}
+      />
       {doneBtnVisible && (
         <IconButton
           className="notecard__done-button"

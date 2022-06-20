@@ -13,12 +13,12 @@
   text-align: center;
   width: 100%;
 }
-.no-notes-found > h2 {
+.no-notes-found-label > h2 {
   margin-top: 1rem;
   font-size: 1.25rem;
   font-weight: 400;
 }
-.no-notes-found > h4 {
+.no-notes-found-label > h4 {
   margin-top: 0.5rem;
   font-size: 0.8rem;
   font-weight: 200;
@@ -27,6 +27,10 @@
 .no-trashed-found,
 .no-reminders-found,
 .no-archived-found {
+  font-family: 'var(--ff-google) ', sans-serif;
+  color: var(--tc-dark-gray);
+  text-align: center;
+  width: 100%;
   margin-top: 4rem;
   margin-inline: auto;
   display: flex;
@@ -35,9 +39,9 @@
   justify-content: center;
 }
 
-.no-reminders-label,
-.no-trashed-label,
-.no-archived-label {
+.no-reminders-label > h2,
+.no-trashed-label > h2,
+.no-archived-label > h2 {
   color: #80868b;
   cursor: default;
   font-family: 'Google Sans', Roboto, Arial, sans-serif;
