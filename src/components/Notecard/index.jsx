@@ -74,7 +74,11 @@ export default function Notecard({ noteItem, isCreating, update }) {
         />
       )}
       {displayMenuPanel && (
-        <MenuPanel id={id} isArchived={noteData.isArchived} updateNotes={update} />
+        <MenuPanel
+          id={id}
+          isArchived={noteData.isArchived}
+          updateNotes={update}
+        />
       )}
       {!noteData.isTrashed && (
         <div className="notecard__buttons-container">
@@ -90,22 +94,30 @@ export default function Notecard({ noteItem, isCreating, update }) {
           />
           <IconButton
             className={`notecard__button pin-button ${
-              isPinned ? 'note-pinned' : ''
+              noteData.isPinned ? 'note-pinned' : ''
             }`}
             label="Fix Note"
-            handleClick={() => handleDataChange({ name: 'isPinned', value: !noteData.isPinned })}
+            handleClick={() => {
+              handleDataChange({ name: 'isPinned', value: !noteData.isPinned });
+              new NoteItemController().updateNote(id, noteData);
+              update(true);
+              setDoneBtnVisible(false);
+            }}
           />
         </div>
       )}
-      <div
-        role="button"
-        className={`notecard-pin-button ${isPinned ? 'note-pinned' : ''}`}
-        aria-label="Fix note"
-        data-tooltip-text="Fix note"
-        tabIndex="0"
-      >
-        <img className="svg-icon-large" alt="" />
-      </div>
+      <IconButton
+        className={`notecard__pin-button--big ${
+          noteData.isPinned ? 'note-pinned' : ''
+        }`}
+        handleClick={() => {
+          handleDataChange({ name: 'isPinned', value: !noteData.isPinned });
+          new NoteItemController().updateNote(id, noteData);
+          update(true);
+          setDoneBtnVisible(false);
+        }}
+        label="Fix Note"
+      />
       <InputField
         text={noteData.noteTitle}
         className="notecard__title"

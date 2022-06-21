@@ -1,6 +1,5 @@
 @import url(../../styles/styles.css);
 
-
 .notecard {
   display: block;
   border-radius: 0.5rem;
@@ -148,17 +147,20 @@
   border: none;
   color: var(--c-black);
 }
-.notecard-pin-button {
-  display: none;
-  position: absolute;
+.notecard__pin-button--big {
+  cursor: pointer;
+  background-image: url(../../assets/svg/notecard/pin-large-icon.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-color: transparent;
   border-radius: 50%;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  height: 0rem;
+  position: absolute;
+  height: 1.5rem;
   aspect-ratio: 1;
-  z-index: 10;
   right: 0.75rem;
   top: 0.325rem;
   opacity: 0;
@@ -194,13 +196,21 @@
   .note-lower-toolbar {
     display: flex;
   }
-  .notecard:hover .note-lower-toolbar {
+  .notecard:hover .note-lower-toolbar{
     opacity: 1;
   }
 
   .notecard__buttons-container {
     display: none;
   }
+  .notecard__pin-button--big {
+    display: flex;
+  }
+  .notecard:hover .notecard__pin-button--big {
+    opacity: 0.6;
+  }
+  .note-pinned{
+    background-image: url(../../assets/svg/notecard/pin-large-pinned-icon.svg);
+    opacity: 0.9;
+  }
 }
-
-
