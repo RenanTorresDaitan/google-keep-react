@@ -4,6 +4,8 @@ import db from '../../models/DBManager';
 import Notecard from '../Notecard';
 import './styles.css';
 import NotesAreaHeader from '../NotesAreaHeader';
+import IconButton from '../IconButton';
+import NoteItemController from '../../controllers/NoteItemController';
 
 function NoteListItems({ sidebarSelected }) {
   const [notesToRender, setNotesToRender] = useState([]);
@@ -47,8 +49,23 @@ function NoteListItems({ sidebarSelected }) {
     );
   }, [notesToRender]);
 
+  const trashHeader = (
+    <div className="trash-header">
+      Notes in Trash are deleted after 7 days.
+      <IconButton
+        className="empty-trash-btn"
+        handleClick={() => {
+          new NoteItemController().deleteTrashedNotes();
+          handleUpdate();
+        }}
+        label="Empty trash"
+        btnText="Empty Trash"
+      />
+    </div>
+  );
   return (
     <section className="notes-area">
+      {sidebarSelected === 'TRASH' && trashHeader}
       {notecards.length === 0 && <NotesAreaHeader sidebar={sidebarSelected} />}
       {notecards}
     </section>
