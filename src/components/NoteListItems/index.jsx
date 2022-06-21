@@ -7,13 +7,9 @@ import NotesAreaHeader from '../NotesAreaHeader';
 import IconButton from '../IconButton';
 import NoteItemController from '../../controllers/NoteItemController';
 
-function NoteListItems({ sidebarSelected }) {
+function NoteListItems({ sidebarSelected, updateNotes }) {
   const [notesToRender, setNotesToRender] = useState([]);
   const [notecards, setNotecards] = useState([]);
-  const [updated, setUpdated] = useState(false);
-  const handleUpdate = () => {
-    setUpdated((prevState) => !prevState);
-  };
   useEffect(() => {
     const noteList = db.noteItemsList.getList();
     if (sidebarSelected === 'NOTES') {
@@ -34,7 +30,7 @@ function NoteListItems({ sidebarSelected }) {
     if (sidebarSelected === 'TRASH') {
       setNotesToRender(noteList.filter((item) => item.isTrashed));
     }
-  }, [sidebarSelected, updated]);
+  }, [sidebarSelected, updateNotes]);
 
   useEffect(() => {
     setNotecards(
@@ -43,11 +39,11 @@ function NoteListItems({ sidebarSelected }) {
           key={item.id}
           noteItem={item}
           isCreating={false}
-          update={handleUpdate}
+          update={updateNotes}
         />
       )),
     );
-  }, [notesToRender]);
+  }, [notesToRender, updateNotes]);
 
   const trashHeader = (
     <div className="trash-header">
@@ -56,7 +52,7 @@ function NoteListItems({ sidebarSelected }) {
         className="empty-trash-btn"
         handleClick={() => {
           new NoteItemController().deleteTrashedNotes();
-          handleUpdate();
+          updateNotes();
         }}
         label="Empty trash"
         btnText="Empty Trash"
@@ -76,4 +72,5 @@ export default NoteListItems;
 
 NoteListItems.propTypes = {
   sidebarSelected: PropTypes.string.isRequired,
+  updateNotes: PropTypes.func.isRequired,
 };

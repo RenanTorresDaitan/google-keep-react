@@ -154,6 +154,7 @@ export default function Notecard({ noteItem, isCreating, update }) {
             handleBlur();
             if (isCreating) {
               db.createNewNoteItem(noteData);
+              update(true);
               return;
             }
             new NoteItemController().updateNote(id, noteData);

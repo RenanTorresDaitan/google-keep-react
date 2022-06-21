@@ -21,6 +21,7 @@
   font-family: var(--ff-google);
   font-size: 14px;
   font-weight: 500;
+  width: 300px;
 }
 .newnote__take-a-note:hover {
   background-color: var(--c-off-white-1);

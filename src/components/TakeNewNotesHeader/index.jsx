@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import IconButton from '../IconButton';
 import NoteItemModel from '../../models/NoteItemModel';
 import db from '../../models/DBManager';
 import './styles.css';
 import Notecard from '../Notecard';
 
-function TakeNewNotesHeader() {
+function TakeNewNotesHeader({ updateNotes }) {
   const [displayHeader, setDisplayHeader] = useState(true);
   const handleDisplayHeader = () => {
     setDisplayHeader((prevState) => !prevState);
@@ -13,12 +14,11 @@ function TakeNewNotesHeader() {
   const handleNewNote = (type) => {
     const newNote = new NoteItemModel();
     if (type === 'list') newNote.isToDoList = true;
-    db.createNewNoteItem(newNote);
     handleDisplayHeader();
   };
 
   return (
-    <div>
+    <div style={{ display: 'block', margin: 'auto' }}>
       {displayHeader ? (
         <div className="newnote__header">
           <IconButton
@@ -34,10 +34,21 @@ function TakeNewNotesHeader() {
           />
         </div>
       ) : (
-        <Notecard isCreating noteItem={new NoteItemModel()} update={() => {}} />
+        <Notecard
+          isCreating
+          noteItem={new NoteItemModel()}
+          update={() => {
+            updateNotes();
+            handleDisplayHeader();
+          }}
+        />
       )}
     </div>
   );
 }
 
 export default TakeNewNotesHeader;
+
+TakeNewNotesHeader.propTypes = {
+  updateNotes: PropTypes.func.isRequired,
+};
