@@ -21,13 +21,14 @@ function SideBarItem({ active, icon, label, click }) {
 
 SideBarItem.defaultProps = {
   active: 'false',
+  click: () => {},
 };
 
 SideBarItem.propTypes = {
   active: PropTypes.string,
   icon: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  click: PropTypes.func.isRequired,
+  click: PropTypes.func,
 };
 
 export default SideBarItem;

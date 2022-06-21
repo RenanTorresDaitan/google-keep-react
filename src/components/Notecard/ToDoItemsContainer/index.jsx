@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import plusIcon from '../../../assets/svg/notecard/plus-icon.svg';
 import ToDoItem from '../../ToDoItem';
+import './styles.css';
 
 function ToDoItemsContainer({ toDoItems }) {
   const checkedToDoItems = toDoItems.map((item) => item.checked);

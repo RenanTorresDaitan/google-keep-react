@@ -1,8 +1,8 @@
-import DBManager from '../models/DBManager';
+import db from '../models/DBManager';
 
 export default class NoteItemController {
   constructor() {
-    this.dbManager = DBManager.getInstance();
+    this.dbManager = db;
     this.sidebarView = 'sidebarView';
     this.SEVEN_DAYS_IN_MILLISECONDS = 604800000;
   }

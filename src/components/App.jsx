@@ -7,12 +7,14 @@ import '../styles/styles.css';
 export default function App() {
   const [sidebarSelected, setSidebarSelected] = useState('NOTES');
   const handleSidebarChange = (sidebar) => setSidebarSelected(sidebar);
-
   return (
     <div className="app">
       <Header />
       <section className="main-section">
-        <SideBar changeSidebar={(label) => handleSidebarChange(label)} />
+        <SideBar
+          active={sidebarSelected}
+          changeSidebar={(label) => handleSidebarChange(label)}
+        />
         <Content sidebarSelected={sidebarSelected} />
       </section>
     </div>

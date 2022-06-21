@@ -9,23 +9,39 @@ import boxIcon from '../../assets/svg/box-icon.svg';
 import trashIcon from '../../assets/svg/trash-icon.svg';
 import './styles.css';
 
-export default function SideBar({ changeSidebar }) {
+export default function SideBar({ active, changeSidebar }) {
   return (
     <div className="sidebar__container">
       <SideBarItem
-        active="true"
+        active={(active === 'NOTES').toString()}
         icon={lampIcon}
         label="Notes"
         click={changeSidebar}
       />
-      <SideBarItem icon={bellIcon} label="Reminders" click={changeSidebar} />
-      <SideBarItem icon={pencilIcon} label="Edit label" click={changeSidebar} />
-      <SideBarItem icon={boxIcon} label="Archive" click={changeSidebar} />
-      <SideBarItem icon={trashIcon} label="Trash" click={changeSidebar} />
+      <SideBarItem
+        active={(active === 'REMINDERS').toString()}
+        icon={bellIcon}
+        label="Reminders"
+        click={changeSidebar}
+      />
+      <SideBarItem active="false" icon={pencilIcon} label="Edit label" />
+      <SideBarItem
+        active={(active === 'ARCHIVE').toString()}
+        icon={boxIcon}
+        label="Archive"
+        click={changeSidebar}
+      />
+      <SideBarItem
+        active={(active === 'TRASH').toString()}
+        icon={trashIcon}
+        label="Trash"
+        click={changeSidebar}
+      />
     </div>
   );
 }
 
 SideBar.propTypes = {
   changeSidebar: PropTypes.func.isRequired,
+  active: PropTypes.string.isRequired,
 };

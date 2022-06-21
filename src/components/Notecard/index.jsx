@@ -9,9 +9,9 @@ import IconButton from '../IconButton';
 import InputField from './InputField';
 import LowerToolbar from './LowerToolbar';
 import ToDoItemsContainer from './ToDoItemsContainer';
-import DBManager from '../../models/DBManager';
+import db from '../../models/DBManager';
 
-export default function Notecard({ noteItem, isCreating }) {
+export default function Notecard({ noteItem, isCreating, update }) {
   const {
     id,
     noteTitle,
@@ -31,27 +31,32 @@ export default function Notecard({ noteItem, isCreating }) {
 
   const [noteData, setNoteData] = useState({
     noteTitle,
-    noteDescription,
     color,
     isArchived,
+    isPinned,
+    isReminder,
+    isToDoList,
     isTrashed,
+    noteDescription,
+    toDoItems,
   });
 
-  const handleColorChange = () => setDisplayColorContainer(true);
-  const handleMenuPanel = () => setDisplayMenuPanel(true);
-  const handlePinNote = () => new NoteItemController().pinNote(id);
+  const showColorPanel = () => setDisplayColorContainer(true);
+  const showMenuPanel = () => setDisplayMenuPanel(true);
   const handleBlur = () => {
     setDisplayColorContainer(false);
     setDisplayMenuPanel(false);
   };
 
-  const handleTitleChange = (event) => {
-    setNoteData({ ...noteData, noteTitle: event.target.value });
+  const handleDataChange = (data) => {
+    const { name, value, type, checked } = data;
+    setNoteData((prevNoteData) => ({
+      ...prevNoteData,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+    handleBlur();
+    setDoneBtnVisible(true);
   };
-  const handleDescriptionChange = (event) => {
-    setNoteData({ ...noteData, noteDescription: event.target.value });
-  };
-
   return (
     <div
       className="notecard"
@@ -63,32 +68,32 @@ export default function Notecard({ noteItem, isCreating }) {
         <ColorBallContainer
           id={id}
           changeToColor={(c) => {
-            setNoteData({ ...noteData, color: c });
-            handleBlur();
+            handleDataChange({ name: 'color', value: c });
+            setDoneBtnVisible(false);
           }}
         />
       )}
       {displayMenuPanel && (
-        <MenuPanel id={id} isArchived={noteData.isArchived} />
+        <MenuPanel id={id} isArchived={noteData.isArchived} updateNotes={update} />
       )}
       {!noteData.isTrashed && (
         <div className="notecard__buttons-container">
           <IconButton
             className="notecard__button color-button"
             label="Change Note Color"
-            handleClick={handleColorChange}
+            handleClick={showColorPanel}
           />
           <IconButton
             className="notecard__button menu-button"
             label="Menu"
-            handleClick={handleMenuPanel}
+            handleClick={showMenuPanel}
           />
           <IconButton
             className={`notecard__button pin-button ${
               isPinned ? 'note-pinned' : ''
             }`}
             label="Fix Note"
-            handleClick={handlePinNote}
+            handleClick={() => handleDataChange({ name: 'isPinned', value: !noteData.isPinned })}
           />
         </div>
       )}
@@ -105,7 +110,7 @@ export default function Notecard({ noteItem, isCreating }) {
         text={noteData.noteTitle}
         className="notecard__title"
         placeHolder="Title"
-        handleChange={(e) => handleTitleChange(e)}
+        handleChange={(e) => handleDataChange({ name: 'noteTitle', value: e.target.value })}
         handleShowDoneBtn={() => setDoneBtnVisible(true)}
       />
       {isToDoList ? (
@@ -115,7 +120,7 @@ export default function Notecard({ noteItem, isCreating }) {
           text={noteData.noteDescription}
           className="notecard__desc"
           placeHolder="Take a note..."
-          handleChange={(e) => handleDescriptionChange(e)}
+          handleChange={(e) => handleDataChange({ name: 'noteDescription', value: e.target.value })}
           handleShowDoneBtn={() => setDoneBtnVisible(true)}
         />
       )}
@@ -124,8 +129,9 @@ export default function Notecard({ noteItem, isCreating }) {
           id={id}
           isArchived={noteData.isArchived}
           isTrashed={noteData.isTrashed}
-          handleChangeColor={handleColorChange}
-          handleOpenMenu={handleMenuPanel}
+          handleChangeColor={showColorPanel}
+          handleOpenMenu={showMenuPanel}
+          updateNotes={update}
         />
       )}
       {doneBtnVisible && (
@@ -135,11 +141,11 @@ export default function Notecard({ noteItem, isCreating }) {
             setDoneBtnVisible(false);
             handleBlur();
             if (isCreating) {
-              DBManager.createNewNoteItem(noteData);
+              db.createNewNoteItem(noteData);
               return;
             }
             new NoteItemController().updateNote(id, noteData);
-            DBManager.updateNotesOnLocalStorage();
+            update(true);
           }}
           label="Done"
           btnText="Done"
@@ -151,4 +157,5 @@ export default function Notecard({ noteItem, isCreating }) {
 Notecard.propTypes = {
   noteItem: PropTypes.instanceOf(NoteItemModel).isRequired,
   isCreating: PropTypes.bool.isRequired,
+  update: PropTypes.func.isRequired,
 };
