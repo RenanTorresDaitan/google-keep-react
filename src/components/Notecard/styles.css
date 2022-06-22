@@ -191,7 +191,7 @@
 
 @media screen and (min-width: 900px) {
   .notecard {
-    padding-bottom: 0.15rem;
+    padding-bottom: 1rem;
   }
   .note-lower-toolbar {
     display: flex;

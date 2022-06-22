@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './styles.css';
-import NoteItemController from '../../../controllers/NoteItemController';
 
-export default function ColorBallContainer({ id, changeToColor }) {
+export default function ColorBallContainer({ changeToColor }) {
   const colors = [
     'red',
     'orange',
@@ -19,11 +18,6 @@ export default function ColorBallContainer({ id, changeToColor }) {
     'default',
   ];
 
-  const handleColorChange = (color) => {
-    new NoteItemController().changeNoteColor(id, color);
-    changeToColor(color);
-  };
-
   const createColorBall = (color) => (
     <span
       aria-label={color}
@@ -32,8 +26,8 @@ export default function ColorBallContainer({ id, changeToColor }) {
       tabIndex={0}
       key={color}
       data-color={color}
-      onClick={() => handleColorChange(color)}
-      onKeyDown={(e) => ((e.code === 'Enter' || e.code === 'Space') ? handleColorChange(color) : null)}
+      onClick={() => changeToColor(color)}
+      onKeyDown={(e) => ((e.code === 'Enter' || e.code === 'Space') ? changeToColor(color) : null)}
     />
   );
 
@@ -45,6 +39,5 @@ export default function ColorBallContainer({ id, changeToColor }) {
 }
 
 ColorBallContainer.propTypes = {
-  id: PropTypes.number.isRequired,
   changeToColor: PropTypes.func.isRequired,
 };

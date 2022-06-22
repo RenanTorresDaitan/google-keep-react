@@ -36,13 +36,13 @@
 .to-do-item-checkbox:hover {
   opacity: 0.8;
 }
-.to-do-item-checkbox[checked="false"] {
+.to-do-item-checkbox[check='false'] {
   background-image: url(../../../assets/svg/checkbox-unchecked.svg);
 }
-.to-do-item-checkbox[checked="true"] {
+.to-do-item-checkbox[check='true'] {
   background-image: url(../../../assets/svg/checkbox-checked.svg);
 }
-.to-do-item-checkbox[checked="true"] ~ .to-do-item-label {
+.to-do-item-checkbox[check='true'] ~ .to-do-item-label {
   text-decoration: line-through;
   user-select: none;
 }
@@ -86,7 +86,7 @@
   opacity: 0;
   border-radius: 50%;
   aspect-ratio: 1;
-  transition: opacity, background-color, 200ms; 
+  transition: opacity, background-color, 200ms;
   height: 1rem;
   width: 1rem;
   margin-right: 0.5rem;
@@ -111,4 +111,8 @@
   overflow: hidden;
   overflow-wrap: break-word;
   white-space: normal;
+}
+
+.rotate-90-cw {
+  transform: rotate(90deg);
 }

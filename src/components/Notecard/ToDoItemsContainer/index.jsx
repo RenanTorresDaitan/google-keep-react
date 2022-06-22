@@ -1,19 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import plusIcon from '../../../assets/svg/notecard/plus-icon.svg';
-import ToDoItem from '../../ToDoItem';
+import ToDoItem from './ToDoItem';
 import './styles.css';
 
-function ToDoItemsContainer({ toDoItems }) {
-  const checkedToDoItems = toDoItems.map((item) => item.checked);
-  const uncheckedToDoItems = toDoItems.map((item) => !item.checked);
+function ToDoItemsContainer({ toDoItems, updateNotes }) {
+  const [noteToDoItems, setNoteToDoItems] = useState(toDoItems);
+  const [showCompletedItems, setShowCompletedItems] = useState(true);
+  const checkedToDoItems = useRef(noteToDoItems.filter((item) => item.checked));
+  const uncheckedToDoItems = useRef(
+    noteToDoItems.filter((item) => !item.checked),
+  );
+  useEffect(() => {
+    checkedToDoItems.current = noteToDoItems.filter((item) => item.checked);
+    uncheckedToDoItems.current = noteToDoItems.filter((item) => !item.checked);
+  }, [toDoItems, noteToDoItems]);
 
+  const handleUpdate = (updatedItem) => {
+    console.log(updatedItem);
+    setNoteToDoItems((prevState) => {
+      const newState = prevState.map((item) => {
+        if (item.id === updatedItem.id) return updatedItem;
+        return item;
+      });
+      return newState;
+    });
+  };
   return (
     <div className="note-to-do-items">
-      {uncheckedToDoItems.map(({ id, title, checked }) => (
-        <ToDoItem id={id} checked={checked} title={title} />
-      ))}
-      {!toDoItems.length && (
+      {uncheckedToDoItems.current.length > 0
+        && uncheckedToDoItems.current.map(({ id, title, checked }) => (
+          <ToDoItem
+            key={id}
+            id={id}
+            checked={checked}
+            title={title}
+            update={(item) => {
+              handleUpdate(item);
+              updateNotes(true);
+            }}
+          />
+        ))}
+      {!noteToDoItems.length && (
         <div className="to-do-item-placeholder">
           <img className="svg-icon-large" src={plusIcon} alt="" />
           <textarea
@@ -23,22 +51,37 @@ function ToDoItemsContainer({ toDoItems }) {
           />
         </div>
       )}
-      {checkedToDoItems > 0 && (
+      {checkedToDoItems.current.length > 0 && (
         <div className="completed-items-area">
           <div className="completed-items-separator" />
-          <div className="completed-items-div">
-            <div className="completed-items-btn rotate-90-cw" />
+          <div
+            role="button"
+            tabIndex={0}
+            className="completed-items-div"
+            onClick={() => setShowCompletedItems((prevState) => !prevState)}
+            onKeyDown={() => {}}
+          >
+            <div className={`completed-items-btn ${showCompletedItems ? 'rotate-90-cw' : ''}`} />
             <span className="completed-items-label">
-              {checkedToDoItems.length > 1
-                ? `${checkedToDoItems.length} Completed items`
+              {checkedToDoItems.current.length > 1
+                ? `${checkedToDoItems.current.length} Completed items`
                 : '1 Completed item'}
             </span>
           </div>
-          <div className="completed-items-list">
-            {checkedToDoItems.map(({ id, title, checked }) => (
-              <ToDoItem id={id} checked={checked} title={title} />
-            ))}
-          </div>
+          {showCompletedItems && (
+            <div className="completed-items-list">
+              {checkedToDoItems.current.length > 0
+                && checkedToDoItems.current.map(({ id, title, checked }) => (
+                  <ToDoItem
+                    key={id}
+                    id={id}
+                    checked={checked}
+                    title={title}
+                    update={(item) => handleUpdate(item)}
+                  />
+                ))}
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -53,6 +96,7 @@ ToDoItemsContainer.defaultProps = {
 
 ToDoItemsContainer.propTypes = {
   toDoItems: PropTypes.arrayOf(ToDoItem),
+  updateNotes: PropTypes.func.isRequired,
 };
 
 /*

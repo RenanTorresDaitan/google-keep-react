@@ -2,20 +2,25 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '../IconButton';
 import NoteItemModel from '../../models/NoteItemModel';
-import db from '../../models/DBManager';
 import './styles.css';
 import Notecard from '../Notecard';
 
 function TakeNewNotesHeader({ updateNotes }) {
   const [displayHeader, setDisplayHeader] = useState(true);
+  const [typeOfNote, setTypeOfNote] = useState('note');
   const handleDisplayHeader = () => {
     setDisplayHeader((prevState) => !prevState);
   };
   const handleNewNote = (type) => {
-    const newNote = new NoteItemModel();
-    if (type === 'list') newNote.isToDoList = true;
+    setTypeOfNote(type);
     handleDisplayHeader();
   };
+
+  const newNote = new NoteItemModel();
+  typeOfNote === 'list'
+    ? (newNote.isToDoList = true)
+    : (newNote.isToDoList = false);
+  newNote.toDoItems = [{ id: 10, title: 'teste', checked: false }];
 
   return (
     <div style={{ display: 'block', margin: 'auto' }}>
@@ -36,7 +41,7 @@ function TakeNewNotesHeader({ updateNotes }) {
       ) : (
         <Notecard
           isCreating
-          noteItem={new NoteItemModel()}
+          noteItem={newNote}
           update={() => {
             updateNotes();
             handleDisplayHeader();

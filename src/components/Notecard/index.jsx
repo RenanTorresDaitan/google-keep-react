@@ -66,9 +66,12 @@ export default function Notecard({ noteItem, isCreating, update }) {
     >
       {displayColorContainer && (
         <ColorBallContainer
-          id={id}
           changeToColor={(c) => {
             handleDataChange({ name: 'color', value: c });
+            if (!isCreating) {
+              new NoteItemController().changeNoteColor(id, c);
+              update(true);
+            }
             setDoneBtnVisible(false);
           }}
         />
@@ -124,9 +127,10 @@ export default function Notecard({ noteItem, isCreating, update }) {
         placeHolder="Title"
         handleChange={(e) => handleDataChange({ name: 'noteTitle', value: e.target.value })}
         handleShowDoneBtn={() => setDoneBtnVisible(true)}
+        visible={!isCreating}
       />
       {isToDoList ? (
-        <ToDoItemsContainer toDoitems={noteData.toDoItems} />
+        <ToDoItemsContainer toDoItems={toDoItems} updateNotes={update} />
       ) : (
         <InputField
           text={noteData.noteDescription}
@@ -134,6 +138,7 @@ export default function Notecard({ noteItem, isCreating, update }) {
           placeHolder="Take a note..."
           handleChange={(e) => handleDataChange({ name: 'noteDescription', value: e.target.value })}
           handleShowDoneBtn={() => setDoneBtnVisible(true)}
+          visible={!isCreating}
         />
       )}
       {!isCreating && (
@@ -146,7 +151,7 @@ export default function Notecard({ noteItem, isCreating, update }) {
           updateNotes={update}
         />
       )}
-      {doneBtnVisible && (
+      {(doneBtnVisible || isCreating) && (
         <IconButton
           className="notecard__done-button"
           handleClick={() => {
