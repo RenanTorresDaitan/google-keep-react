@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import NoteListItems from '../NoteListItems';
 import TakeNewNotesHeader from '../TakeNewNotesHeader';
 import './styles.css';
+import NoteItemModel from '../../models/NoteItemModel';
 
-export default function Content({ sidebarSelected }) {
+export default function Content({ notesToRender }) {
   const [updated, setUpdated] = useState(false);
   const handleUpdate = () => {
     setUpdated((prevState) => !prevState);
@@ -12,11 +13,11 @@ export default function Content({ sidebarSelected }) {
   return (
     <div className="content">
       <TakeNewNotesHeader updateNotes={handleUpdate} />
-      <NoteListItems sidebarSelected={sidebarSelected} updateNotes={handleUpdate} />
+      <NoteListItems notecards={notesToRender} />
     </div>
   );
 }
 
 Content.propTypes = {
-  sidebarSelected: PropTypes.string.isRequired,
+  notesToRender: PropTypes.arrayOf(PropTypes.instanceOf(NoteItemModel)).isRequired,
 };

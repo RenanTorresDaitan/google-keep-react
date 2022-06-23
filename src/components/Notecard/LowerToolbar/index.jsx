@@ -11,7 +11,6 @@ function LowerToolbar({
   isTrashed,
   handleChangeColor,
   handleOpenMenu,
-  updateNotes,
 }) {
   return (
     <div className="note-lower-toolbar">
@@ -21,7 +20,6 @@ function LowerToolbar({
           label="Add Reminder"
           handleClick={() => {
             new NoteItemController().addReminder(id);
-            updateNotes(true);
           }}
         />
       )}
@@ -40,7 +38,6 @@ function LowerToolbar({
           label={`${isArchived ? 'Unarchive note' : 'Archive note'}`}
           handleClick={() => {
             new NoteItemController().archiveNote(id);
-            updateNotes(true);
           }}
         />
       )}
@@ -57,7 +54,6 @@ function LowerToolbar({
           label="Restore Note"
           handleClick={() => {
             new NoteItemController().restoreNote(id);
-            updateNotes(true);
           }}
         />
       )}
@@ -67,7 +63,6 @@ function LowerToolbar({
           label="Delete Note"
           handleClick={() => {
             new NoteItemController().deleteNote(id);
-            updateNotes(true);
           }}
         />
       )}
@@ -83,5 +78,4 @@ LowerToolbar.propTypes = {
   isTrashed: PropTypes.bool.isRequired,
   handleChangeColor: PropTypes.func.isRequired,
   handleOpenMenu: PropTypes.func.isRequired,
-  updateNotes: PropTypes.func.isRequired,
 };

@@ -11,7 +11,7 @@ import LowerToolbar from './LowerToolbar';
 import ToDoItemsContainer from './ToDoItemsContainer';
 import db from '../../models/DBManager';
 
-export default function Notecard({ noteItem, isCreating, update }) {
+export default function Notecard({ noteItem, isCreating }) {
   const {
     id,
     noteTitle,
@@ -71,18 +71,13 @@ export default function Notecard({ noteItem, isCreating, update }) {
             handleDataChange({ name: 'color', value: c });
             if (!isCreating) {
               new NoteItemController().changeNoteColor(id, c);
-              update(true);
             }
             setDoneBtnVisible(false);
           }}
         />
       )}
       {displayMenuPanel && (
-        <MenuPanel
-          id={id}
-          isArchived={noteData.isArchived}
-          updateNotes={update}
-        />
+        <MenuPanel id={id} isArchived={noteData.isArchived} />
       )}
       {!noteData.isTrashed && (
         <div className="notecard__buttons-container">
@@ -104,7 +99,7 @@ export default function Notecard({ noteItem, isCreating, update }) {
             handleClick={() => {
               handleDataChange({ name: 'isPinned', value: !noteData.isPinned });
               new NoteItemController().updateNote(id, noteData);
-              update(true);
+
               setDoneBtnVisible(false);
             }}
           />
@@ -117,7 +112,7 @@ export default function Notecard({ noteItem, isCreating, update }) {
         handleClick={() => {
           handleDataChange({ name: 'isPinned', value: !noteData.isPinned });
           new NoteItemController().updateNote(id, noteData);
-          update(true);
+
           setDoneBtnVisible(false);
         }}
         label="Fix Note"
@@ -138,7 +133,6 @@ export default function Notecard({ noteItem, isCreating, update }) {
             setDoneBtnVisible(false);
             if (!isCreating) {
               new NoteItemController().updateNote(id, noteData);
-              update(true);
             }
           }}
         />
@@ -159,7 +153,6 @@ export default function Notecard({ noteItem, isCreating, update }) {
           isTrashed={noteData.isTrashed}
           handleChangeColor={showColorPanel}
           handleOpenMenu={showMenuPanel}
-          updateNotes={update}
         />
       )}
       {(doneBtnVisible || isCreating) && (
@@ -170,11 +163,10 @@ export default function Notecard({ noteItem, isCreating, update }) {
             handleBlur();
             if (isCreating) {
               db.createNewNoteItem(noteData);
-              update(true);
+
               return;
             }
             new NoteItemController().updateNote(id, noteData);
-            update(true);
           }}
           label="Done"
           btnText="Done"
@@ -186,5 +178,4 @@ export default function Notecard({ noteItem, isCreating, update }) {
 Notecard.propTypes = {
   noteItem: PropTypes.instanceOf(NoteItemModel).isRequired,
   isCreating: PropTypes.bool.isRequired,
-  update: PropTypes.func.isRequired,
 };
