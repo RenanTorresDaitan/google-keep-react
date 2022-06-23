@@ -20,7 +20,6 @@ function TakeNewNotesHeader({ updateNotes }) {
   typeOfNote === 'list'
     ? (newNote.isToDoList = true)
     : (newNote.isToDoList = false);
-  newNote.toDoItems = [{ id: 10, title: 'teste', checked: false }];
 
   return (
     <div style={{ display: 'block', margin: 'auto' }}>

@@ -1,57 +1,78 @@
-import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
+/* eslint-disable comma-dangle */
+import React, { useState, useEffect } from 'react';
+import PropTypes, { number, string } from 'prop-types';
 import plusIcon from '../../../assets/svg/notecard/plus-icon.svg';
 import ToDoItem from './ToDoItem';
 import './styles.css';
 
-function ToDoItemsContainer({ toDoItems, updateNotes }) {
-  const [noteToDoItems, setNoteToDoItems] = useState(toDoItems);
-  const [showCompletedItems, setShowCompletedItems] = useState(true);
-  const checkedToDoItems = useRef(noteToDoItems.filter((item) => item.checked));
-  const uncheckedToDoItems = useRef(
-    noteToDoItems.filter((item) => !item.checked),
-  );
-  useEffect(() => {
-    checkedToDoItems.current = noteToDoItems.filter((item) => item.checked);
-    uncheckedToDoItems.current = noteToDoItems.filter((item) => !item.checked);
-  }, [toDoItems, noteToDoItems]);
+function ToDoItemsContainer({ toDoItems, updateToDoItems }) {
+  const [showCompletedItems, setShowCompletedItems] = useState(false);
+  const [toDoItemsData, setToDoItemsData] = useState(toDoItems);
 
-  const handleUpdate = (updatedItem) => {
-    console.log(updatedItem);
-    setNoteToDoItems((prevState) => {
-      const newState = prevState.map((item) => {
-        if (item.id === updatedItem.id) return updatedItem;
-        return item;
-      });
-      return newState;
+  const checkedItems = toDoItemsData.filter((item) => item.checked === 'true');
+  const checkedItemsEl = checkedItems.map((item) => {
+    const { id, title, checked } = item;
+    return (
+      <ToDoItem
+        key={id}
+        id={id}
+        checked={checked}
+        title={title}
+        updateToDoItem={(td) => handleUpdateToDo(td)}
+      />
+    );
+  });
+  const uncheckedItems = toDoItemsData.filter(
+    (item) => item.checked === 'false'
+  );
+  const uncheckedItemsEl = uncheckedItems.map((item, index) => {
+    const { id, title, checked } = item;
+    return (
+      <ToDoItem
+        key={id}
+        id={id}
+        checked={checked}
+        title={title}
+        updateToDoItem={(td) => handleUpdateToDo(td)}
+      />
+    );
+  });
+  const handleUpdateToDo = (newItem) => {
+    const newToDos = toDoItemsData.map((oldItem) => {
+      if (oldItem.id === newItem.id) return newItem;
+      return oldItem;
     });
+    setToDoItemsData(newToDos);
   };
+
+  const createNewToDoItem = (event) => {
+    if (event.keyCode > 60 && event.keyCode < 95) {
+      setToDoItemsData((prevTodos) => [
+        ...prevTodos,
+        { id: toDoItemsData.length, title: event.key, checked: 'false' },
+      ]);
+    }
+  };
+
+  useEffect(() => {
+    updateToDoItems(toDoItemsData);
+  }, [toDoItemsData]);
+
   return (
     <div className="note-to-do-items">
-      {uncheckedToDoItems.current.length > 0
-        && uncheckedToDoItems.current.map(({ id, title, checked }) => (
-          <ToDoItem
-            key={id}
-            id={id}
-            checked={checked}
-            title={title}
-            update={(item) => {
-              handleUpdate(item);
-              updateNotes(true);
-            }}
-          />
-        ))}
-      {!noteToDoItems.length && (
+      {uncheckedItemsEl}
+      {!uncheckedItems.length && (
         <div className="to-do-item-placeholder">
           <img className="svg-icon-large" src={plusIcon} alt="" />
           <textarea
             className="to-do-item-textarea"
             placeholder="List item"
             tabIndex={0}
+            onKeyDown={createNewToDoItem}
           />
         </div>
       )}
-      {checkedToDoItems.current.length > 0 && (
+      {checkedItems.length > 0 && (
         <div className="completed-items-area">
           <div className="completed-items-separator" />
           <div
@@ -61,26 +82,19 @@ function ToDoItemsContainer({ toDoItems, updateNotes }) {
             onClick={() => setShowCompletedItems((prevState) => !prevState)}
             onKeyDown={() => {}}
           >
-            <div className={`completed-items-btn ${showCompletedItems ? 'rotate-90-cw' : ''}`} />
+            <div
+              className={`completed-items-btn ${
+                showCompletedItems ? 'rotate-90-cw' : ''
+              }`}
+            />
             <span className="completed-items-label">
-              {checkedToDoItems.current.length > 1
-                ? `${checkedToDoItems.current.length} Completed items`
+              {checkedItems.length > 1
+                ? `${checkedItems.length} Completed items`
                 : '1 Completed item'}
             </span>
           </div>
           {showCompletedItems && (
-            <div className="completed-items-list">
-              {checkedToDoItems.current.length > 0
-                && checkedToDoItems.current.map(({ id, title, checked }) => (
-                  <ToDoItem
-                    key={id}
-                    id={id}
-                    checked={checked}
-                    title={title}
-                    update={(item) => handleUpdate(item)}
-                  />
-                ))}
-            </div>
+            <div className="completed-items-list">{checkedItemsEl}</div>
           )}
         </div>
       )}
@@ -95,51 +109,12 @@ ToDoItemsContainer.defaultProps = {
 };
 
 ToDoItemsContainer.propTypes = {
-  toDoItems: PropTypes.arrayOf(ToDoItem),
-  updateNotes: PropTypes.func.isRequired,
+  toDoItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: number,
+      title: string,
+      checked: string,
+    })
+  ),
+  updateToDoItems: PropTypes.func.isRequired,
 };
-
-/*
-        `;
-    this.uncheckedItems.forEach((item) => element.insertBefore(
-      ToDoItemContainer.createToDoItem(this.noteItem.id, item, this.noteItemView),
-      element.querySelector('.to-do-item-placeholder'),
-    ));
-    this.checkedItems.forEach((item) => element
-      .querySelector('.completed-items-list')
-      .append(ToDoItemContainer.createToDoItem(this.noteItem.id, item, this.noteItemView)));
-    element
-      .querySelector('.to-do-item-placeholder .to-do-item-textarea')
-      .addEventListener('keydown', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        this.noteItemView.createNewToDoItem(this.noteItem.id, event);
-      });
-    element
-      .querySelector('.to-do-item-placeholder .to-do-item-textarea')
-      .addEventListener('click', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-      });
-    element
-      .querySelector('.completed-items-div')
-      .addEventListener('click', (event) => {
-        event.stopPropagation();
-        this.noteItemView.toggleCompletedItemsList();
-      });
-    return element;
-  }
-
-  update() {
-    this.uncheckedItems = [];
-    this.checkedItems = [];
-    this.toDoItems.forEach((item) => {
-      if (!item.isChecked) this.uncheckedItems.push(item);
-      else this.checkedItems.push(item);
-    });
-    this._element = this._template();
-  }
-
-  }
-}
-*/

@@ -49,14 +49,15 @@ export default function Notecard({ noteItem, isCreating, update }) {
   };
 
   const handleDataChange = (data) => {
-    const { name, value, type, checked } = data;
+    const { name, value } = data;
     setNoteData((prevNoteData) => ({
       ...prevNoteData,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: value,
     }));
     handleBlur();
     setDoneBtnVisible(true);
   };
+
   return (
     <div
       className="notecard"
@@ -130,7 +131,17 @@ export default function Notecard({ noteItem, isCreating, update }) {
         visible={!isCreating}
       />
       {isToDoList ? (
-        <ToDoItemsContainer toDoItems={toDoItems} updateNotes={update} />
+        <ToDoItemsContainer
+          toDoItems={noteData.toDoItems}
+          updateToDoItems={(items) => {
+            handleDataChange({ name: 'toDoItems', value: items });
+            setDoneBtnVisible(false);
+            if (!isCreating) {
+              new NoteItemController().updateNote(id, noteData);
+              update(true);
+            }
+          }}
+        />
       ) : (
         <InputField
           text={noteData.noteDescription}

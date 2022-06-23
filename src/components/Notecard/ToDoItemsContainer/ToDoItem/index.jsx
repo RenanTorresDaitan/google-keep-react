@@ -1,39 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import '../styles.css';
 
-function ToDoItem({ id, title, checked, update }) {
-  const [toDoItemState, setToDoItemState] = useState({ id, title, checked });
-  function handleChange(newState) {
-    const { name, value } = newState;
-    setToDoItemState((prevState) => ({
-      ...prevState,
+function ToDoItem({ id, title, checked, updateToDoItem }) {
+  const [toDoData, setToDoData] = useState({
+    id,
+    title,
+    checked,
+  });
+  const [showText, setShowText] = useState(true);
+  const handleToDoData = (data) => {
+    const { name, value } = data;
+    setToDoData((prevNoteData) => ({
+      ...prevNoteData,
       [name]: value,
     }));
-  }
+  };
+  useEffect(() => {
+    updateToDoItem(toDoData);
+  }, [toDoData]);
 
   return (
-    <div className="to-do-item" data-note-id={toDoItemState.id}>
+    <div className="to-do-item" data-note-id={toDoData.id}>
       <div
         aria-labelledby="label"
         role="button"
         className="to-do-item-checkbox"
-        check={`${toDoItemState.checked}`}
+        check={toDoData.checked}
         tabIndex={0}
         onClick={() => {
-          handleChange({ name: 'checked', value: !toDoItemState.checked });
-          update(toDoItemState);
+          handleToDoData({
+            name: 'checked',
+            value: toDoData.checked === 'true' ? 'false' : 'true',
+          });
         }}
         onKeyDown={(e) => {}}
+        name="checkbox"
       />
-      <label htmlFor="to-do-item-checbox" className="to-do-item-label">
-        {toDoItemState.title}
-      </label>
-      <textarea
-        className="to-do-item-textarea"
-        placeholder="List item"
-        // value={title}
-      />
+      {showText && (
+        <span
+          role="button"
+          htmlFor="checkbox"
+          className="to-do-item-label"
+          tabIndex={0}
+          onClick={() => setShowText(false)}
+          onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space' ? setShowText(true) : null)}
+        >
+          {toDoData.title}
+        </span>
+      )}
+      {!showText && (
+        <textarea
+          className="to-do-item-textarea"
+          placeholder="List item"
+          value={toDoData.title}
+          onChange={(event) => {
+            handleToDoData({ name: 'title', value: event.target.value });
+            if (event.nativeEvent.inputType === 'insertLineBreak') {
+              setShowText(true);
+            }
+          }}
+        />
+      )}
       <div className="to-do-item-delete" />
     </div>
   );
@@ -44,26 +72,6 @@ export default ToDoItem;
 ToDoItem.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  checked: PropTypes.bool.isRequired,
-  update: PropTypes.func.isRequired,
+  checked: PropTypes.string.isRequired,
+  updateToDoItem: PropTypes.func.isRequired,
 };
-/*  element
-    .querySelector('.to-do-item-checkbox')
-    .addEventListener('click', (event) => {
-      event.stopPropagation();
-      view.handleChange(noteId, toDoItem.id);
-    });
-  element
-    .querySelector('.to-do-item-label')
-    .addEventListener('click', (event) => {
-      event.stopPropagation();
-      view.changeToDoItemLabel(noteId, toDoItem.id);
-    });
-  element
-    .querySelector('.to-do-item-delete')
-    .addEventListener('click', (event) => {
-      event.stopPropagation();
-      view.deleteToDoItem(noteId, toDoItem.id);
-    });
-  return element;
-*/
