@@ -1,11 +1,11 @@
 /* eslint-disable comma-dangle */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes, { number, string } from 'prop-types';
-import plusIcon from '../../../assets/svg/notecard/plus-icon.svg';
+import plusIcon from '../../assets/svg/notecard/plus-icon.svg';
 import ToDoItem from './ToDoItem';
 import './styles.css';
 
-function ToDoItemsContainer({ toDoItems, updateToDoItems }) {
+function ToDoItemsContainer({ toDoItems }) {
   const [showCompletedItems, setShowCompletedItems] = useState(false);
   const [toDoItemsData, setToDoItemsData] = useState(toDoItems);
 
@@ -53,11 +53,6 @@ function ToDoItemsContainer({ toDoItems, updateToDoItems }) {
       ]);
     }
   };
-
-  useEffect(() => {
-    updateToDoItems(toDoItemsData);
-  }, [toDoItemsData]);
-
   return (
     <div className="note-to-do-items">
       {uncheckedItemsEl}
@@ -116,5 +111,4 @@ ToDoItemsContainer.propTypes = {
       checked: string,
     })
   ),
-  updateToDoItems: PropTypes.func.isRequired,
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import '../styles.css';
 
-function ToDoItem({ id, title, checked, updateToDoItem }) {
+function ToDoItem({ id, title, checked }) {
   const [toDoData, setToDoData] = useState({
     id,
     title,
@@ -16,9 +16,6 @@ function ToDoItem({ id, title, checked, updateToDoItem }) {
       [name]: value,
     }));
   };
-  useEffect(() => {
-    updateToDoItem(toDoData);
-  }, [toDoData]);
 
   return (
     <div className="to-do-item" data-note-id={toDoData.id}>
@@ -73,5 +70,4 @@ ToDoItem.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   checked: PropTypes.string.isRequired,
-  updateToDoItem: PropTypes.func.isRequired,
 };

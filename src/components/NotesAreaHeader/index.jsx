@@ -1,11 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import NoteItemController from '../../controllers/NoteItemController';
+import Button from '../Button';
 
-function NotesAreaHeader({ sidebar }) {
+function NotesAreaHeader({ sidebar, notesLength }) {
   let imageClass = '';
   let notesClass = '';
   let title = '';
   let subtitle = '';
+
+  const trashHeader = (
+    <div className="trash-header">
+      Notes in Trash are deleted after 7 days.
+      <Button
+        className="empty-trash-btn"
+        handleClick={() => {
+          new NoteItemController().deleteTrashedNotes();
+        }}
+        label="Empty trash"
+        btnText="Empty Trash"
+      />
+    </div>
+  );
 
   switch (sidebar) {
     case 'NOTES':
@@ -37,11 +53,16 @@ function NotesAreaHeader({ sidebar }) {
   }
 
   return (
-    <div className={notesClass}>
-      <div className={imageClass} />
-      <h2>{title}</h2>
-      <h4>{subtitle}</h4>
-    </div>
+    <>
+      {sidebar === 'TRASH' && trashHeader}
+      {notesLength === 0 && (
+        <div className={notesClass}>
+          <div className={imageClass} />
+          <h2>{title}</h2>
+          <h4>{subtitle}</h4>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -49,4 +70,5 @@ export default NotesAreaHeader;
 
 NotesAreaHeader.propTypes = {
   sidebar: PropTypes.string.isRequired,
+  notesLength: PropTypes.number.isRequired,
 };

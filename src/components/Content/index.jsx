@@ -1,23 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import NoteListItems from '../NoteListItems';
+import NoteItemsList from '../NoteItemsList';
 import TakeNewNotesHeader from '../TakeNewNotesHeader';
 import './styles.css';
 import NoteItemModel from '../../models/NoteItemModel';
+import NotesAreaHeader from '../NotesAreaHeader';
 
-export default function Content({ notesToRender }) {
-  const [updated, setUpdated] = useState(false);
-  const handleUpdate = () => {
-    setUpdated((prevState) => !prevState);
-  };
+export default function Content({ sidebarSelected, notesToRender }) {
   return (
     <div className="content">
-      <TakeNewNotesHeader updateNotes={handleUpdate} />
-      <NoteListItems notecards={notesToRender} />
+      <TakeNewNotesHeader />
+      <NotesAreaHeader
+        sidebar={sidebarSelected}
+        notesLength={notesToRender.length}
+      />
+      <NoteItemsList notesToRender={notesToRender} />
     </div>
   );
 }
 
 Content.propTypes = {
-  notesToRender: PropTypes.arrayOf(PropTypes.instanceOf(NoteItemModel)).isRequired,
+  notesToRender: PropTypes.arrayOf(PropTypes.instanceOf(NoteItemModel))
+    .isRequired,
+  sidebarSelected: PropTypes.string.isRequired,
 };

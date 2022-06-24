@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function InputField({ text, placeHolder, className, handleChange, handleShowDoneBtn, visible }) {
+function InputField({ text, placeHolder, className, handleChange, visible }) {
   const [showText, setShowText] = useState(visible);
   const textarea = useRef();
 
@@ -24,7 +24,7 @@ function InputField({ text, placeHolder, className, handleChange, handleShowDone
       role="textbox"
       className={className}
       onClick={handleShowText}
-      onKeyDown={handleShowDoneBtn}
+      onKeyDown={() => {}}
       tabIndex={0}
     >
       {showText ? (
@@ -56,6 +56,5 @@ InputField.propTypes = {
   className: PropTypes.string.isRequired,
   placeHolder: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  handleShowDoneBtn: PropTypes.func.isRequired,
   visible: PropTypes.bool,
 };

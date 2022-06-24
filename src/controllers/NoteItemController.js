@@ -3,7 +3,6 @@ import db from '../models/DBManager';
 export default class NoteItemController {
   constructor() {
     this.dbManager = db;
-    this.sidebarView = 'sidebarView';
     this.SEVEN_DAYS_IN_MILLISECONDS = 604800000;
   }
 
@@ -73,7 +72,6 @@ export default class NoteItemController {
 
   updateNotes() {
     this.dbManager.updateNotesOnLocalStorage();
-    // this.sidebarView.changeToActiveSidebar();
   }
 
   // Buttons methods

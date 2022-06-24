@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import NoteItemController from '../../../controllers/NoteItemController';
+import NoteItemController from '../../controllers/NoteItemController';
 
-export default function MenuPanel({ id, isArchived, updateNotes }) {
+export default function MenuPanel({ id, isArchived }) {
   return (
     <div className="notecard__menu-panel">
       <div
@@ -12,7 +12,6 @@ export default function MenuPanel({ id, isArchived, updateNotes }) {
         tabIndex={0}
         onClick={() => {
           new NoteItemController().archiveNote(id);
-          updateNotes(true);
         }}
         onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space'
           ? new NoteItemController().archiveNote(id)
@@ -27,7 +26,6 @@ export default function MenuPanel({ id, isArchived, updateNotes }) {
         tabIndex={0}
         onClick={() => {
           new NoteItemController().trashNote(id);
-          updateNotes(true);
         }}
         onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space'
           ? new NoteItemController().trashNote(id)
@@ -42,5 +40,4 @@ export default function MenuPanel({ id, isArchived, updateNotes }) {
 MenuPanel.propTypes = {
   id: PropTypes.number.isRequired,
   isArchived: PropTypes.bool.isRequired,
-  updateNotes: PropTypes.func.isRequired,
 };

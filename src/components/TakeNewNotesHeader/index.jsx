@@ -1,58 +1,34 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import IconButton from '../IconButton';
-import NoteItemModel from '../../models/NoteItemModel';
-import './styles.css';
+import db from '../../models/DBManager';
+import Button from '../Button';
 import Notecard from '../Notecard';
+import './styles.css';
 
-function TakeNewNotesHeader({ updateNotes }) {
+function TakeNewNotesHeader() {
   const [displayHeader, setDisplayHeader] = useState(true);
-  const [typeOfNote, setTypeOfNote] = useState('note');
   const handleDisplayHeader = () => {
+    db.createNewNoteItem({ noteTime: { creationDate: Date.now() } });
     setDisplayHeader((prevState) => !prevState);
   };
-  const handleNewNote = (type) => {
-    setTypeOfNote(type);
-    handleDisplayHeader();
-  };
-
-  const newNote = new NoteItemModel();
-  typeOfNote === 'list'
-    ? (newNote.isToDoList = true)
-    : (newNote.isToDoList = false);
-
   return (
     <div style={{ display: 'block', margin: 'auto' }}>
-      {displayHeader ? (
+      {displayHeader && (
         <div className="newnote__header">
-          <IconButton
+          <Button
             className="newnote__take-a-note"
-            handleClick={() => handleNewNote('note')}
+            handleClick={() => handleDisplayHeader()}
             label="Take a note..."
             btnText="Take a note..."
           />
-          <IconButton
+          <Button
             className="newnote__new-list icon-button icon-size"
             label="New list"
-            handleClick={() => handleNewNote('list')}
+            handleClick={() => handleDisplayHeader()}
           />
         </div>
-      ) : (
-        <Notecard
-          isCreating
-          noteItem={newNote}
-          update={() => {
-            updateNotes();
-            handleDisplayHeader();
-          }}
-        />
       )}
     </div>
   );
 }
 
 export default TakeNewNotesHeader;
-
-TakeNewNotesHeader.propTypes = {
-  updateNotes: PropTypes.func.isRequired,
-};
