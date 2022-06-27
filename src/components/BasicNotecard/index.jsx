@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import './styles.css';
 import ColorBallContainer from '../ColorBallContainer';
 import MenuPanel from '../MenuPanel';
-import NoteItemController from '../../controllers/NoteItemController';
 import Button from '../Button';
 import InputField from '../InputField';
+import db from '../../models/DBManager';
 
 export default function BasicNotecard({ noteData, handleDataChange }) {
   const {
@@ -13,11 +13,8 @@ export default function BasicNotecard({ noteData, handleDataChange }) {
     noteTitle,
     isArchived,
     isPinned,
-    isReminder,
-    isToDoList,
     isTrashed,
     noteDescription,
-    toDoItems,
   } = noteData;
   const [displayColorContainer, setDisplayColorContainer] = useState(false);
   const [displayMenuPanel, setDisplayMenuPanel] = useState(false);
@@ -38,7 +35,12 @@ export default function BasicNotecard({ noteData, handleDataChange }) {
           }}
         />
       )}
-      {displayMenuPanel && <MenuPanel id={id} isArchived={isArchived} />}
+      {displayMenuPanel && (
+        <MenuPanel
+          noteData={{ isArchived, isTrashed }}
+          handleDataChange={handleDataChange}
+        />
+      )}
       {!isTrashed && (
         <div className="notecard__buttons-container">
           <Button
@@ -66,7 +68,7 @@ export default function BasicNotecard({ noteData, handleDataChange }) {
         className={`notecard__pin-button--big ${isPinned ? 'note-pinned' : ''}`}
         handleClick={() => {
           handleDataChange({ name: 'isPinned', value: !isPinned });
-          new NoteItemController().updateNote(id, noteData);
+          db.updateNote(id, noteData);
         }}
         label="Fix Note"
       />
@@ -92,16 +94,8 @@ BasicNotecard.propTypes = {
     isArchived: PropTypes.bool,
     isPinned: PropTypes.bool,
     isReminder: PropTypes.bool,
-    isToDoList: PropTypes.bool,
     isTrashed: PropTypes.bool,
     noteDescription: PropTypes.string,
-    toDoItems: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number,
-        title: PropTypes.string,
-        checked: PropTypes.string,
-      }),
-    ),
   }).isRequired,
   handleDataChange: PropTypes.func.isRequired,
 };

@@ -1,43 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import NoteItemController from '../../controllers/NoteItemController';
+import Button from '../Button';
 
-export default function MenuPanel({ id, isArchived }) {
+export default function MenuPanel({ noteData, handleDataChange }) {
   return (
     <div className="notecard__menu-panel">
-      <div
-        role="button"
-        className={`notecard__menu-panel-option ${isArchived ? 'hide' : ''}`}
-        data-button="archive-button"
-        tabIndex={0}
-        onClick={() => {
-          new NoteItemController().archiveNote(id);
-        }}
-        onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space'
-          ? new NoteItemController().archiveNote(id)
-          : null)}
-      >
-        Archive
-      </div>
-      <div
-        role="button"
-        className="notecard__menu-panel-option"
-        data-button="delete-button"
-        tabIndex={0}
-        onClick={() => {
-          new NoteItemController().trashNote(id);
-        }}
-        onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space'
-          ? new NoteItemController().trashNote(id)
-          : null)}
-      >
-        Delete
-      </div>
+      {!noteData.isArchived && (
+        <Button
+          className="notecard__menu-panel-option"
+          handleClick={() => handleDataChange({ name: 'isArchived', value: !noteData.isArchived })}
+          label="Archive note"
+          btnText="Archive"
+        />
+      )}
+      {!noteData.isTrashed && (
+        <Button
+          className="notecard__menu-panel-option"
+          handleClick={() => handleDataChange({ name: 'isTrashed', value: !noteData.isTrashed })}
+          label="Delete note"
+          btnText="Delete"
+        />
+      )}
     </div>
   );
 }
 
 MenuPanel.propTypes = {
-  id: PropTypes.number.isRequired,
-  isArchived: PropTypes.bool.isRequired,
+  noteData: PropTypes.shape(
+    PropTypes.bool.isRequired,
+    PropTypes.bool.isRequired,
+  ).isRequired,
+  handleDataChange: PropTypes.func.isRequired,
 };

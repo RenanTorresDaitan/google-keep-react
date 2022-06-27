@@ -22,7 +22,7 @@ export default class NoteListModel {
   }
 
   removeNoteFromList(id) {
-    this._list = this.getList().filter((item) => item.id !== id);
+    this._list = this._list.filter((item) => item.id !== id);
   }
 
   #calculateNextId() {

@@ -12,15 +12,11 @@ class DBManager {
     const storedList = localStorage.getItem(this.APP_NAME);
     if (typeof storedList !== 'string') return;
     const parsedList = JSON.parse(storedList);
+    this.noteItemsList.clearList();
     parsedList._list.forEach((storedNote) => {
-      const note = storedNote;
-      this.noteItemsList.addNoteToList(new NoteItemModel(note));
+      this.noteItemsList.addNoteToList(new NoteItemModel(storedNote));
     });
     this.deleteOldNotes();
-  }
-
-  getInstance() {
-    return this;
   }
 
   deleteOldNotes() {
@@ -35,10 +31,16 @@ class DBManager {
     localStorage.setItem(this.APP_NAME, JSON.stringify(this.noteItemsList));
   }
 
-  createNewNoteItem(noteInfo) {
-    const newNoteItem = new NoteItemModel(noteInfo);
+  createNewNoteItem(noteData) {
+    const newNoteItem = new NoteItemModel(noteData);
     this.noteItemsList.addNoteToList(newNoteItem);
     this.updateNotesOnLocalStorage();
+  }
+
+  updateNote(id, noteData) {
+    const oldNote = this.noteItemsList.getNoteById(id);
+    this.noteItemsList.removeNoteFromList(id);
+    this.createNewNoteItem({ ...oldNote, ...noteData });
   }
 }
 

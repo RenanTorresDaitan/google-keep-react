@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import './styles.css';
 
 import Button from '../../Button/index';
+import db from '../../../models/DBManager';
 
-function LowerToolbar({ noteData, handleDataChange }) {
+function LowerToolbar({ noteData, handleDataChange, update }) {
   return (
     <div className="note-lower-toolbar">
       {noteData.isTrashed ? (
@@ -40,10 +41,12 @@ function LowerToolbar({ noteData, handleDataChange }) {
               noteData.isArchived ? 'unarchive-icon' : 'archive-icon'
             }`}
             label={`${noteData.isArchived ? 'Unarchive note' : 'Archive note'}`}
-            handleClick={() => handleDataChange({
-              name: 'isArchived',
-              value: !noteData.isArchived,
-            })}
+            handleClick={() => {
+              handleDataChange({
+                name: 'isArchived',
+                value: !noteData.isArchived,
+              });
+            }}
           />
           <Button
             className="lower-toolbar-button menu-icon"
@@ -77,4 +80,5 @@ LowerToolbar.propTypes = {
     ),
   }).isRequired,
   handleDataChange: PropTypes.func.isRequired,
+  update: PropTypes.func.isRequired,
 };

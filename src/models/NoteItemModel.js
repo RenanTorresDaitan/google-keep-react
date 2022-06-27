@@ -3,7 +3,7 @@ export default class NoteItemModel {
     _id = null,
     noteTitle = '',
     noteDescription = '',
-    noteTime = { creationDate: 0, deletionDate: null },
+    noteTime = { creationDate: Date.now(), deletionDate: null },
     isPinned = false,
     isToDoList = false,
     isReminder = false,

@@ -20,15 +20,16 @@ function InputField({ text, placeHolder, className, handleChange, visible }) {
   }, [showText]);
 
   return (
-    <div
-      role="textbox"
-      className={className}
-      onClick={handleShowText}
-      onKeyDown={() => {}}
-      tabIndex={0}
-    >
+    <div className={className}>
       {showText ? (
-        <span>{text}</span>
+        <span
+          role="textbox"
+          tabIndex={0}
+          onClick={handleShowText}
+          onKeyDown={() => {}}
+        >
+          {text}
+        </span>
       ) : (
         <textarea
           className={`${className}-textarea`}

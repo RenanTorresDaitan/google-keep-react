@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import NoteItemController from '../../controllers/NoteItemController';
 import Button from '../Button';
+import db from '../../models/DBManager';
 
 function NotesAreaHeader({ sidebar, notesLength }) {
   let imageClass = '';
@@ -15,7 +15,7 @@ function NotesAreaHeader({ sidebar, notesLength }) {
       <Button
         className="empty-trash-btn"
         handleClick={() => {
-          new NoteItemController().deleteTrashedNotes();
+          db.deleteTrashedNotes();
         }}
         label="Empty trash"
         btnText="Empty Trash"
