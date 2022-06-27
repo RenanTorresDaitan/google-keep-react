@@ -5,7 +5,6 @@ class DBManager {
   constructor() {
     this.APP_NAME = 'Keep-Notes';
     this.noteItemsList = new NoteListModel();
-    this.loadNotesFromLocalStorage();
   }
 
   loadNotesFromLocalStorage() {
@@ -17,6 +16,7 @@ class DBManager {
       this.noteItemsList.addNoteToList(new NoteItemModel(storedNote));
     });
     this.deleteOldNotes();
+    console.log('notes loaded');
   }
 
   deleteOldNotes() {

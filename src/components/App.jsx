@@ -8,12 +8,13 @@ import db from '../models/DBManager';
 export default function App() {
   const [sidebarSelected, setSidebarSelected] = useState('NOTES');
   const [notesToRender, setNotesToRender] = useState([]);
-  const [update, setUpdate] = useState(false);
+  const [update, setUpdate] = useState(Date.now());
   const handleSidebarChange = (sidebar) => setSidebarSelected(sidebar);
 
   useEffect(() => {
     db.loadNotesFromLocalStorage();
   }, [update]);
+
   const noteList = db.noteItemsList
     .getList()
     .sort((a, b) => b.getTime() - a.getTime())
@@ -37,7 +38,7 @@ export default function App() {
     if (sidebarSelected === 'TRASH') {
       setNotesToRender(noteList.filter((item) => item.isTrashed));
     }
-  }, [sidebarSelected, noteList]);
+  }, [sidebarSelected, noteList, update]);
 
   return (
     <div className="app">
@@ -50,10 +51,7 @@ export default function App() {
         <Content
           sidebarSelected={sidebarSelected}
           notesToRender={notesToRender}
-          update={() => {
-            console.log('update called');
-            setUpdate((prevState) => !prevState);
-          }}
+          update={() => setUpdate(Date.now())}
         />
       </section>
     </div>

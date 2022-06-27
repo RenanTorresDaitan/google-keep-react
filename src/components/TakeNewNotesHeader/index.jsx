@@ -7,13 +7,13 @@ import './styles.css';
 function TakeNewNotesHeader({ update }) {
   const [displayHeader, setDisplayHeader] = useState(true);
   const [typeOfNewNote, setTypeOfNewNote] = useState('note');
-  const handleDisplayHeader = () => {
-    setDisplayHeader((prevState) => !prevState);
+  const handleDisplayHeader = (visible) => {
+    setDisplayHeader(visible);
   };
   const createNewNote = (type) => (
     <NewNotecard
       typeOfNote={type}
-      showHeader={handleDisplayHeader}
+      showHeader={() => handleDisplayHeader(true)}
       update={update}
     />
   );
@@ -24,7 +24,7 @@ function TakeNewNotesHeader({ update }) {
           <Button
             className="newnote__take-a-note"
             handleClick={() => {
-              handleDisplayHeader();
+              handleDisplayHeader(false);
               setTypeOfNewNote('note');
             }}
             label="Take a note..."
@@ -34,7 +34,7 @@ function TakeNewNotesHeader({ update }) {
             className="newnote__new-list icon-button icon-size"
             label="New list"
             handleClick={() => {
-              handleDisplayHeader();
+              handleDisplayHeader(false);
               setTypeOfNewNote('list');
             }}
           />

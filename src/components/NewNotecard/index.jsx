@@ -47,8 +47,19 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
 
   const handleNewNote = () => {
     db.createNewNoteItem(newNoteData);
+    setNewNoteData({
+      noteTitle: '',
+      color: 'default',
+      isArchived: false,
+      isPinned: false,
+      isReminder: false,
+      isToDoList: typeOfNote === 'list',
+      isTrashed: false,
+      noteDescription: '',
+      toDoItems: [],
+    });
     setDoneBtnVisible(false);
-    showHeader(true);
+    showHeader();
     update();
   };
 
@@ -133,7 +144,7 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
       {doneBtnVisible && (
         <Button
           className="notecard__done-button"
-          handleClick={handleNewNote}
+          handleClick={() => handleNewNote()}
           label="Done"
           btnText="Done"
         />
