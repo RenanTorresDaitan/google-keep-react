@@ -13,12 +13,9 @@ export default function BasicNotecard({
   handleDataChange,
   sendNoteData,
 }) {
-  const { noteTitle, isPinned, isTrashed, noteDescription } = noteItem;
+  const { noteTitle, isArchived, isPinned, isTrashed, noteDescription } = noteItem;
   const [showModal, setShowModal] = useState({ menu: false, color: false });
-  const [noteData, setNoteData] = useState({
-    noteTitle,
-    noteDescription,
-  });
+
   return (
     <>
       {showModal.color && (
@@ -30,7 +27,10 @@ export default function BasicNotecard({
         />
       )}
       {showModal.menu && (
-        <MenuPanel noteItem={noteItem} handleDataChange={handleDataChange} />
+        <MenuPanel
+          options={{ isArchived, isTrashed }}
+          handleDataChange={handleDataChange}
+        />
       )}
       {!isTrashed && (
         <div className="notecard__buttons-container">
@@ -65,8 +65,7 @@ export default function BasicNotecard({
         className="notecard__title"
         placeHolder="Title"
         handleChange={(value) => {
-          setNoteData({ ...noteData, noteTitle: value });
-          sendNoteData(noteData);
+          sendNoteData({ noteTitle: value });
         }}
       />
       <InputField
@@ -74,8 +73,7 @@ export default function BasicNotecard({
         className="notecard__desc"
         placeHolder="Take a note..."
         handleChange={(value) => {
-          setNoteData({ ...noteData, noteDescription: value });
-          sendNoteData(noteData);
+          sendNoteData({ noteDescription: value });
         }}
       />
       <LowerToolbar

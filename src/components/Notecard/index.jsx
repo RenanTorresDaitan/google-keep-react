@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './styles.css';
 import NoteItemModel from '../../models/NoteItemModel';
 import BasicNotecard from '../BasicNotecard';
 import ToDoItemsContainer from '../ToDoItemsContainer';
-import LowerToolbar from '../MenuPanel/LowerToolbar';
 import Button from '../Button';
 import db from '../../models/DBManager';
 
@@ -34,7 +33,7 @@ export default function Notecard({ noteItem, update }) {
         noteItem={noteItem}
         handleDataChange={handleUpdate}
         sendNoteData={(data) => {
-          setNoteData(data);
+          setNoteData({ ...noteData, ...data });
           setDoneBtnVisible(true);
         }}
       />

@@ -20,22 +20,14 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
     noteDescription: '',
     toDoItems: [],
   });
-  const [displayColorContainer, setDisplayColorContainer] = useState(false);
-  const [displayMenuPanel, setDisplayMenuPanel] = useState(false);
   const [doneBtnVisible, setDoneBtnVisible] = useState(false);
-  const showColorPanel = () => setDisplayColorContainer(true);
-  const showMenuPanel = () => setDisplayMenuPanel(true);
-  const handleBlur = () => {
-    setDisplayColorContainer(false);
-    setDisplayMenuPanel(false);
-  };
+  const [showModal, setShowModal] = useState({ menu: false, color: false });
   const handleDataChange = (data) => {
-    const { name, value } = data;
     setNewNoteData((prevNoteData) => ({
       ...prevNoteData,
-      [name]: value,
+      ...data,
     }));
-    handleBlur();
+    setShowModal({ menu: false, color: false });
   };
   useEffect(() => {
     setDoneBtnVisible(true);
@@ -59,21 +51,20 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
       data-note-id={newNoteData.id}
       data-color={newNoteData.color}
     >
-      {displayColorContainer && (
+      {showModal.color && (
         <ColorBallContainer
           changeToColor={(c) => {
-            handleDataChange({ name: 'color', value: c });
-            handleBlur();
+            handleDataChange({ color: c });
           }}
         />
       )}
-      {displayMenuPanel && (
+      {showModal.menu && (
         <MenuPanel
-          noteData={{
+          options={{
             isArchived: newNoteData.isArchived,
             isTrashed: newNoteData.isTrashed,
           }}
-          handleDataChange={handleDataChange}
+          handleDataChange={(options) => handleDataChange({ options })}
         />
       )}
       {!newNoteData.isTrashed && (
@@ -81,12 +72,12 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
           <Button
             className="notecard__button color-button"
             label="Change Note Color"
-            handleClick={showColorPanel}
+            handleClick={() => setShowModal({ color: true })}
           />
           <Button
             className="notecard__button menu-button"
             label="Menu"
-            handleClick={showMenuPanel}
+            handleClick={() => setShowModal({ menu: true })}
           />
           <Button
             className={`notecard__button pin-button ${
@@ -94,10 +85,7 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
             }`}
             label="Fix Note"
             handleClick={() => {
-              handleDataChange({
-                name: 'isPinned',
-                value: !newNoteData.isPinned,
-              });
+              handleDataChange({ isPinned: !newNoteData.isPinned });
             }}
           />
         </div>
@@ -107,7 +95,7 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
           newNoteData.isPinned ? 'note-pinned' : ''
         }`}
         handleClick={() => {
-          handleDataChange({ name: 'isPinned', value: !newNoteData.isPinned });
+          handleDataChange({ isPinned: !newNoteData.isPinned });
         }}
         label="Fix Note"
       />
@@ -115,7 +103,7 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
         text={newNoteData.noteTitle}
         className="notecard__title"
         placeHolder="Title"
-        handleChange={(e) => handleDataChange({ name: 'noteTitle', value: e.target.value })}
+        handleChange={(value) => handleDataChange({ noteTitle: value })}
         visible={false}
       />
       {newNoteData.isToDoList ? (
@@ -125,7 +113,7 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
           text={newNoteData.noteDescription}
           className="notecard__desc"
           placeHolder="Take a note..."
-          handleChange={(e) => handleDataChange({ name: 'noteDescription', value: e.target.value })}
+          handleChange={(value) => handleDataChange({ noteDescription: value })}
           visible={false}
         />
       )}

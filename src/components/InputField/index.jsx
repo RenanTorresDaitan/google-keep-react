@@ -3,11 +3,8 @@ import PropTypes from 'prop-types';
 
 function InputField({ text, placeHolder, className, handleChange, visible }) {
   const [showText, setShowText] = useState(visible);
-  const [inputData, setInputData] = useState(text);
+  const [input, setInput] = useState(text);
   const textarea = useRef();
-  useEffect(() => {
-    handleChange(inputData);
-  }, [text, inputData]);
   const handleShowText = () => {
     setShowText((prevState) => !prevState);
   };
@@ -31,7 +28,7 @@ function InputField({ text, placeHolder, className, handleChange, visible }) {
       onKeyDown={() => {}}
     >
       {showText ? (
-        <span>{inputData}</span>
+        <span>{input}</span>
       ) : (
         <textarea
           className={`${className}-textarea`}
@@ -41,9 +38,10 @@ function InputField({ text, placeHolder, className, handleChange, visible }) {
           maxLength="999"
           placeholder={placeHolder}
           style={{ height: '1rem' }}
-          value={inputData}
+          value={input}
           onChange={(e) => {
-            setInputData(e.target.value);
+            setInput(e.target.value);
+            handleChange(e.target.value);
           }}
         />
       )}
