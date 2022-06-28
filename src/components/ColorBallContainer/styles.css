@@ -1,4 +1,4 @@
-@import url(../../../styles/styles.css);
+@import url(../../styles/styles.css);
 
 .color-ball__container {
   background-color: var(--c-off-white-1);

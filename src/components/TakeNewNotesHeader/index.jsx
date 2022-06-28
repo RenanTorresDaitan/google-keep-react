@@ -1,58 +1,52 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import IconButton from '../IconButton';
-import NoteItemModel from '../../models/NoteItemModel';
+import Button from '../Button';
+import NewNotecard from '../NewNotecard';
 import './styles.css';
-import Notecard from '../Notecard';
 
-function TakeNewNotesHeader({ updateNotes }) {
+function TakeNewNotesHeader({ update }) {
   const [displayHeader, setDisplayHeader] = useState(true);
-  const [typeOfNote, setTypeOfNote] = useState('note');
-  const handleDisplayHeader = () => {
-    setDisplayHeader((prevState) => !prevState);
+  const [typeOfNewNote, setTypeOfNewNote] = useState('note');
+  const handleDisplayHeader = (visible) => {
+    setDisplayHeader(visible);
   };
-  const handleNewNote = (type) => {
-    setTypeOfNote(type);
-    handleDisplayHeader();
-  };
-
-  const newNote = new NoteItemModel();
-  typeOfNote === 'list'
-    ? (newNote.isToDoList = true)
-    : (newNote.isToDoList = false);
-
+  const createNewNote = (type) => (
+    <NewNotecard
+      typeOfNote={type}
+      showHeader={() => handleDisplayHeader(true)}
+      update={update}
+    />
+  );
   return (
     <div style={{ display: 'block', margin: 'auto' }}>
       {displayHeader ? (
         <div className="newnote__header">
-          <IconButton
+          <Button
             className="newnote__take-a-note"
-            handleClick={() => handleNewNote('note')}
+            handleClick={() => {
+              handleDisplayHeader(false);
+              setTypeOfNewNote('note');
+            }}
             label="Take a note..."
             btnText="Take a note..."
           />
-          <IconButton
+          <Button
             className="newnote__new-list icon-button icon-size"
             label="New list"
-            handleClick={() => handleNewNote('list')}
+            handleClick={() => {
+              handleDisplayHeader(false);
+              setTypeOfNewNote('list');
+            }}
           />
         </div>
       ) : (
-        <Notecard
-          isCreating
-          noteItem={newNote}
-          update={() => {
-            updateNotes();
-            handleDisplayHeader();
-          }}
-        />
+        createNewNote(typeOfNewNote)
       )}
     </div>
   );
 }
+TakeNewNotesHeader.propTypes = {
+  update: PropTypes.func.isRequired,
+};
 
 export default TakeNewNotesHeader;
-
-TakeNewNotesHeader.propTypes = {
-  updateNotes: PropTypes.func.isRequired,
-};

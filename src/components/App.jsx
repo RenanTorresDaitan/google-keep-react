@@ -8,11 +8,15 @@ import db from '../models/DBManager';
 export default function App() {
   const [sidebarSelected, setSidebarSelected] = useState('NOTES');
   const [notesToRender, setNotesToRender] = useState([]);
-
+  const [update, setUpdate] = useState(Date.now());
   const handleSidebarChange = (sidebar) => setSidebarSelected(sidebar);
 
+  const noteList = db.noteItemsList
+    .getList()
+    .sort((a, b) => b.getTime() - a.getTime())
+    .sort((a, b) => Number(b.isPinned) - Number(a.isPinned));
+
   useEffect(() => {
-    const noteList = db.noteItemsList.getList();
     if (sidebarSelected === 'NOTES') {
       setNotesToRender(
         noteList.filter((item) => !item.isArchived && !item.isTrashed),
@@ -31,7 +35,7 @@ export default function App() {
     if (sidebarSelected === 'TRASH') {
       setNotesToRender(noteList.filter((item) => item.isTrashed));
     }
-  }, [sidebarSelected]);
+  }, [sidebarSelected, noteList, update]);
 
   return (
     <div className="app">
@@ -41,7 +45,11 @@ export default function App() {
           active={sidebarSelected}
           changeSidebar={(label) => handleSidebarChange(label)}
         />
-        <Content notesToRender={notesToRender} />
+        <Content
+          sidebarSelected={sidebarSelected}
+          notesToRender={notesToRender}
+          update={() => setUpdate(Date.now())}
+        />
       </section>
     </div>
   );

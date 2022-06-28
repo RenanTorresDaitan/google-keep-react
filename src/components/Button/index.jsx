@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../../styles/styles.css';
 
-function IconButton({ className, label, handleClick, btnText }) {
+function Button({ className, label, handleClick, btnText }) {
   return (
     <div
       role="button"
@@ -19,13 +19,13 @@ function IconButton({ className, label, handleClick, btnText }) {
   );
 }
 
-export default IconButton;
+export default Button;
 
-IconButton.defaultProps = {
+Button.defaultProps = {
   btnText: '',
 };
 
-IconButton.propTypes = {
+Button.propTypes = {
   className: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   btnText: PropTypes.string,

@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function InputField({ text, placeHolder, className, handleChange, handleShowDoneBtn, visible }) {
+function InputField({ text, placeHolder, className, handleChange, visible }) {
   const [showText, setShowText] = useState(visible);
+  const [input, setInput] = useState(text);
   const textarea = useRef();
-
   const handleShowText = () => {
     setShowText((prevState) => !prevState);
   };
@@ -21,14 +21,14 @@ function InputField({ text, placeHolder, className, handleChange, handleShowDone
 
   return (
     <div
-      role="textbox"
       className={className}
+      role="textbox"
       onClick={handleShowText}
-      onKeyDown={handleShowDoneBtn}
       tabIndex={0}
+      onKeyDown={() => {}}
     >
       {showText ? (
-        <span>{text}</span>
+        <span>{input}</span>
       ) : (
         <textarea
           className={`${className}-textarea`}
@@ -38,8 +38,11 @@ function InputField({ text, placeHolder, className, handleChange, handleShowDone
           maxLength="999"
           placeholder={placeHolder}
           style={{ height: '1rem' }}
-          value={text}
-          onChange={handleChange}
+          value={input}
+          onChange={(e) => {
+            setInput(e.target.value);
+            handleChange(e.target.value);
+          }}
         />
       )}
     </div>
@@ -56,6 +59,5 @@ InputField.propTypes = {
   className: PropTypes.string.isRequired,
   placeHolder: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  handleShowDoneBtn: PropTypes.func.isRequired,
   visible: PropTypes.bool,
 };
