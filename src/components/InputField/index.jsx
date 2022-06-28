@@ -1,7 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function InputField({ text, placeHolder, className, handleChange, visible }) {
+function InputField({
+  text,
+  placeHolder,
+  className,
+  handleChange,
+  visible,
+  editing,
+}) {
   const [showText, setShowText] = useState(visible);
   const textarea = useRef();
 
@@ -20,16 +27,15 @@ function InputField({ text, placeHolder, className, handleChange, visible }) {
   }, [showText]);
 
   return (
-    <div className={className}>
+    <div
+      className={className}
+      role="textbox"
+      onClick={handleShowText}
+      tabIndex={0}
+      onKeyDown={() => {}}
+    >
       {showText ? (
-        <span
-          role="textbox"
-          tabIndex={0}
-          onClick={handleShowText}
-          onKeyDown={() => {}}
-        >
-          {text}
-        </span>
+        <span>{text}</span>
       ) : (
         <textarea
           className={`${className}-textarea`}
@@ -50,6 +56,7 @@ function InputField({ text, placeHolder, className, handleChange, visible }) {
 export default InputField;
 InputField.defaultProps = {
   visible: true,
+  editing: false,
 };
 
 InputField.propTypes = {
@@ -58,4 +65,5 @@ InputField.propTypes = {
   placeHolder: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   visible: PropTypes.bool,
+  editing: PropTypes.bool,
 };

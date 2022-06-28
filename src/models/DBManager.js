@@ -5,6 +5,7 @@ class DBManager {
   constructor() {
     this.APP_NAME = 'Keep-Notes';
     this.noteItemsList = new NoteListModel();
+    this.loadNotesFromLocalStorage();
   }
 
   loadNotesFromLocalStorage() {
@@ -15,19 +16,18 @@ class DBManager {
     parsedList._list.forEach((storedNote) => {
       this.noteItemsList.addNoteToList(new NoteItemModel(storedNote));
     });
-    this.deleteOldNotes();
-    console.log('notes loaded');
   }
 
   deleteOldNotes() {
     this.noteItemsList.getList().forEach((item) => {
       if (item.checkTimeToDelete()) {
-        this.noteItemsList.removeNoteFromList(item.getId());
+        this.noteItemsList.removeNoteFromList(item.id);
       }
     });
   }
 
   updateNotesOnLocalStorage() {
+    this.deleteOldNotes();
     localStorage.setItem(this.APP_NAME, JSON.stringify(this.noteItemsList));
   }
 

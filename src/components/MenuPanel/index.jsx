@@ -1,22 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '../Button';
+import NoteItemModel from '../../models/NoteItemModel';
 
-export default function MenuPanel({ noteData, handleDataChange }) {
+export default function MenuPanel({ noteItem, handleDataChange }) {
+  const { isArchived, isTrashed } = noteItem;
   return (
     <div className="notecard__menu-panel">
-      {!noteData.isArchived && (
+      {!isArchived && (
         <Button
           className="notecard__menu-panel-option"
-          handleClick={() => handleDataChange({ name: 'isArchived', value: !noteData.isArchived })}
+          handleClick={() => handleDataChange({ isArchived: !isArchived })}
           label="Archive note"
-          btnText="Archive"
+          btnText={isArchived ? 'Unarchive' : 'Archive'}
         />
       )}
-      {!noteData.isTrashed && (
+      {!isTrashed && (
         <Button
           className="notecard__menu-panel-option"
-          handleClick={() => handleDataChange({ name: 'isTrashed', value: !noteData.isTrashed })}
+          handleClick={() => handleDataChange({ isTrashed: true })}
           label="Delete note"
           btnText="Delete"
         />
@@ -26,9 +28,6 @@ export default function MenuPanel({ noteData, handleDataChange }) {
 }
 
 MenuPanel.propTypes = {
-  noteData: PropTypes.shape(
-    PropTypes.bool.isRequired,
-    PropTypes.bool.isRequired,
-  ).isRequired,
+  noteItem: PropTypes.instanceOf(NoteItemModel).isRequired,
   handleDataChange: PropTypes.func.isRequired,
 };

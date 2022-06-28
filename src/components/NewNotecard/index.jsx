@@ -47,17 +47,6 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
 
   const handleNewNote = () => {
     db.createNewNoteItem(newNoteData);
-    setNewNoteData({
-      noteTitle: '',
-      color: 'default',
-      isArchived: false,
-      isPinned: false,
-      isReminder: false,
-      isToDoList: typeOfNote === 'list',
-      isTrashed: false,
-      noteDescription: '',
-      toDoItems: [],
-    });
     setDoneBtnVisible(false);
     showHeader();
     update();
@@ -119,7 +108,6 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
         }`}
         handleClick={() => {
           handleDataChange({ name: 'isPinned', value: !newNoteData.isPinned });
-          db.updateNote(null, newNoteData);
         }}
         label="Fix Note"
       />

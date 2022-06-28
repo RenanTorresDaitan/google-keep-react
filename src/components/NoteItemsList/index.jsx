@@ -5,8 +5,8 @@ import './styles.css';
 import NoteItemModel from '../../models/NoteItemModel';
 
 export default function NoteItemsList({ notesToRender, update }) {
-  const notecards = notesToRender.map((item) => (
-    <Notecard key={item.id} noteItem={item} update={update} />
+  const notecards = notesToRender.map((noteItem) => (
+    <Notecard key={noteItem.id} noteItem={noteItem} update={update} />
   ));
   return <section className="notes-area">{notecards}</section>;
 }

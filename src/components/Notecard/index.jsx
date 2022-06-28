@@ -9,51 +9,40 @@ import Button from '../Button';
 import db from '../../models/DBManager';
 
 export default function Notecard({ noteItem, update }) {
-  const [noteData, setNoteData] = useState(noteItem);
+  const { id, color, noteTitle, noteDescription, isToDoList } = noteItem;
   const [doneBtnVisible, setDoneBtnVisible] = useState(false);
-  const handleDataChange = (data) => {
-    const { name, value } = data;
-    setNoteData((prevNoteData) => ({
-      ...prevNoteData,
-      [name]: value,
-    }));
-    console.log(name, value);
-    setDoneBtnVisible(true);
-  };
-
-  useEffect(() => {
-    db.updateNote(noteData.id, noteData);
-  }, []);
-
+  const [noteData, setNoteData] = useState({
+    noteTitle,
+    noteDescription,
+  });
   const toDoItemsContainer = (
-    <ToDoItemsContainer toDoItems={noteData.toDoItems} />
+    <ToDoItemsContainer toDoItems={noteItem.toDoItems} />
   );
-  const handleUpdate = () => {
+  const handleUpdate = (data) => {
     setDoneBtnVisible(false);
-    db.updateNote(noteItem.id, noteData);
+    db.updateNote(id, data);
     update(true);
   };
   return (
     <div
       className="notecard"
-      aria-label={`Keep's Note ${noteData.noteTitle}`}
-      data-note-id={noteData.id}
-      data-color={noteData.color}
+      aria-label={`Keep's Note ${noteTitle}`}
+      data-note-id={id}
+      data-color={color}
     >
       <BasicNotecard
-        noteData={noteData}
-        handleDataChange={(a) => handleDataChange(a)}
+        noteItem={noteItem}
+        handleDataChange={handleUpdate}
+        sendNoteData={(data) => {
+          setNoteData(data);
+          setDoneBtnVisible(true);
+        }}
       />
-      {noteData.isToDoList && toDoItemsContainer}
-      <LowerToolbar
-        noteData={noteData}
-        handleDataChange={handleDataChange}
-        update={update}
-      />
+      {isToDoList && toDoItemsContainer}
       {doneBtnVisible && (
         <Button
           className="notecard__done-button"
-          handleClick={() => handleUpdate()}
+          handleClick={() => handleUpdate(noteData)}
           label="Done"
           btnText="Done"
         />

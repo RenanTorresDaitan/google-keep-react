@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import './styles.css';
 
 import Button from '../../Button/index';
-import db from '../../../models/DBManager';
+import NoteItemModel from '../../../models/NoteItemModel';
 
-function LowerToolbar({ noteData, handleDataChange, update }) {
+function LowerToolbar({ noteData, handleDataChange, showModal }) {
   return (
     <div className="note-lower-toolbar">
       {noteData.isTrashed ? (
@@ -13,12 +13,14 @@ function LowerToolbar({ noteData, handleDataChange, update }) {
           <Button
             className="lower-toolbar-button restore-icon"
             label="Restore Note"
-            handleClick={() => {}}
+            handleClick={() => handleDataChange({ isTrashed: false })}
           />
           <Button
             className="lower-toolbar-button delete-icon"
             label="Delete Note"
-            handleClick={() => {}}
+            handleClick={() => handleDataChange({
+              noteTime: { ...noteData.noteTime, deletionDate: 0 },
+            })}
           />
         </>
       ) : (
@@ -26,32 +28,24 @@ function LowerToolbar({ noteData, handleDataChange, update }) {
           <Button
             className="lower-toolbar-button add-reminder-icon"
             label="Add Reminder"
-            handleClick={() => handleDataChange({
-              name: 'isReminder',
-              value: !noteData.isReminder,
-            })}
+            handleClick={() => handleDataChange({ isReminder: !noteData.isReminder })}
           />
           <Button
             className="lower-toolbar-button color-palette-icon"
             label="Change Note Color"
-            handleClick={() => {}}
+            handleClick={() => showModal({ color: true })}
           />
           <Button
             className={`lower-toolbar-button ${
               noteData.isArchived ? 'unarchive-icon' : 'archive-icon'
             }`}
             label={`${noteData.isArchived ? 'Unarchive note' : 'Archive note'}`}
-            handleClick={() => {
-              handleDataChange({
-                name: 'isArchived',
-                value: !noteData.isArchived,
-              });
-            }}
+            handleClick={() => handleDataChange({ isArchived: !noteData.isArchived })}
           />
           <Button
             className="lower-toolbar-button menu-icon"
             label="Open Menu"
-            handleClick={() => {}}
+            handleClick={() => showModal({ menu: true })}
           />
         </>
       )}
@@ -62,23 +56,7 @@ function LowerToolbar({ noteData, handleDataChange, update }) {
 export default LowerToolbar;
 
 LowerToolbar.propTypes = {
-  noteData: PropTypes.shape({
-    id: PropTypes.number,
-    noteTitle: PropTypes.string,
-    isArchived: PropTypes.bool,
-    isPinned: PropTypes.bool,
-    isReminder: PropTypes.bool,
-    isToDoList: PropTypes.bool,
-    isTrashed: PropTypes.bool,
-    noteDescription: PropTypes.string,
-    toDoItems: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number,
-        title: PropTypes.string,
-        checked: PropTypes.string,
-      }),
-    ),
-  }).isRequired,
+  noteData: PropTypes.instanceOf(NoteItemModel).isRequired,
   handleDataChange: PropTypes.func.isRequired,
-  update: PropTypes.func.isRequired,
+  showModal: PropTypes.func.isRequired,
 };

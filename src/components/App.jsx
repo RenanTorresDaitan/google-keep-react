@@ -11,14 +11,11 @@ export default function App() {
   const [update, setUpdate] = useState(Date.now());
   const handleSidebarChange = (sidebar) => setSidebarSelected(sidebar);
 
-  useEffect(() => {
-    db.loadNotesFromLocalStorage();
-  }, [update]);
-
   const noteList = db.noteItemsList
     .getList()
     .sort((a, b) => b.getTime() - a.getTime())
     .sort((a, b) => Number(b.isPinned) - Number(a.isPinned));
+
   useEffect(() => {
     if (sidebarSelected === 'NOTES') {
       setNotesToRender(

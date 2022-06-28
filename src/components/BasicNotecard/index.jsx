@@ -5,53 +5,44 @@ import ColorBallContainer from '../ColorBallContainer';
 import MenuPanel from '../MenuPanel';
 import Button from '../Button';
 import InputField from '../InputField';
-import db from '../../models/DBManager';
+import NoteItemModel from '../../models/NoteItemModel';
+import LowerToolbar from '../MenuPanel/LowerToolbar';
 
-export default function BasicNotecard({ noteData, handleDataChange }) {
-  const {
-    id,
+export default function BasicNotecard({
+  noteItem,
+  handleDataChange,
+  sendNoteData,
+}) {
+  const { noteTitle, isPinned, isTrashed, noteDescription } = noteItem;
+  const [showModal, setShowModal] = useState({ menu: false, color: false });
+  const [noteData, setNoteData] = useState({
     noteTitle,
-    isArchived,
-    isPinned,
-    isTrashed,
     noteDescription,
-  } = noteData;
-  const [displayColorContainer, setDisplayColorContainer] = useState(false);
-  const [displayMenuPanel, setDisplayMenuPanel] = useState(false);
-  const showColorPanel = () => setDisplayColorContainer(true);
-  const showMenuPanel = () => setDisplayMenuPanel(true);
-  const handleBlur = () => {
-    setDisplayColorContainer(false);
-    setDisplayMenuPanel(false);
-  };
-
+  });
   return (
     <>
-      {displayColorContainer && (
+      {showModal.color && (
         <ColorBallContainer
           changeToColor={(c) => {
-            handleDataChange({ name: 'color', value: c });
-            handleBlur();
+            handleDataChange({ color: c });
+            setShowModal({ color: false });
           }}
         />
       )}
-      {displayMenuPanel && (
-        <MenuPanel
-          noteData={{ isArchived, isTrashed }}
-          handleDataChange={handleDataChange}
-        />
+      {showModal.menu && (
+        <MenuPanel noteItem={noteItem} handleDataChange={handleDataChange} />
       )}
       {!isTrashed && (
         <div className="notecard__buttons-container">
           <Button
             className="notecard__button color-button"
             label="Change Note Color"
-            handleClick={showColorPanel}
+            handleClick={() => setShowModal({ color: true })}
           />
           <Button
             className="notecard__button menu-button"
             label="Menu"
-            handleClick={showMenuPanel}
+            handleClick={() => setShowModal({ menu: true })}
           />
           <Button
             className={`notecard__button pin-button ${
@@ -59,43 +50,44 @@ export default function BasicNotecard({ noteData, handleDataChange }) {
             }`}
             label="Fix Note"
             handleClick={() => {
-              handleDataChange({ name: 'isPinned', value: !isPinned });
+              handleDataChange({ isPinned: !isPinned });
             }}
           />
         </div>
       )}
       <Button
         className={`notecard__pin-button--big ${isPinned ? 'note-pinned' : ''}`}
-        handleClick={() => {
-          handleDataChange({ name: 'isPinned', value: !isPinned });
-          db.updateNote(id, noteData);
-        }}
+        handleClick={() => handleDataChange({ isPinned: !isPinned })}
         label="Fix Note"
       />
       <InputField
-        text={noteTitle}
+        text={noteData.noteTitle}
         className="notecard__title"
         placeHolder="Title"
-        handleChange={(e) => handleDataChange({ name: 'noteTitle', value: e.target.value })}
+        handleChange={(e) => {
+          setNoteData({ ...noteData, noteTitle: e.target.value });
+          sendNoteData(noteData);
+        }}
       />
       <InputField
-        text={noteDescription}
+        text={noteData.noteDescription}
         className="notecard__desc"
         placeHolder="Take a note..."
-        handleChange={(e) => handleDataChange({ name: 'noteDescription', value: e.target.value })}
+        handleChange={(e) => {
+          setNoteData({ ...noteData, noteDescription: e.target.value });
+          sendNoteData(noteData);
+        }}
+      />
+      <LowerToolbar
+        noteData={noteItem}
+        handleDataChange={handleDataChange}
+        showModal={(m) => setShowModal(m)}
       />
     </>
   );
 }
 BasicNotecard.propTypes = {
-  noteData: PropTypes.shape({
-    id: PropTypes.number,
-    noteTitle: PropTypes.string,
-    isArchived: PropTypes.bool,
-    isPinned: PropTypes.bool,
-    isReminder: PropTypes.bool,
-    isTrashed: PropTypes.bool,
-    noteDescription: PropTypes.string,
-  }).isRequired,
+  noteItem: PropTypes.instanceOf(NoteItemModel).isRequired,
   handleDataChange: PropTypes.func.isRequired,
+  sendNoteData: PropTypes.func.isRequired,
 };

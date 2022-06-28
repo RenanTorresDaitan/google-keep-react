@@ -9,7 +9,7 @@ import NotesAreaHeader from '../NotesAreaHeader';
 export default function Content({ sidebarSelected, notesToRender, update }) {
   return (
     <div className="content">
-      <TakeNewNotesHeader update={update} />
+      {sidebarSelected !== 'TRASH' && (<TakeNewNotesHeader update={update} />)}
       <NotesAreaHeader
         sidebar={sidebarSelected}
         notesLength={notesToRender.length}
