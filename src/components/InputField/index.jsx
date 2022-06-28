@@ -1,17 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function InputField({
-  text,
-  placeHolder,
-  className,
-  handleChange,
-  visible,
-  editing,
-}) {
+function InputField({ text, placeHolder, className, handleChange, visible }) {
   const [showText, setShowText] = useState(visible);
+  const [inputData, setInputData] = useState(text);
   const textarea = useRef();
-
+  useEffect(() => {
+    handleChange(inputData);
+  }, [text, inputData]);
   const handleShowText = () => {
     setShowText((prevState) => !prevState);
   };
@@ -35,7 +31,7 @@ function InputField({
       onKeyDown={() => {}}
     >
       {showText ? (
-        <span>{text}</span>
+        <span>{inputData}</span>
       ) : (
         <textarea
           className={`${className}-textarea`}
@@ -45,8 +41,10 @@ function InputField({
           maxLength="999"
           placeholder={placeHolder}
           style={{ height: '1rem' }}
-          value={text}
-          onChange={handleChange}
+          value={inputData}
+          onChange={(e) => {
+            setInputData(e.target.value);
+          }}
         />
       )}
     </div>
@@ -56,7 +54,6 @@ function InputField({
 export default InputField;
 InputField.defaultProps = {
   visible: true,
-  editing: false,
 };
 
 InputField.propTypes = {
@@ -65,5 +62,4 @@ InputField.propTypes = {
   placeHolder: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   visible: PropTypes.bool,
-  editing: PropTypes.bool,
 };

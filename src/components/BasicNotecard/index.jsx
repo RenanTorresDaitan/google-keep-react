@@ -61,20 +61,20 @@ export default function BasicNotecard({
         label="Fix Note"
       />
       <InputField
-        text={noteData.noteTitle}
+        text={noteTitle}
         className="notecard__title"
         placeHolder="Title"
-        handleChange={(e) => {
-          setNoteData({ ...noteData, noteTitle: e.target.value });
+        handleChange={(value) => {
+          setNoteData({ ...noteData, noteTitle: value });
           sendNoteData(noteData);
         }}
       />
       <InputField
-        text={noteData.noteDescription}
+        text={noteDescription}
         className="notecard__desc"
         placeHolder="Take a note..."
-        handleChange={(e) => {
-          setNoteData({ ...noteData, noteDescription: e.target.value });
+        handleChange={(value) => {
+          setNoteData({ ...noteData, noteDescription: value });
           sendNoteData(noteData);
         }}
       />
