@@ -12,6 +12,7 @@ export default function BasicNotecard({
   noteItem,
   handleDataChange,
   sendNoteData,
+  typeOfNoteEl,
 }) {
   const { noteTitle, isArchived, isPinned, isTrashed, noteDescription } = noteItem;
   const [showModal, setShowModal] = useState({ menu: false, color: false });
@@ -68,14 +69,7 @@ export default function BasicNotecard({
           sendNoteData({ noteTitle: value });
         }}
       />
-      <InputField
-        text={noteDescription}
-        className="notecard__desc"
-        placeHolder="Take a note..."
-        handleChange={(value) => {
-          sendNoteData({ noteDescription: value });
-        }}
-      />
+      {typeOfNoteEl}
       <LowerToolbar
         noteData={noteItem}
         handleDataChange={handleDataChange}
@@ -88,4 +82,5 @@ BasicNotecard.propTypes = {
   noteItem: PropTypes.instanceOf(NoteItemModel).isRequired,
   handleDataChange: PropTypes.func.isRequired,
   sendNoteData: PropTypes.func.isRequired,
+  typeOfNoteEl: PropTypes.node.isRequired,
 };

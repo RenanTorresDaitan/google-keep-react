@@ -4,6 +4,7 @@ import './styles.css';
 import NoteItemModel from '../../models/NoteItemModel';
 import BasicNotecard from '../BasicNotecard';
 import ToDoItemsContainer from '../ToDoItemsContainer';
+import InputField from '../InputField';
 import Button from '../Button';
 import db from '../../models/DBManager';
 
@@ -25,6 +26,16 @@ export default function Notecard({ noteItem, update }) {
       handleDataChange={(data) => handleUpdate({ toDoItems: data })}
     />
   );
+  const noteDescriptionEl = (
+    <InputField
+      text={noteData.noteDescription}
+      className="notecard__desc"
+      placeHolder="Take a note..."
+      handleChange={(value) => {
+        setNoteData({ ...noteData, noteDescription: value });
+      }}
+    />
+  );
   return (
     <div
       className="notecard"
@@ -39,8 +50,8 @@ export default function Notecard({ noteItem, update }) {
           setNoteData({ ...noteData, ...data });
           setDoneBtnVisible(true);
         }}
+        typeOfNoteEl={isToDoList ? toDoItemsContainer : noteDescriptionEl}
       />
-      {isToDoList && toDoItemsContainer}
       {doneBtnVisible && (
         <Button
           className="notecard__done-button"

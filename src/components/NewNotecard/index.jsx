@@ -65,9 +65,9 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
         <MenuPanel
           options={{
             isArchived: newNoteData.isArchived,
-            isTrashed: newNoteData.isTrashed,
+            isTrashed: true,
           }}
-          handleDataChange={(options) => handleDataChange({ options })}
+          handleDataChange={(options) => handleDataChange(options)}
         />
       )}
       {!newNoteData.isTrashed && (
