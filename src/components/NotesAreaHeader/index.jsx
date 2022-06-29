@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from '../Button';
 import db from '../../models/DBManager';
 
-function NotesAreaHeader({ sidebar, notesLength }) {
+function NotesAreaHeader({ sidebar, notesLength, update }) {
   let imageClass = '';
   let notesClass = '';
   let title = '';
@@ -16,6 +16,7 @@ function NotesAreaHeader({ sidebar, notesLength }) {
         className="empty-trash-btn"
         handleClick={() => {
           db.deleteTrashedNotes();
+          update();
         }}
         label="Empty trash"
         btnText="Empty Trash"
@@ -71,4 +72,5 @@ export default NotesAreaHeader;
 NotesAreaHeader.propTypes = {
   sidebar: PropTypes.string.isRequired,
   notesLength: PropTypes.number.isRequired,
+  update: PropTypes.func.isRequired,
 };

@@ -42,6 +42,13 @@ class DBManager {
     this.noteItemsList.removeNoteFromList(id);
     this.createNewNoteItem({ ...oldNote, ...noteData });
   }
+
+  deleteTrashedNotes() {
+    this.noteItemsList.getList().forEach((item) => {
+      if (item.isTrashed) this.noteItemsList.removeNoteFromList(item.id);
+      this.updateNotesOnLocalStorage();
+    });
+  }
 }
 
 const db = new DBManager();

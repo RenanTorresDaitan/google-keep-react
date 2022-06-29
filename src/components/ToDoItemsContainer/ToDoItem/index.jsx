@@ -1,35 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import '../styles.css';
 
-function ToDoItem({ id, title, checked }) {
-  const [toDoData, setToDoData] = useState({
-    id,
-    title,
-    checked,
-  });
+function ToDoItem({ toDoItem, updateToDoItem }) {
   const [showText, setShowText] = useState(true);
-  const handleToDoData = (data) => {
-    const { name, value } = data;
-    setToDoData((prevNoteData) => ({
-      ...prevNoteData,
-      [name]: value,
-    }));
-  };
-
+  const { id, title, checked } = toDoItem;
   return (
-    <div className="to-do-item" data-note-id={toDoData.id}>
+    <div className="to-do-item" data-note-id={id}>
       <div
         aria-labelledby="label"
         role="button"
         className="to-do-item-checkbox"
-        check={toDoData.checked}
+        check={checked}
         tabIndex={0}
         onClick={() => {
-          handleToDoData({
-            name: 'checked',
-            value: toDoData.checked === 'true' ? 'false' : 'true',
-          });
+          updateToDoItem({ id, title, checked: checked === 'true' ? 'false' : 'true' });
         }}
         onKeyDown={(e) => {}}
         name="checkbox"
@@ -41,19 +26,23 @@ function ToDoItem({ id, title, checked }) {
           className="to-do-item-label"
           tabIndex={0}
           onClick={() => setShowText(false)}
-          onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space' ? setShowText(true) : null)}
+          onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space' ? setShowText(false) : null)}
         >
-          {toDoData.title}
+          {title}
         </span>
       )}
       {!showText && (
         <textarea
           className="to-do-item-textarea"
           placeholder="List item"
-          value={toDoData.title}
+          value={title}
           onChange={(event) => {
-            handleToDoData({ name: 'title', value: event.target.value });
-            if (event.nativeEvent.inputType === 'insertLineBreak') {
+            updateToDoItem({ id, title: event.target.value, checked });
+          }}
+          onKeyDown={(e) => {
+            if (e.code === 'Enter') {
+              e.preventDefault();
+              updateToDoItem({ id, title, checked });
               setShowText(true);
             }
           }}
@@ -67,7 +56,10 @@ function ToDoItem({ id, title, checked }) {
 export default ToDoItem;
 
 ToDoItem.propTypes = {
-  id: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  checked: PropTypes.string.isRequired,
+  toDoItem: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    checked: PropTypes.string.isRequired,
+  }).isRequired,
+  updateToDoItem: PropTypes.func.isRequired,
 };
