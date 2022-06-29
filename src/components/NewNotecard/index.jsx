@@ -33,13 +33,21 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
     setDoneBtnVisible(true);
   }, [newNoteData.noteDescription, newNoteData.noteTitle]);
 
-  const toDoItemsContainer = (
+  const toDoItemsEl = (
     <ToDoItemsContainer
       toDoItems={newNoteData.toDoItems}
       handleDataChange={(data) => handleDataChange({ toDoItems: data })}
     />
   );
-
+  const noteDescriptionEl = (
+    <InputField
+      text={newNoteData.noteDescription}
+      className="notecard__desc"
+      placeHolder="Take a note..."
+      handleChange={(value) => handleDataChange({ noteDescription: value })}
+      visible={false}
+    />
+  );
   const handleNewNote = () => {
     db.createNewNoteItem(newNoteData);
     setDoneBtnVisible(false);
@@ -109,17 +117,7 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
         handleChange={(value) => handleDataChange({ noteTitle: value })}
         visible={false}
       />
-      {newNoteData.isToDoList ? (
-        toDoItemsContainer
-      ) : (
-        <InputField
-          text={newNoteData.noteDescription}
-          className="notecard__desc"
-          placeHolder="Take a note..."
-          handleChange={(value) => handleDataChange({ noteDescription: value })}
-          visible={false}
-        />
-      )}
+      {newNoteData.isToDoList ? toDoItemsEl : noteDescriptionEl}
       {doneBtnVisible && (
         <Button
           className="notecard__done-button"

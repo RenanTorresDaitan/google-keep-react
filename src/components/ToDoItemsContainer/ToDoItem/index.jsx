@@ -1,10 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import '../styles.css';
 
 function ToDoItem({ toDoItem, updateToDoItem }) {
   const [showText, setShowText] = useState(true);
+  const textarea = useRef();
   const { id, title, checked } = toDoItem;
+
+  useEffect(() => {
+    if (!showText) {
+      textarea.current.focus();
+      textarea.current.setSelectionRange(
+        textarea.current.value.length,
+        textarea.current.value.length,
+      );
+    }
+  }, [showText]);
+
   return (
     <div className="to-do-item" data-note-id={id}>
       <div
@@ -14,7 +26,11 @@ function ToDoItem({ toDoItem, updateToDoItem }) {
         check={checked}
         tabIndex={0}
         onClick={() => {
-          updateToDoItem({ id, title, checked: checked === 'true' ? 'false' : 'true' });
+          updateToDoItem({
+            id,
+            title,
+            checked: checked === 'true' ? 'false' : 'true',
+          });
         }}
         onKeyDown={(e) => {}}
         name="checkbox"
@@ -25,7 +41,9 @@ function ToDoItem({ toDoItem, updateToDoItem }) {
           htmlFor="checkbox"
           className="to-do-item-label"
           tabIndex={0}
-          onClick={() => setShowText(false)}
+          onClick={() => {
+            setShowText(false);
+          }}
           onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space' ? setShowText(false) : null)}
         >
           {title}
@@ -36,14 +54,15 @@ function ToDoItem({ toDoItem, updateToDoItem }) {
           className="to-do-item-textarea"
           placeholder="List item"
           value={title}
+          ref={textarea}
           onChange={(event) => {
             updateToDoItem({ id, title: event.target.value, checked });
           }}
           onKeyDown={(e) => {
             if (e.code === 'Enter') {
               e.preventDefault();
-              updateToDoItem({ id, title, checked });
               setShowText(true);
+              updateToDoItem({ id, title, checked });
             }
           }}
         />

@@ -20,7 +20,7 @@ export default function Notecard({ noteItem, update }) {
     db.updateNote(id, data);
     update(true);
   };
-  const toDoItemsContainer = (
+  const toDoItemsEl = (
     <ToDoItemsContainer
       toDoItems={noteItem.toDoItems}
       handleDataChange={(data) => handleUpdate({ toDoItems: data })}
@@ -50,7 +50,7 @@ export default function Notecard({ noteItem, update }) {
           setNoteData({ ...noteData, ...data });
           setDoneBtnVisible(true);
         }}
-        typeOfNoteEl={isToDoList ? toDoItemsContainer : noteDescriptionEl}
+        typeOfNoteEl={isToDoList ? toDoItemsEl : noteDescriptionEl}
       />
       {doneBtnVisible && (
         <Button
