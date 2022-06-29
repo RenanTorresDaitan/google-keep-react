@@ -13,6 +13,7 @@ export default function Content({ sidebarSelected, notesToRender, update }) {
       <NotesAreaHeader
         sidebar={sidebarSelected}
         notesLength={notesToRender.length}
+        update={update}
       />
       <NoteItemsList notesToRender={notesToRender} update={update} />
     </div>

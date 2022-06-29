@@ -14,14 +14,17 @@ export default function Notecard({ noteItem, update }) {
     noteTitle,
     noteDescription,
   });
-  const toDoItemsContainer = (
-    <ToDoItemsContainer toDoItems={noteItem.toDoItems} />
-  );
   const handleUpdate = (data) => {
     setDoneBtnVisible(false);
     db.updateNote(id, data);
     update(true);
   };
+  const toDoItemsContainer = (
+    <ToDoItemsContainer
+      toDoItems={noteItem.toDoItems}
+      handleDataChange={(data) => handleUpdate({ toDoItems: data })}
+    />
+  );
   return (
     <div
       className="notecard"

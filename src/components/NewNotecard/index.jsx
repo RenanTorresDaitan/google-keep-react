@@ -34,7 +34,10 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
   }, [newNoteData.noteDescription, newNoteData.noteTitle]);
 
   const toDoItemsContainer = (
-    <ToDoItemsContainer toDoItems={newNoteData.toDoItems} />
+    <ToDoItemsContainer
+      toDoItems={newNoteData.toDoItems}
+      handleDataChange={(data) => handleDataChange({ toDoItems: data })}
+    />
   );
 
   const handleNewNote = () => {
