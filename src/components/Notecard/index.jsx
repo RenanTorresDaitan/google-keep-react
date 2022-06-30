@@ -33,6 +33,7 @@ export default function Notecard({ noteItem, update }) {
       placeHolder="Take a note..."
       handleChange={(value) => {
         setNoteData({ ...noteData, noteDescription: value });
+        setDoneBtnVisible(true);
       }}
     />
   );

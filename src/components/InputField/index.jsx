@@ -6,7 +6,11 @@ function InputField({ text, placeHolder, className, handleChange, visible }) {
   const [input, setInput] = useState(text);
   const textarea = useRef();
   const handleShowText = () => {
-    setShowText((prevState) => !prevState);
+    if (input === '') {
+      setShowText(false);
+    } else {
+      setShowText((prevState) => !prevState);
+    }
   };
 
   useEffect(() => {

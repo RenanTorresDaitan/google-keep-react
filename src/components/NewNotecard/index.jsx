@@ -29,9 +29,6 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
     }));
     setShowModal({ menu: false, color: false });
   };
-  useEffect(() => {
-    setDoneBtnVisible(true);
-  }, [newNoteData.noteDescription, newNoteData.noteTitle]);
 
   const toDoItemsEl = (
     <ToDoItemsContainer
@@ -54,7 +51,9 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
     showHeader();
     update();
   };
-
+  useEffect(() => {
+    setDoneBtnVisible(true);
+  }, [newNoteData.noteDescription, newNoteData.noteTitle]);
   return (
     <div
       className="notecard"
