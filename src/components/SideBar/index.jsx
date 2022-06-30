@@ -9,34 +9,45 @@ import boxIcon from '../../assets/svg/box-icon.svg';
 import trashIcon from '../../assets/svg/trash-icon.svg';
 import './styles.css';
 
-export default function SideBar({ active, changeSidebar }) {
+export default function SideBar({ active, changeSidebar, expand }) {
   return (
-    <div className="sidebar__container">
-      <SideBarItem
-        active={(active === 'NOTES').toString()}
-        icon={lampIcon}
-        label="Notes"
-        click={changeSidebar}
-      />
-      <SideBarItem
-        active={(active === 'REMINDERS').toString()}
-        icon={bellIcon}
-        label="Reminders"
-        click={changeSidebar}
-      />
-      <SideBarItem active="false" icon={pencilIcon} label="Edit label" />
-      <SideBarItem
-        active={(active === 'ARCHIVE').toString()}
-        icon={boxIcon}
-        label="Archive"
-        click={changeSidebar}
-      />
-      <SideBarItem
-        active={(active === 'TRASH').toString()}
-        icon={trashIcon}
-        label="Trash"
-        click={changeSidebar}
-      />
+    <div className={`sidebar__container ${expand ? 'sidebar__container--expanded' : ''}`}>
+      <div className={`sidebar ${expand ? 'sidebar--expanded' : ''}`}>
+        <SideBarItem
+          active={(active === 'NOTES').toString()}
+          icon={lampIcon}
+          label="Notes"
+          click={changeSidebar}
+          expand={expand}
+        />
+        <SideBarItem
+          active={(active === 'REMINDERS').toString()}
+          icon={bellIcon}
+          label="Reminders"
+          click={changeSidebar}
+          expand={expand}
+        />
+        <SideBarItem
+          active="false"
+          icon={pencilIcon}
+          label="Edit label"
+          expand={expand}
+        />
+        <SideBarItem
+          active={(active === 'ARCHIVE').toString()}
+          icon={boxIcon}
+          label="Archive"
+          click={changeSidebar}
+          expand={expand}
+        />
+        <SideBarItem
+          active={(active === 'TRASH').toString()}
+          icon={trashIcon}
+          label="Trash"
+          click={changeSidebar}
+          expand={expand}
+        />
+      </div>
     </div>
   );
 }
@@ -44,4 +55,5 @@ export default function SideBar({ active, changeSidebar }) {
 SideBar.propTypes = {
   changeSidebar: PropTypes.func.isRequired,
   active: PropTypes.string.isRequired,
+  expand: PropTypes.bool.isRequired,
 };

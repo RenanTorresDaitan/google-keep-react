@@ -8,6 +8,10 @@ import db from '../models/DBManager';
 export default function App() {
   const [sidebarSelected, setSidebarSelected] = useState('NOTES');
   const [notesToRender, setNotesToRender] = useState([]);
+  const [expandSideBar, setExpandSideBar] = useState(false);
+  const handleMenuClick = () => {
+    setExpandSideBar((prevState) => !prevState);
+  };
   const [update, setUpdate] = useState(Date.now());
   const handleSidebarChange = (sidebar) => setSidebarSelected(sidebar);
 
@@ -39,11 +43,15 @@ export default function App() {
 
   return (
     <div className="app">
-      <Header sidebarSelected={sidebarSelected} />
+      <Header
+        sidebarSelected={sidebarSelected}
+        handleMenuClick={handleMenuClick}
+      />
       <section className="main-section">
         <SideBar
           active={sidebarSelected}
           changeSidebar={(label) => handleSidebarChange(label)}
+          expand={expandSideBar}
         />
         <Content
           sidebarSelected={sidebarSelected}

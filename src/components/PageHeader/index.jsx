@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from '../Button';
 import './styles.css';
 
-function PageHeader({ sidebarSelected }) {
+function PageHeader({ sidebarSelected, handleMenuClick }) {
   let title = 'Keep';
   let subtitle = 'Notes';
 
@@ -32,7 +32,7 @@ function PageHeader({ sidebarSelected }) {
       <Button
         className="header__menu-bars"
         label="Menu"
-        handleClick={() => {}}
+        handleClick={handleMenuClick}
       />
       {sidebarSelected === 'NOTES' && <div className="header__icon" />}
       <div className="header__title-container">
@@ -49,6 +49,7 @@ function PageHeader({ sidebarSelected }) {
 
 PageHeader.propTypes = {
   sidebarSelected: PropTypes.string.isRequired,
+  handleMenuClick: PropTypes.func.isRequired,
 };
 
 export default PageHeader;

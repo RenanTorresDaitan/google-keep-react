@@ -8,7 +8,7 @@ import PageHeader from '../PageHeader';
 
 import './styles.css';
 
-function Header({ sidebarSelected }) {
+function Header({ sidebarSelected, handleMenuClick }) {
   const [showSearch, setShowSearch] = useState(false);
 
   function handleShowSearch() {
@@ -17,7 +17,7 @@ function Header({ sidebarSelected }) {
 
   return (
     <header className="app-header">
-      <PageHeader sidebarSelected={sidebarSelected} />
+      <PageHeader sidebarSelected={sidebarSelected} handleMenuClick={handleMenuClick} />
       {showSearch && <SearchBar />}
       <div className="header-icons">
         <div
@@ -58,6 +58,7 @@ function Header({ sidebarSelected }) {
 
 Header.propTypes = {
   sidebarSelected: PropTypes.string.isRequired,
+  handleMenuClick: PropTypes.func.isRequired,
 };
 
 export default Header;
