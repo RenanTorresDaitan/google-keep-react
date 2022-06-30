@@ -1,5 +1,5 @@
 .sidebar__container {
-  display: flex;
+  display: none;
   flex-direction: column;
   width: 4.25rem;
   height: 100%;
@@ -58,4 +58,10 @@
 }
 .sidebar-item[active="true"] .sidebar-item__icon > .svg-icon-large {
   opacity: 1;
+}
+
+@media screen and (min-width: 900px) {
+  .sidebar__container{
+    display:flex;
+  }
 }

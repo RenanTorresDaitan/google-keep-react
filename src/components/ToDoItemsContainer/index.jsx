@@ -14,6 +14,7 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
       key={item.id}
       toDoItem={item}
       updateToDoItem={(td) => handleUpdateToDo(td)}
+      deleteToDoItem={(td) => deleteToDoItem(td)}
     />
   ));
   const uncheckedItems = toDoItems.filter((item) => item.checked === 'false');
@@ -22,6 +23,7 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
       key={item.id}
       toDoItem={item}
       updateToDoItem={(td) => handleUpdateToDo(td)}
+      deleteToDoItem={(td) => deleteToDoItem(td)}
     />
   ));
   const handleUpdateToDo = (newItem) => {
@@ -31,13 +33,26 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
     });
     handleDataChange(newToDos);
   };
+  const deleteToDoItem = (item) => {
+    const newToDos = toDoItems.filter((oldItem) => oldItem.id !== item.id);
+    handleDataChange(newToDos);
+  };
 
   const createNewToDoItem = (event) => {
     event.preventDefault();
     if (event.keyCode > 60 && event.keyCode < 95) {
+      const lastId = toDoItems.sort((a, b) => a.id - b.id);
+      let nextId = 1;
+      if (lastId.length > 0) {
+        nextId = lastId[lastId.length - 1].id + 1;
+      }
       handleDataChange([
         ...toDoItems,
-        { id: toDoItems.length, title: event.key, checked: 'false' },
+        {
+          id: nextId,
+          title: event.key,
+          checked: 'false',
+        },
       ]);
     }
   };

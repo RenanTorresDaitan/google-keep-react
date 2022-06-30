@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import SearchBar from '../SearchBar/SearchBar';
 import searchIcon from '../../assets/svg/search-icon.svg';
-import menuBarsIcon from '../../assets/svg/menu-bars.svg';
 import openNewTabIcon from '../../assets/svg/open-new-tab-icon.svg';
 import closeIcon from '../../assets/svg/close-icon.svg';
+import PageHeader from '../PageHeader';
+
 import './styles.css';
 
-export default function Header() {
+function Header({ sidebarSelected }) {
   const [showSearch, setShowSearch] = useState(false);
 
   function handleShowSearch() {
@@ -15,18 +17,7 @@ export default function Header() {
 
   return (
     <header className="app-header">
-      <div className="header-container">
-        <div className="icon-button icon-size menu-bars">
-          <img className="svg-icon-large" src={menuBarsIcon} alt="" />
-        </div>
-        <div className="header-icon icon-size" />
-        <h2 className="header-title" tabIndex={-1}>
-          Keep
-        </h2>
-        <h3 className="header-subtitle" tabIndex={-1}>
-          Notes
-        </h3>
-      </div>
+      <PageHeader sidebarSelected={sidebarSelected} />
       {showSearch && <SearchBar />}
       <div className="header-icons">
         <div
@@ -36,7 +27,7 @@ export default function Header() {
           aria-label="Search"
           tabIndex={0}
           onClick={handleShowSearch}
-          onKeyDown={(e) => ((e.code === 'Enter' || e.code === 'Space') ? handleShowSearch() : null)}
+          onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space' ? handleShowSearch() : null)}
         >
           <img className="svg-icon" src={searchIcon} alt="" />
         </div>
@@ -64,3 +55,9 @@ export default function Header() {
     </header>
   );
 }
+
+Header.propTypes = {
+  sidebarSelected: PropTypes.string.isRequired,
+};
+
+export default Header;

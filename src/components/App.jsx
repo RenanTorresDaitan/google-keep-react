@@ -39,7 +39,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <Header />
+      <Header sidebarSelected={sidebarSelected} />
       <section className="main-section">
         <SideBar
           active={sidebarSelected}

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import '../styles.css';
 
-function ToDoItem({ toDoItem, updateToDoItem }) {
+function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }) {
   const [showText, setShowText] = useState(true);
   const textarea = useRef();
   const { id, title, checked } = toDoItem;
@@ -67,7 +67,17 @@ function ToDoItem({ toDoItem, updateToDoItem }) {
           }}
         />
       )}
-      <div className="to-do-item-delete" />
+      <div
+        className="to-do-item-delete"
+        role="button"
+        tabIndex={0}
+        name="delete-btn"
+        onClick={() => deleteToDoItem(toDoItem)}
+        onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space'
+          ? deleteToDoItem(toDoItem)
+          : null)}
+        label="delete note"
+      />
     </div>
   );
 }
@@ -81,4 +91,5 @@ ToDoItem.propTypes = {
     checked: PropTypes.string.isRequired,
   }).isRequired,
   updateToDoItem: PropTypes.func.isRequired,
+  deleteToDoItem: PropTypes.func.isRequired,
 };
