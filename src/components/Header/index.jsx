@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import SearchBar from '../SearchBar/SearchBar';
-import searchIcon from '../../assets/svg/search-icon.svg';
-import openNewTabIcon from '../../assets/svg/open-new-tab-icon.svg';
-import closeIcon from '../../assets/svg/close-icon.svg';
+import SearchBar from '../SearchBar';
 import PageHeader from '../PageHeader';
 
 import './styles.css';
+import Button from '../Button';
 
 function Header({ sidebarSelected, handleMenuClick }) {
   const [showSearch, setShowSearch] = useState(false);
@@ -17,40 +15,27 @@ function Header({ sidebarSelected, handleMenuClick }) {
 
   return (
     <header className="app-header">
-      <PageHeader sidebarSelected={sidebarSelected} handleMenuClick={handleMenuClick} />
-      {showSearch && <SearchBar />}
+      <PageHeader
+        sidebarSelected={sidebarSelected}
+        handleMenuClick={handleMenuClick}
+      />
+      {showSearch && <SearchBar closeSearch={() => handleShowSearch()} />}
       <div className="header-icons">
-        <div
-          id="search-icon-btn"
-          className="icon-button icon-size"
-          role="button"
-          aria-label="Search"
-          tabIndex={0}
-          onClick={handleShowSearch}
-          onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space' ? handleShowSearch() : null)}
-        >
-          <img className="svg-icon" src={searchIcon} alt="" />
-        </div>
-        <div
-          className="icon-button icon-size"
-          role="button"
-          aria-label="Open in new tab"
-          tabIndex={0}
-        >
-          <img
-            className="svg-icon"
-            src={openNewTabIcon}
-            alt="Open in a new Tab"
-          />
-        </div>
-        <div
-          className="icon-button icon-size"
-          role="button"
-          aria-label="Close"
-          tabIndex={0}
-        >
-          <img className="svg-icon" src={closeIcon} alt="Close App" />
-        </div>
+        <Button
+          className="search-panel__button icon-size icon-button"
+          handleClick={() => handleShowSearch()}
+          label="Search"
+        />
+        <Button
+          className="search-panel__open-new-tab icon-size icon-button"
+          handleClick={() => {}}
+          label="Open in new tab"
+        />
+        <Button
+          className="search-panel__close-button icon-size icon-button"
+          handleClick={() => {}}
+          label="Close"
+        />
       </div>
     </header>
   );
