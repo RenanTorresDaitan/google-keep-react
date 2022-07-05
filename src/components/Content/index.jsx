@@ -1,28 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import NoteItemsList from '../NoteItemsList';
 import TakeNewNotesHeader from '../TakeNewNotesHeader';
 import './styles.css';
-import NoteItemModel from '../../models/NoteItemModel';
 import NotesAreaHeader from '../NotesAreaHeader';
+import NotesContext from '../contexts/NotesContext';
 
-export default function Content({ sidebarSelected, notesToRender, update }) {
+export default function Content({ update }) {
+  const { sidebarSelected } = useContext(NotesContext);
   return (
     <div className="content">
-      {sidebarSelected !== 'TRASH' && (<TakeNewNotesHeader update={update} />)}
-      <NotesAreaHeader
-        sidebar={sidebarSelected}
-        notesLength={notesToRender.length}
-        update={update}
-      />
-      <NoteItemsList notesToRender={notesToRender} update={update} />
+      {sidebarSelected !== 'TRASH' && <TakeNewNotesHeader update={update} />}
+      <NotesAreaHeader update={update} />
+      <NoteItemsList update={update} />
     </div>
   );
 }
 
 Content.propTypes = {
-  notesToRender: PropTypes.arrayOf(PropTypes.instanceOf(NoteItemModel))
-    .isRequired,
-  sidebarSelected: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
 };

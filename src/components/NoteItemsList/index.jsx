@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Notecard from '../Notecard';
 import './styles.css';
-import NoteItemModel from '../../models/NoteItemModel';
+import NotesContext from '../contexts/NotesContext';
 
-export default function NoteItemsList({ notesToRender, update }) {
+export default function NoteItemsList({ update }) {
+  const { notesToRender } = useContext(NotesContext);
+
   const notecards = notesToRender.map((noteItem) => (
     <Notecard key={noteItem.id} noteItem={noteItem} update={update} />
   ));
@@ -12,7 +14,5 @@ export default function NoteItemsList({ notesToRender, update }) {
 }
 
 NoteItemsList.propTypes = {
-  notesToRender: PropTypes.arrayOf(PropTypes.instanceOf(NoteItemModel))
-    .isRequired,
   update: PropTypes.func.isRequired,
 };

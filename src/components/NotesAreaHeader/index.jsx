@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Button from '../Button';
 import db from '../../models/DBManager';
+import NotesContext from '../contexts/NotesContext';
 
-function NotesAreaHeader({ sidebar, notesLength, update }) {
+function NotesAreaHeader({ update }) {
+  const { sidebarSelected, notesToRender } = useContext(NotesContext);
   let imageClass = '';
   let notesClass = '';
   let title = '';
@@ -24,7 +26,7 @@ function NotesAreaHeader({ sidebar, notesLength, update }) {
     </div>
   );
 
-  switch (sidebar) {
+  switch (sidebarSelected) {
     case 'NOTES':
       imageClass = 'no-notes-img';
       notesClass = 'no-notes-found no-notes-found-label';
@@ -55,8 +57,8 @@ function NotesAreaHeader({ sidebar, notesLength, update }) {
 
   return (
     <>
-      {sidebar === 'TRASH' && trashHeader}
-      {notesLength === 0 && (
+      {sidebarSelected === 'TRASH' && trashHeader}
+      {notesToRender.length === 0 && (
         <div className={notesClass}>
           <div className={imageClass} />
           <h2>{title}</h2>
@@ -70,7 +72,5 @@ function NotesAreaHeader({ sidebar, notesLength, update }) {
 export default NotesAreaHeader;
 
 NotesAreaHeader.propTypes = {
-  sidebar: PropTypes.string.isRequired,
-  notesLength: PropTypes.number.isRequired,
   update: PropTypes.func.isRequired,
 };

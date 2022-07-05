@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Content from './Content';
 import Header from './Header';
 import SideBar from './SideBar';
 import '../styles/styles.css';
 import db from '../models/DBManager';
+import NotesContext from './contexts/NotesContext';
 
 export default function App() {
   const [sidebarSelected, setSidebarSelected] = useState('NOTES');
@@ -41,24 +42,23 @@ export default function App() {
     }
   }, [sidebarSelected, noteList, update]);
 
+  const notesContext = useMemo(
+    () => ({ sidebarSelected, notesToRender }),
+    [sidebarSelected, notesToRender],
+  );
+
   return (
     <div className="app">
-      <Header
-        sidebarSelected={sidebarSelected}
-        handleMenuClick={handleMenuClick}
-      />
-      <section className="main-section">
-        <SideBar
-          active={sidebarSelected}
-          changeSidebar={(label) => handleSidebarChange(label)}
-          expand={expandSideBar}
-        />
-        <Content
-          sidebarSelected={sidebarSelected}
-          notesToRender={notesToRender}
-          update={() => setUpdate(Date.now())}
-        />
-      </section>
+      <NotesContext.Provider value={notesContext}>
+        <Header handleMenuClick={handleMenuClick} />
+        <section className="main-section">
+          <SideBar
+            changeSidebar={(label) => handleSidebarChange(label)}
+            expand={expandSideBar}
+          />
+          <Content update={() => setUpdate(Date.now())} />
+        </section>
+      </NotesContext.Provider>
     </div>
   );
 }

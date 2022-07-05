@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import SideBarItem from './SideBarItem';
@@ -8,20 +8,26 @@ import pencilIcon from '../../assets/svg/pencil-icon.svg';
 import boxIcon from '../../assets/svg/box-icon.svg';
 import trashIcon from '../../assets/svg/trash-icon.svg';
 import './styles.css';
+import NotesContext from '../contexts/NotesContext';
 
-export default function SideBar({ active, changeSidebar, expand }) {
+export default function SideBar({ changeSidebar, expand }) {
+  const { sidebarSelected } = useContext(NotesContext);
   return (
-    <div className={`sidebar__container ${expand ? 'sidebar__container--expanded' : ''}`}>
+    <div
+      className={`sidebar__container ${
+        expand ? 'sidebar__container--expanded' : ''
+      }`}
+    >
       <div className={`sidebar ${expand ? 'sidebar--expanded' : ''}`}>
         <SideBarItem
-          active={(active === 'NOTES').toString()}
+          active={(sidebarSelected === 'NOTES').toString()}
           icon={lampIcon}
           label="Notes"
           click={changeSidebar}
           expand={expand}
         />
         <SideBarItem
-          active={(active === 'REMINDERS').toString()}
+          active={(sidebarSelected === 'REMINDERS').toString()}
           icon={bellIcon}
           label="Reminders"
           click={changeSidebar}
@@ -34,14 +40,14 @@ export default function SideBar({ active, changeSidebar, expand }) {
           expand={expand}
         />
         <SideBarItem
-          active={(active === 'ARCHIVE').toString()}
+          active={(sidebarSelected === 'ARCHIVE').toString()}
           icon={boxIcon}
           label="Archive"
           click={changeSidebar}
           expand={expand}
         />
         <SideBarItem
-          active={(active === 'TRASH').toString()}
+          active={(sidebarSelected === 'TRASH').toString()}
           icon={trashIcon}
           label="Trash"
           click={changeSidebar}
@@ -54,6 +60,5 @@ export default function SideBar({ active, changeSidebar, expand }) {
 
 SideBar.propTypes = {
   changeSidebar: PropTypes.func.isRequired,
-  active: PropTypes.string.isRequired,
   expand: PropTypes.bool.isRequired,
 };

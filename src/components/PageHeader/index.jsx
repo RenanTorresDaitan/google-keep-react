@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Button from '../Button';
+import NotesContext from '../contexts/NotesContext';
 import './styles.css';
 
-function PageHeader({ sidebarSelected, handleMenuClick }) {
+function PageHeader({ handleMenuClick }) {
+  const { sidebarSelected } = useContext(NotesContext);
+
   let title = 'Keep';
   let subtitle = 'Notes';
 
@@ -48,7 +51,6 @@ function PageHeader({ sidebarSelected, handleMenuClick }) {
 }
 
 PageHeader.propTypes = {
-  sidebarSelected: PropTypes.string.isRequired,
   handleMenuClick: PropTypes.func.isRequired,
 };
 
