@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Button from '../Button';
-import NotesContext from '../contexts/NotesContext';
+import { NotesContext } from '../contexts/NotesProvider';
 import './styles.css';
 
 function PageHeader({ handleMenuClick }) {

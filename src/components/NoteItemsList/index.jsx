@@ -1,18 +1,13 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
 import Notecard from '../Notecard';
 import './styles.css';
-import NotesContext from '../contexts/NotesContext';
+import { NotesContext } from '../contexts/NotesProvider';
 
-export default function NoteItemsList({ update }) {
+export default function NoteItemsList() {
   const { notesToRender } = useContext(NotesContext);
 
   const notecards = notesToRender.map((noteItem) => (
-    <Notecard key={noteItem.id} noteItem={noteItem} update={update} />
+    <Notecard key={noteItem.id} noteItem={noteItem} />
   ));
   return <section className="notes-area">{notecards}</section>;
 }
-
-NoteItemsList.propTypes = {
-  update: PropTypes.func.isRequired,
-};

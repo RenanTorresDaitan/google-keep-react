@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import Button from '../Button';
 import NewNotecard from '../NewNotecard';
 import './styles.css';
 
-function TakeNewNotesHeader({ update }) {
+function TakeNewNotesHeader() {
   const [displayHeader, setDisplayHeader] = useState(true);
   const [typeOfNewNote, setTypeOfNewNote] = useState('note');
   const handleDisplayHeader = (visible) => {
@@ -14,7 +13,6 @@ function TakeNewNotesHeader({ update }) {
     <NewNotecard
       typeOfNote={type}
       showHeader={() => handleDisplayHeader(true)}
-      update={update}
     />
   );
   return (
@@ -45,8 +43,5 @@ function TakeNewNotesHeader({ update }) {
     </div>
   );
 }
-TakeNewNotesHeader.propTypes = {
-  update: PropTypes.func.isRequired,
-};
 
 export default TakeNewNotesHeader;

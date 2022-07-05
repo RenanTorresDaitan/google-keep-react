@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import SearchBar from '../SearchBar';
 import PageHeader from '../PageHeader';

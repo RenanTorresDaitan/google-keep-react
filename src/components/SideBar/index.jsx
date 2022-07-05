@@ -8,10 +8,10 @@ import pencilIcon from '../../assets/svg/pencil-icon.svg';
 import boxIcon from '../../assets/svg/box-icon.svg';
 import trashIcon from '../../assets/svg/trash-icon.svg';
 import './styles.css';
-import NotesContext from '../contexts/NotesContext';
+import { NotesContext } from '../contexts/NotesProvider';
 
-export default function SideBar({ changeSidebar, expand }) {
-  const { sidebarSelected } = useContext(NotesContext);
+export default function SideBar({ expand }) {
+  const { sidebarSelected, handleSidebarChange } = useContext(NotesContext);
   return (
     <div
       className={`sidebar__container ${
@@ -23,14 +23,14 @@ export default function SideBar({ changeSidebar, expand }) {
           active={(sidebarSelected === 'NOTES').toString()}
           icon={lampIcon}
           label="Notes"
-          click={changeSidebar}
+          click={handleSidebarChange}
           expand={expand}
         />
         <SideBarItem
           active={(sidebarSelected === 'REMINDERS').toString()}
           icon={bellIcon}
           label="Reminders"
-          click={changeSidebar}
+          click={handleSidebarChange}
           expand={expand}
         />
         <SideBarItem
@@ -43,14 +43,14 @@ export default function SideBar({ changeSidebar, expand }) {
           active={(sidebarSelected === 'ARCHIVE').toString()}
           icon={boxIcon}
           label="Archive"
-          click={changeSidebar}
+          click={handleSidebarChange}
           expand={expand}
         />
         <SideBarItem
           active={(sidebarSelected === 'TRASH').toString()}
           icon={trashIcon}
           label="Trash"
-          click={changeSidebar}
+          click={handleSidebarChange}
           expand={expand}
         />
       </div>
@@ -59,6 +59,5 @@ export default function SideBar({ changeSidebar, expand }) {
 }
 
 SideBar.propTypes = {
-  changeSidebar: PropTypes.func.isRequired,
   expand: PropTypes.bool.isRequired,
 };

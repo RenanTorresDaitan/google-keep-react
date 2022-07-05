@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
 import Button from '../Button';
 import db from '../../models/DBManager';
-import NotesContext from '../contexts/NotesContext';
+import { NotesContext } from '../contexts/NotesProvider';
 
-function NotesAreaHeader({ update }) {
-  const { sidebarSelected, notesToRender } = useContext(NotesContext);
+function NotesAreaHeader() {
+  const { sidebarSelected, notesToRender, handleUpdate } = useContext(NotesContext);
   let imageClass = '';
   let notesClass = '';
   let title = '';
@@ -18,7 +17,7 @@ function NotesAreaHeader({ update }) {
         className="empty-trash-btn"
         handleClick={() => {
           db.deleteTrashedNotes();
-          update();
+          handleUpdate();
         }}
         label="Empty trash"
         btnText="Empty Trash"
@@ -70,7 +69,3 @@ function NotesAreaHeader({ update }) {
 }
 
 export default NotesAreaHeader;
-
-NotesAreaHeader.propTypes = {
-  update: PropTypes.func.isRequired,
-};
