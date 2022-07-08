@@ -23,11 +23,12 @@ export default Button;
 
 Button.defaultProps = {
   btnText: '',
+  handleClick: undefined,
 };
 
 Button.propTypes = {
   className: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   btnText: PropTypes.string,
-  handleClick: PropTypes.func.isRequired,
+  handleClick: PropTypes.func,
 };

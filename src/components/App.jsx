@@ -7,13 +7,13 @@ import NotesProvider from './contexts/NotesProvider';
 
 export default function App() {
   const [expandSideBar, setExpandSideBar] = useState(false);
-  const handleMenuClick = () => {
+  const handleSideBarExpansion = () => {
     setExpandSideBar((prevState) => !prevState);
   };
   return (
     <div className="app">
       <NotesProvider>
-        <Header handleMenuClick={handleMenuClick} />
+        <Header handleMenuClick={handleSideBarExpansion} />
         <section className="main-section">
           <SideBar
             expand={expandSideBar}

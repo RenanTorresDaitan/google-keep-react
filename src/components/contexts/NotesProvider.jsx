@@ -40,8 +40,10 @@ function NotesProvider({ children }) {
 
   const context = useMemo(
     () => ({
+      noteList,
       sidebarSelected,
       notesToRender,
+      setNotesToRender,
       handleSidebarChange,
       handleUpdate,
     }),

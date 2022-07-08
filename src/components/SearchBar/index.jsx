@@ -1,17 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
+import useDebounce from '../../hooks/useDebounce';
 
+import { NotesContext } from '../contexts/NotesProvider';
 import Button from '../Button';
 import './styles.css';
 
 function SearchBar({ closeSearch }) {
   const [searchValue, setSearchValue] = useState('');
+  const debouncedValue = useDebounce(searchValue, 300);
+  const { noteList, setNotesToRender } = useContext(NotesContext);
+  useEffect(() => {
+    const searchList = noteList.filter(
+      (note) => note.noteTitle.includes(debouncedValue)
+        || note.noteDescription.includes(debouncedValue)
+        || note.toDoItems.map((td) => td.title).join(' ').includes(debouncedValue),
+    );
+    setNotesToRender(searchList);
+  }, [debouncedValue, noteList, setNotesToRender]);
 
   const handleInput = (value) => {
     setSearchValue(value);
   };
   const cancelSearch = () => {
     setSearchValue('');
+    setNotesToRender(noteList);
     closeSearch();
   };
 
@@ -19,7 +32,6 @@ function SearchBar({ closeSearch }) {
     <div className="search-panel">
       <Button
         className="search-panel__button icon-size icon-button"
-        handleClick={() => {}}
         label="Search"
       />
       <input

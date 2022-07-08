@@ -9,28 +9,26 @@ import Button from '../Button';
 function Header({ handleMenuClick }) {
   const [showSearch, setShowSearch] = useState(false);
 
-  function handleShowSearch() {
+  const handleShowSearch = () => {
     setShowSearch((prevState) => !prevState);
-  }
+  };
 
   return (
     <header className="app-header">
       <PageHeader handleMenuClick={handleMenuClick} />
-      {showSearch && <SearchBar closeSearch={() => handleShowSearch()} />}
+      {showSearch && <SearchBar closeSearch={handleShowSearch} />}
       <div className="header-icons">
         <Button
           className="search-panel__button icon-size icon-button"
-          handleClick={() => handleShowSearch()}
+          handleClick={handleShowSearch}
           label="Search"
         />
         <Button
           className="search-panel__open-new-tab icon-size icon-button"
-          handleClick={() => {}}
           label="Open in new tab"
         />
         <Button
           className="search-panel__close-button icon-size icon-button"
-          handleClick={() => {}}
           label="Close"
         />
       </div>
