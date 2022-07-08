@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import './styles.css';
 import NoteItemModel from '../../models/NoteItemModel';
@@ -7,23 +7,25 @@ import ToDoItemsContainer from '../ToDoItemsContainer';
 import InputField from '../InputField';
 import Button from '../Button';
 import db from '../../models/DBManager';
+import { NotesContext } from '../contexts/NotesProvider';
 
-export default function Notecard({ noteItem, update }) {
+export default function Notecard({ noteItem }) {
   const { id, color, noteTitle, noteDescription, isToDoList } = noteItem;
   const [doneBtnVisible, setDoneBtnVisible] = useState(false);
   const [noteData, setNoteData] = useState({
     noteTitle,
     noteDescription,
   });
-  const handleUpdate = (data) => {
+  const { handleUpdate } = useContext(NotesContext);
+  const handleDataChange = (data) => {
     setDoneBtnVisible(false);
     db.updateNote(id, data);
-    update(true);
+    handleUpdate();
   };
   const toDoItemsEl = (
     <ToDoItemsContainer
       toDoItems={noteItem.toDoItems}
-      handleDataChange={(data) => handleUpdate({ toDoItems: data })}
+      handleDataChange={(data) => handleDataChange({ toDoItems: data })}
     />
   );
   const noteDescriptionEl = (
@@ -46,7 +48,7 @@ export default function Notecard({ noteItem, update }) {
     >
       <BasicNotecard
         noteItem={noteItem}
-        handleDataChange={handleUpdate}
+        handleDataChange={handleDataChange}
         sendNoteData={(data) => {
           setNoteData({ ...noteData, ...data });
           setDoneBtnVisible(true);
@@ -56,7 +58,7 @@ export default function Notecard({ noteItem, update }) {
       {doneBtnVisible && (
         <Button
           className="notecard__done-button"
-          handleClick={() => handleUpdate(noteData)}
+          handleClick={() => handleDataChange(noteData)}
           label="Done"
           btnText="Done"
         />
@@ -66,5 +68,4 @@ export default function Notecard({ noteItem, update }) {
 }
 Notecard.propTypes = {
   noteItem: PropTypes.instanceOf(NoteItemModel).isRequired,
-  update: PropTypes.func.isRequired,
 };

@@ -7,6 +7,7 @@
 }
 .header__menu-bars {
   display: none;
+  cursor: pointer;
   background-image: url(../../assets/svg/menu-bars.svg);
   background-repeat: no-repeat;
   background-position: center;

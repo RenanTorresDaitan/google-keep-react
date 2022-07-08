@@ -1,12 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import '../styles.css';
 
-function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }) {
+function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
   const [showText, setShowText] = useState(true);
   const textarea = useRef();
   const { id, title, checked } = toDoItem;
-
   useEffect(() => {
     if (!showText) {
       textarea.current.focus();
@@ -41,6 +40,7 @@ function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }) {
           htmlFor="checkbox"
           className="to-do-item-label"
           tabIndex={0}
+          ref={ref}
           onClick={() => {
             setShowText(false);
           }}
@@ -81,8 +81,8 @@ function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }) {
     </div>
   );
 }
-
-export default ToDoItem;
+const toDoItemRef = forwardRef(ToDoItem);
+export default toDoItemRef;
 
 ToDoItem.propTypes = {
   toDoItem: PropTypes.shape({

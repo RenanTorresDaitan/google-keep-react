@@ -1,9 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import Button from '../Button';
 import db from '../../models/DBManager';
+import { NotesContext } from '../contexts/NotesProvider';
 
-function NotesAreaHeader({ sidebar, notesLength, update }) {
+function NotesAreaHeader() {
+  const { sidebarSelected, notesToRender, handleUpdate } = useContext(NotesContext);
   let imageClass = '';
   let notesClass = '';
   let title = '';
@@ -16,7 +17,7 @@ function NotesAreaHeader({ sidebar, notesLength, update }) {
         className="empty-trash-btn"
         handleClick={() => {
           db.deleteTrashedNotes();
-          update();
+          handleUpdate();
         }}
         label="Empty trash"
         btnText="Empty Trash"
@@ -24,7 +25,7 @@ function NotesAreaHeader({ sidebar, notesLength, update }) {
     </div>
   );
 
-  switch (sidebar) {
+  switch (sidebarSelected) {
     case 'NOTES':
       imageClass = 'no-notes-img';
       notesClass = 'no-notes-found no-notes-found-label';
@@ -55,8 +56,8 @@ function NotesAreaHeader({ sidebar, notesLength, update }) {
 
   return (
     <>
-      {sidebar === 'TRASH' && trashHeader}
-      {notesLength === 0 && (
+      {sidebarSelected === 'TRASH' && trashHeader}
+      {notesToRender.length === 0 && (
         <div className={notesClass}>
           <div className={imageClass} />
           <h2>{title}</h2>
@@ -68,9 +69,3 @@ function NotesAreaHeader({ sidebar, notesLength, update }) {
 }
 
 export default NotesAreaHeader;
-
-NotesAreaHeader.propTypes = {
-  sidebar: PropTypes.string.isRequired,
-  notesLength: PropTypes.number.isRequired,
-  update: PropTypes.func.isRequired,
-};

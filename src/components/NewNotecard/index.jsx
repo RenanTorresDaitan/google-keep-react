@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import './styles.css';
 import ColorBallContainer from '../ColorBallContainer';
@@ -7,8 +7,9 @@ import Button from '../Button';
 import InputField from '../InputField';
 import db from '../../models/DBManager';
 import ToDoItemsContainer from '../ToDoItemsContainer';
+import { NotesContext } from '../contexts/NotesProvider';
 
-export default function NewNotecard({ typeOfNote, showHeader, update }) {
+export default function NewNotecard({ typeOfNote, showHeader }) {
   const [newNoteData, setNewNoteData] = useState({
     noteTitle: '',
     color: 'default',
@@ -22,6 +23,8 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
   });
   const [doneBtnVisible, setDoneBtnVisible] = useState(false);
   const [showModal, setShowModal] = useState({ menu: false, color: false });
+  const { handleUpdate } = useContext(NotesContext);
+
   const handleDataChange = (data) => {
     setNewNoteData((prevNoteData) => ({
       ...prevNoteData,
@@ -47,9 +50,9 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
   );
   const handleNewNote = () => {
     db.createNewNoteItem(newNoteData);
+    handleUpdate();
     setDoneBtnVisible(false);
     showHeader();
-    update();
   };
   useEffect(() => {
     setDoneBtnVisible(true);
@@ -131,5 +134,4 @@ export default function NewNotecard({ typeOfNote, showHeader, update }) {
 NewNotecard.propTypes = {
   typeOfNote: PropTypes.string.isRequired,
   showHeader: PropTypes.func.isRequired,
-  update: PropTypes.func.isRequired,
 };

@@ -6,7 +6,7 @@ import PageHeader from '../PageHeader';
 import './styles.css';
 import Button from '../Button';
 
-function Header({ sidebarSelected, handleMenuClick }) {
+function Header({ handleMenuClick }) {
   const [showSearch, setShowSearch] = useState(false);
 
   function handleShowSearch() {
@@ -15,10 +15,7 @@ function Header({ sidebarSelected, handleMenuClick }) {
 
   return (
     <header className="app-header">
-      <PageHeader
-        sidebarSelected={sidebarSelected}
-        handleMenuClick={handleMenuClick}
-      />
+      <PageHeader handleMenuClick={handleMenuClick} />
       {showSearch && <SearchBar closeSearch={() => handleShowSearch()} />}
       <div className="header-icons">
         <Button
@@ -42,7 +39,6 @@ function Header({ sidebarSelected, handleMenuClick }) {
 }
 
 Header.propTypes = {
-  sidebarSelected: PropTypes.string.isRequired,
   handleMenuClick: PropTypes.func.isRequired,
 };
 
