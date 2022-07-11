@@ -1,13 +1,7 @@
 import React, { useState, useRef, useEffect, forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import '../styles.css';
-
-const StyledToDoItem = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 0.25rem 0.3125rem 0 0.875rem;
-`;
+// import '../styles.css';
+import { StyledLabel, StyledCheckbox, StyledTextarea, StyledToDoItem } from '../styles';
 
 function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
   const [showText, setShowText] = useState(true);
@@ -25,10 +19,9 @@ function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
 
   return (
     <StyledToDoItem data-note-id={id}>
-      <div
+      <StyledCheckbox
         aria-labelledby="label"
         role="button"
-        className="to-do-item-checkbox"
         check={checked}
         tabIndex={0}
         onClick={() => {
@@ -42,10 +35,9 @@ function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
         name="checkbox"
       />
       {showText && (
-        <span
+        <StyledLabel
           role="button"
           htmlFor="checkbox"
-          className="to-do-item-label"
           tabIndex={0}
           ref={ref}
           onClick={() => {
@@ -54,11 +46,10 @@ function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
           onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space' ? setShowText(false) : null)}
         >
           {title}
-        </span>
+        </StyledLabel>
       )}
       {!showText && (
-        <textarea
-          className="to-do-item-textarea"
+        <StyledTextarea
           placeholder="List item"
           value={title}
           ref={textarea}

@@ -6,9 +6,8 @@ import React, {
   useCallback,
 } from 'react';
 import PropTypes, { number, string } from 'prop-types';
-import plusIcon from '../../assets/svg/notecard/plus-icon.svg';
 import ToDoItem from './ToDoItem';
-import './styles.css';
+import { StyledTextarea, StyledToDoItemPlaceholder } from './styles';
 
 function ToDoItemsContainer({ toDoItems, handleDataChange }) {
   const [showCompletedItems, setShowCompletedItems] = useState(false);
@@ -99,15 +98,13 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
     >
       {items.unchecked}
       {showPlaceHolder && (
-        <div className="to-do-item-placeholder">
-          <img className="svg-icon-large" src={plusIcon} alt="" />
-          <textarea
-            className="to-do-item-textarea"
+        <StyledToDoItemPlaceholder>
+          <StyledTextarea
             placeholder="List item"
             tabIndex={0}
             onKeyDown={(e) => createNewToDoItem(e)}
           />
-        </div>
+        </StyledToDoItemPlaceholder>
       )}
       {items.checked.length > 0 && (
         <div className="completed-items-area">
