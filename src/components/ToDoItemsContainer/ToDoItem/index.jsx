@@ -1,6 +1,13 @@
 import React, { useState, useRef, useEffect, forwardRef } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import '../styles.css';
+
+const StyledToDoItem = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0.3125rem 0 0.875rem;
+`;
 
 function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
   const [showText, setShowText] = useState(true);
@@ -17,7 +24,7 @@ function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
   }, [showText]);
 
   return (
-    <div className="to-do-item" data-note-id={id}>
+    <StyledToDoItem data-note-id={id}>
       <div
         aria-labelledby="label"
         role="button"
@@ -78,7 +85,7 @@ function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
           : null)}
         label="delete note"
       />
-    </div>
+    </StyledToDoItem>
   );
 }
 const toDoItemRef = forwardRef(ToDoItem);
