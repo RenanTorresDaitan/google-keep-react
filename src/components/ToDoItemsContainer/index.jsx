@@ -7,11 +7,11 @@ import React, {
 } from 'react';
 import PropTypes, { number, string } from 'prop-types';
 import ToDoItem from './ToDoItem';
-import { StyledTextarea, StyledToDoItemPlaceholder } from './styles';
+import { CompletedItemsArea, CompletedItemsBtn, CompletedItemsToggle, CompletedItemsLabel, CompletedItemsList as CompletedItemsList, CompletedItemsSeparator, StyledTextarea, StyledToDoItemPlaceholder } from './styles';
 
 function ToDoItemsContainer({ toDoItems, handleDataChange }) {
   const [showCompletedItems, setShowCompletedItems] = useState(false);
-  const [showPlaceHolder, setShowPlaceHolder] = useState(true);
+  const [showPlaceHolder, setShowPlaceHolder] = useState(false);
   const newToDoItemRef = useRef(null);
 
   const updateToDoItem = useCallback(
@@ -31,7 +31,6 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
     },
     [handleDataChange, toDoItems],
   );
-
   const items = useMemo(
     () => ({
       checked: toDoItems
@@ -60,7 +59,6 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
     }),
     [toDoItems, updateToDoItem, deleteToDoItem],
   );
-
   const createNewToDoItem = (event) => {
     event.preventDefault();
     if (event.keyCode > 60 && event.keyCode < 95) {
@@ -90,7 +88,6 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
 
   return (
     <div
-      className="note-to-do-items"
       onClick={() => setShowPlaceHolder(true)}
       tabIndex={0}
       role="button"
@@ -107,30 +104,25 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
         </StyledToDoItemPlaceholder>
       )}
       {items.checked.length > 0 && (
-        <div className="completed-items-area">
-          <div className="completed-items-separator" />
-          <div
+        <CompletedItemsArea>
+          <CompletedItemsSeparator />
+          <CompletedItemsToggle
             role="button"
             tabIndex={0}
-            className="completed-items-div"
             onClick={() => setShowCompletedItems((prevState) => !prevState)}
             onKeyDown={() => {}}
           >
-            <div
-              className={`completed-items-btn ${
-                showCompletedItems ? 'rotate-90-cw' : ''
-              }`}
-            />
-            <span className="completed-items-label">
+            <CompletedItemsBtn show={showCompletedItems} />
+            <CompletedItemsLabel>
               {items.checked.length > 1
                 ? `${items.checked.length} Completed items`
                 : '1 Completed item'}
-            </span>
-          </div>
+            </CompletedItemsLabel>
+          </CompletedItemsToggle>
           {showCompletedItems && (
-            <div className="completed-items-list">{items.checked}</div>
+            <CompletedItemsList className="completed-items-list">{items.checked}</CompletedItemsList>
           )}
-        </div>
+        </CompletedItemsArea>
       )}
     </div>
   );

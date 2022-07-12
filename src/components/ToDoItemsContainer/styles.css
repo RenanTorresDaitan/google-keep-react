@@ -14,12 +14,6 @@
     color: #000;
   }
 }
-.to-do-item,
-.to-do-item-placeholder {
-  display: flex;
-  align-items: center;
-  padding: 0.25rem 0.3125rem 0 0.875rem;
-}
 
 .to-do-item-checkbox[check='true'] ~ .to-do-item-label {
   text-decoration: line-through;
@@ -53,8 +47,4 @@
 .to-do-item:hover .to-do-item-delete {
   display: flex;
   opacity: 0.8;
-}
-
-.rotate-90-cw {
-  transform: rotate(90deg);
 }
