@@ -1,8 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import plusIcon from '../../assets/svg/notecard/plus-icon.svg';
 import unchecked from '../../assets/svg/checkbox-unchecked.svg';
 import checked from '../../assets/svg/checkbox-checked.svg';
 import arrowIcon from '../../assets/svg/list-arrow-icon.svg';
+import closeIcon from '../../assets/svg/inverted-close-icon.svg';
 
 export const StyledToDoItem = styled.div`
   display: flex;
@@ -15,7 +16,8 @@ export const StyledToDoItemPlaceholder = styled(StyledToDoItem)`
   background-size: 24px 24px;
   background-repeat: no-repeat;
   background-image: url(${plusIcon});
-  padding: 0.5rem 1.875rem;
+  padding: 0.5rem 2rem;
+  margin-left: 0.9rem;
 `;
 
 export const StyledCheckbox = styled.div`
@@ -25,7 +27,13 @@ export const StyledCheckbox = styled.div`
   background-position: center;
   background-size: 18px 18px;
   background-repeat: no-repeat;
-  background-image: ${({ check }) => (check === 'false' ? `url(${unchecked})` : `url(${checked})`)};
+  ${({ check }) => (check === 'false'
+    ? css`
+          background-image: url(${unchecked});
+        `
+    : css`
+          background-image: url(${checked});
+        `)};
   margin: 0.1875rem 0.375rem 0 0;
   width: 1.5rem;
   aspect-ratio: 1;
@@ -54,12 +62,19 @@ export const StyledLabel = styled.span`
   padding: 2px;
   color: var(--tc-gray-2);
 
+  ${({ check }) => check === 'true'
+    && css`
+      text-decoration: line-through;
+      user-select: none;
+    `};
+
   @media screen and (min-width: 900px) {
     font-family: var(--ff-roboto);
     font-size: 14px;
   }
 `;
 export const StyledTextarea = styled.textarea`
+  font-size: 12px;
   font-family: var(--ff-roboto);
   color: var(--tc-dark-gray);
   background-color: transparent;
@@ -72,6 +87,37 @@ export const StyledTextarea = styled.textarea`
   overflow: hidden;
   overflow-wrap: break-word;
   white-space: normal;
+
+  @media screen and (min-width: 900px) {
+    font-family: var(--ff-roboto);
+    font-size: 14px;
+  }
+`;
+
+export const ToDoItemDeleteBtn = styled.div`
+  cursor: pointer;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  border: 1px solid transparent;
+  background-image: url(${closeIcon});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 22px 22px;
+  width: 1.625rem;
+  opacity: 0;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  transition: opacity 200ms;
+  margin-right: 0.5rem;
+  
+  ${StyledToDoItem}:hover > & {
+    display: flex;
+    opacity: 0.5;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 `;
 
 export const CompletedItemsArea = styled.div`
@@ -99,11 +145,14 @@ export const CompletedItemsBtn = styled.div`
   width: 1.5rem;
   height: 1.5rem;
   transition: transform 150ms;
-  transform: ${({ show }) => (show.toString() === 'true' ? 'rotate(90deg)' : 'rotate(0deg)')};
   &:hover,
   &:focus {
     background-color: var(--c-gray);
   }
+  ${({ show }) => show
+    && css`
+      transform: rotate(90deg);
+    `}
 `;
 export const CompletedItemsLabel = styled.span`
   cursor: pointer;

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 // import '../styles.css';
-import { StyledLabel, StyledCheckbox, StyledTextarea, StyledToDoItem } from '../styles';
+import { StyledLabel, StyledCheckbox, StyledTextarea, StyledToDoItem, ToDoItemDeleteBtn } from '../styles';
 
 function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
   const [showText, setShowText] = useState(true);
@@ -37,6 +37,7 @@ function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
       {showText && (
         <StyledLabel
           role="button"
+          check={checked}
           htmlFor="checkbox"
           tabIndex={0}
           ref={ref}
@@ -65,11 +66,9 @@ function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
           }}
         />
       )}
-      <div
-        className="to-do-item-delete"
+      <ToDoItemDeleteBtn
         role="button"
         tabIndex={0}
-        name="delete-btn"
         onClick={() => deleteToDoItem(toDoItem)}
         onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space'
           ? deleteToDoItem(toDoItem)
