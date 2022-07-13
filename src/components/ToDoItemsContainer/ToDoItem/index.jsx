@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, forwardRef } from 'react';
 import PropTypes from 'prop-types';
-// import '../styles.css';
-import { StyledLabel, StyledCheckbox, StyledTextarea, StyledToDoItem, ToDoItemDeleteBtn } from '../styles';
+import { StyledLabel, StyledCheckbox, StyledTextarea, StyledToDoItem, ToDoItemDeleteBtn } from './styles';
 
 function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
   const [showText, setShowText] = useState(true);
@@ -28,7 +27,7 @@ function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
           updateToDoItem({
             id,
             title,
-            checked: checked === 'true' ? 'false' : 'true',
+            checked: !checked,
           });
         }}
         onKeyDown={(e) => {}}
@@ -85,7 +84,7 @@ ToDoItem.propTypes = {
   toDoItem: PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
-    checked: PropTypes.string.isRequired,
+    checked: PropTypes.bool.isRequired,
   }).isRequired,
   updateToDoItem: PropTypes.func.isRequired,
   deleteToDoItem: PropTypes.func.isRequired,

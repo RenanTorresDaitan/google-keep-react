@@ -5,13 +5,14 @@ import React, {
   useMemo,
   useCallback,
 } from 'react';
-import PropTypes, { number, string } from 'prop-types';
+import PropTypes from 'prop-types';
 import ToDoItem from './ToDoItem';
-import { CompletedItemsArea, CompletedItemsBtn, CompletedItemsToggle, CompletedItemsLabel, CompletedItemsList as CompletedItemsList, CompletedItemsSeparator, StyledTextarea, StyledToDoItemPlaceholder } from './styles';
+import { CompletedItemsArea, CompletedItemsBtn, CompletedItemsToggle, CompletedItemsLabel, CompletedItemsList, CompletedItemsSeparator, StyledToDoItemPlaceholder } from './styles';
+import { StyledTextarea } from './ToDoItem/styles';
 
 function ToDoItemsContainer({ toDoItems, handleDataChange }) {
   const [showCompletedItems, setShowCompletedItems] = useState(false);
-  const [showPlaceHolder, setShowPlaceHolder] = useState(false);
+  const [showPlaceHolder, setShowPlaceHolder] = useState(true);
   const newToDoItemRef = useRef(null);
 
   const updateToDoItem = useCallback(
@@ -34,7 +35,7 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
   const items = useMemo(
     () => ({
       checked: toDoItems
-        .filter((item) => item.checked === 'true')
+        .filter((item) => item.checked)
         .map((item) => (
           <ToDoItem
             toDoItem={item}
@@ -44,7 +45,7 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
           />
         )),
       unchecked: toDoItems
-        .filter((item) => item.checked === 'false')
+        .filter((item) => !item.checked)
         .map((item) => (
           <ToDoItem
             toDoItem={item}
@@ -72,7 +73,7 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
         {
           id: nextId,
           title: event.key,
-          checked: 'false',
+          checked: false,
         },
       ]);
       newToDoItemRef.current = nextId;
@@ -137,9 +138,9 @@ ToDoItemsContainer.defaultProps = {
 ToDoItemsContainer.propTypes = {
   toDoItems: PropTypes.arrayOf(
     PropTypes.shape({
-      id: number,
-      title: string,
-      checked: string,
+      id: PropTypes.number,
+      title: PropTypes.string,
+      checked: PropTypes.bool,
     }),
   ),
   handleDataChange: PropTypes.func.isRequired,
