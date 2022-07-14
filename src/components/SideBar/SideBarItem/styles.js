@@ -26,6 +26,7 @@ export const SideBarButton = styled.div`
   transition: width 150ms 350ms;
   transition: border-radius 150ms 350ms;
   transition: padding-left, 150ms 350ms;
+  
   ${StyledSideBarItem}:hover > & {
     border-radius: 0vw 100vw 100vw 0vw;
     background-color: var(--c-light-gray);
