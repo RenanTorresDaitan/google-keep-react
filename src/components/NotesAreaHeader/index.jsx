@@ -1,20 +1,21 @@
 import React, { useContext } from 'react';
-import Button from '../Button';
 import db from '../../models/DBManager';
 import { NotesContext } from '../contexts/NotesProvider';
+import {
+  EmptyTrashButton,
+  NotesAreaImage,
+  NotesAreaTitle,
+  StyledNotesAreaHeader,
+  TrashHeader,
+} from './styles';
 
 function NotesAreaHeader() {
   const { sidebarSelected, notesToRender, handleUpdate } = useContext(NotesContext);
-  let imageClass = '';
-  let notesClass = '';
-  let title = '';
-  let subtitle = '';
 
   const trashHeader = (
-    <div className="trash-header">
+    <TrashHeader>
       Notes in Trash are deleted after 7 days.
-      <Button
-        className="empty-trash-btn"
+      <EmptyTrashButton
         handleClick={() => {
           db.deleteTrashedNotes();
           handleUpdate();
@@ -22,31 +23,25 @@ function NotesAreaHeader() {
         label="Empty trash"
         btnText="Empty Trash"
       />
-    </div>
+    </TrashHeader>
   );
+  let title = '';
+  let subtitle = '';
 
   switch (sidebarSelected) {
     case 'NOTES':
-      imageClass = 'no-notes-img';
-      notesClass = 'no-notes-found no-notes-found-label';
       title = 'No notes yet';
       subtitle = 'Your notes from Google Keep will show up here.';
       break;
     case 'REMINDERS':
-      imageClass = 'no-reminders-img';
-      notesClass = 'no-reminders-found no-reminders-label';
       title = 'Notes with upcoming reminders appear here';
       subtitle = '';
       break;
     case 'ARCHIVE':
-      imageClass = 'no-archived-img';
-      notesClass = 'no-archived-found no-archived-label';
       title = 'Your archived notes appear here';
       subtitle = '';
       break;
     case 'TRASH':
-      imageClass = 'no-trashed-img';
-      notesClass = 'no-trashed-found no-trashed-label';
       title = 'No notes in Trash';
       subtitle = '';
       break;
@@ -58,11 +53,13 @@ function NotesAreaHeader() {
     <>
       {sidebarSelected === 'TRASH' && trashHeader}
       {notesToRender.length === 0 && (
-        <div className={notesClass}>
-          <div className={imageClass} />
-          <h2>{title}</h2>
+        <StyledNotesAreaHeader sidebarSelected={sidebarSelected}>
+          <NotesAreaImage sidebarSelected={sidebarSelected} />
+          <NotesAreaTitle sidebarSelected={sidebarSelected}>
+            {title}
+          </NotesAreaTitle>
           <h4>{subtitle}</h4>
-        </div>
+        </StyledNotesAreaHeader>
       )}
     </>
   );

@@ -15,40 +15,11 @@
   align-items: center;
   justify-content: center;
 }
-.empty-trash-btn {
-  cursor: pointer;
-  color: rgba(0, 0, 0, 0.87);
-  overflow: hidden;
-  font-family: 'Google Sans', Roboto, Arial, sans-serif;
-  font-size: 0.875rem;
-  font-style: normal;
-  color: #1a73e8;
-  font-weight: 500;
-  height: 36px;
-  padding: 0.5rem 1.5rem;
-  margin-left: 1rem;
-  border-radius: 0.25rem;
-}
-.empty-trash-btn:hover {
-  background-color: rgba(66, 133, 244, 0.039);
-}
+
 .search-icon,
 .search-cancel-btn {
   margin: 3px;
   padding: 0.5rem;
-}
-.trash-header {
-  display: flex;
-  color: --tc-dark-gray;
-  cursor: default;
-  flex: 1 0 100%;
-  font-size: 17px;
-  font-style: italic;
-  align-items: center;
-  justify-content: center;
-  padding-top: 1.5rem;
-  padding-bottom: 0.5rem;
-  margin-inline: auto;
 }
 
 .search-panel__button{
