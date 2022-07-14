@@ -1,8 +1,14 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import Button from '../Button';
 import { NotesContext } from '../contexts/NotesProvider';
-import './styles.css';
+import {
+  HeaderContainer,
+  HeaderIcon,
+  HeaderSubtitle,
+  HeaderTitle,
+  HeaderTitleContainer,
+  MenuButton,
+} from './styles';
 
 function PageHeader({ handleMenuClick }) {
   const { sidebarSelected } = useContext(NotesContext);
@@ -31,22 +37,14 @@ function PageHeader({ handleMenuClick }) {
       break;
   }
   return (
-    <div className="header__container">
-      <Button
-        className="header__menu-bars"
-        label="Menu"
-        handleClick={handleMenuClick}
-      />
-      {sidebarSelected === 'NOTES' && <div className="header__icon" />}
-      <div className="header__title-container">
-        <h2 className="header__title" tabIndex={-1}>
-          {title}
-        </h2>
-        <h3 className="header__subtitle" tabIndex={-1}>
-          {subtitle}
-        </h3>
-      </div>
-    </div>
+    <HeaderContainer>
+      <MenuButton label="Menu" handleClick={handleMenuClick} />
+      {sidebarSelected === 'NOTES' && <HeaderIcon />}
+      <HeaderTitleContainer>
+        <HeaderTitle tabIndex={-1}>{title}</HeaderTitle>
+        <HeaderSubtitle tabIndex={-1}>{subtitle}</HeaderSubtitle>
+      </HeaderTitleContainer>
+    </HeaderContainer>
   );
 }
 
