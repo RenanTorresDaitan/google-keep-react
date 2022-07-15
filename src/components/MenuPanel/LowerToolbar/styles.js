@@ -11,7 +11,15 @@ import menuCirclesIcon from '../../../assets/svg/notecard/menu-circles-icon.svg'
 export const NoteLowerToolbar = styled.div`
   padding: 0.5rem 0.5rem 0rem;
   gap: 0.5rem;
-  display: flex;
+  display: none;
+  opacity: 0;
+  transition: opacity 200ms;
+  @media screen and (min-width: 900px) {
+    display: flex;
+  }
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 export const LowerToolbarButton = styled(Button)`

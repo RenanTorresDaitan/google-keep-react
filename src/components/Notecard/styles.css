@@ -89,11 +89,6 @@
   background-color: var(--c-light-gray);
   opacity: 0.8;
 }
-.note-lower-toolbar {
-  display: none;
-  opacity: 0;
-  transition: opacity 200ms;
-}
 
 .notecard__title,
 .notecard__desc {
