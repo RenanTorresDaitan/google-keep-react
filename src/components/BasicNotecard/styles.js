@@ -1,4 +1,82 @@
-@import url(../../styles/styles.css);
+import styled, { css } from 'styled-components';
+import Button from '../Button';
+import pinIcon from '../../assets/svg/notecard/pin-icon.svg';
+import menuCirclesIcon from '../../assets/svg/notecard/menu-circles-icon.svg';
+import colorDropIcon from '../../assets/svg/notecard/drop-icon.svg';
+import largePinIcon from '../../assets/svg/notecard/pin-large-icon.svg';
+import largePinPinnedIcon from '../../assets/svg/notecard/pin-large-pinned-icon.svg';
+
+export const NotecardButtonsContainer = styled.div`
+  display: flex;
+  height: 1.5rem;
+  position: absolute;
+  top: 0.187 5rem;
+  right: 0.25rem;
+  transition: opacity 100ms linear;
+  opacity: 0.8;
+  z-index: 100;
+
+  @media screen and (min-width: 900px) {
+    opacity: 0;
+    display: none;
+  }
+`;
+
+const NotecardButton = styled(Button)`
+  cursor: pointer;
+  background-color: transparent;
+  background-size: 18px 18px;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-sizing: content-box;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  display: inline-block;
+  height: 1.5rem;
+  aspect-ratio: 1;
+  z-index: 1000;
+  margin: 0 -0.125rem;
+  opacity: 0.9;
+`;
+
+export const PinButton = styled(NotecardButton)`
+  background-image: url(${pinIcon});
+`;
+
+export const BigPinButton = styled(NotecardButton)`
+  background-image: url(${largePinIcon});
+  background-size: contain;
+  display: none;
+  position: absolute;
+  right: 0.75rem;
+  top: 0.325rem;
+  opacity: 0;
+  transition: opacity 200ms;
+  @media screen and (min-width: 900px) {
+    display: flex;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  ${({ isPinned }) => isPinned
+    && css`
+      opacity: 0.9;
+      background-image: url(${largePinPinnedIcon});
+    `}
+`;
+
+export const MenuButton = styled(NotecardButton)`
+  background-size: 24px 24px;
+  background-image: url(${menuCirclesIcon});
+`;
+
+export const ColorDropButton = styled(NotecardButton)`
+  background-image: url(${colorDropIcon});
+`;
+
+/*
 
 .notecard {
   display: block;
@@ -15,45 +93,6 @@
 }
 .notecard:hover {
   box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-}
-
-.notecard__buttons-container {
-  display: flex;
-  height: 1.5rem;
-  position: absolute;
-  top: 0.187 5rem;
-  right: 0.25rem;
-  transition: opacity 100ms linear;
-  opacity: 0;
-  z-index: 100;
-}
-
-.notecard__button {
-  background-color: transparent;
-  background-size: 18px 18px;
-  background-position: center;
-  background-repeat: no-repeat;
-  box-sizing: content-box;
-  border: 1px solid transparent;
-  border-radius: 50%;
-  display: inline-block;
-  cursor: pointer;
-  height: 1.5rem;
-  aspect-ratio: 1;
-  z-index: 1;
-  margin: 0 -0.125rem;
-  opacity: 0.9;
-}
-
-.pin-button {
-  background-image: url(../../assets/svg/notecard/pin-icon.svg);
-}
-.menu-button {
-  background-size: 24px 24px;
-  background-image: url(../../assets/svg/notecard/menu-circles-icon.svg);
-}
-.color-button {
-  background-image: url(../../assets/svg/notecard/drop-icon.svg);
 }
 
 .notecard__menu-panel {
@@ -147,25 +186,6 @@
   border: none;
   color: var(--c-black);
 }
-.notecard__pin-button--big {
-  cursor: pointer;
-  background-image: url(../../assets/svg/notecard/pin-large-icon.svg);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  background-color: transparent;
-  border-radius: 50%;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  height: 1.5rem;
-  aspect-ratio: 1;
-  right: 0.75rem;
-  top: 0.325rem;
-  opacity: 0;
-  transition: opacity 200ms;
-}
 
 .notecard__done-button {
   border-radius: 0.5rem;
@@ -185,10 +205,6 @@
   background-color: var(--tc-gray-1);
 }
 
-.hide {
-  display: none;
-}
-
 @media screen and (min-width: 900px) {
   .notecard {
     padding-bottom: 1rem;
@@ -200,17 +216,11 @@
     opacity: 1;
   }
 
-  .notecard__buttons-container {
-    display: none;
-  }
   .notecard__pin-button--big {
     display: flex;
   }
   .notecard:hover .notecard__pin-button--big {
     opacity: 0.6;
   }
-  .note-pinned{
-    background-image: url(../../assets/svg/notecard/pin-large-pinned-icon.svg);
-    opacity: 0.9;
-  }
 }
+*/

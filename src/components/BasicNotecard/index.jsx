@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import './styles.css';
 import ColorBallContainer from '../ColorBallContainer';
 import MenuPanel from '../MenuPanel';
-import Button from '../Button';
 import InputField from '../InputField';
 import NoteItemModel from '../../models/NoteItemModel';
 import LowerToolbar from '../MenuPanel/LowerToolbar';
+import {
+  BigPinButton,
+  PinButton,
+  NotecardButtonsContainer,
+  MenuButton,
+  ColorDropButton,
+} from './styles';
 
 export default function BasicNotecard({
   noteItem,
@@ -14,7 +19,7 @@ export default function BasicNotecard({
   sendNoteData,
   typeOfNoteEl,
 }) {
-  const { noteTitle, isArchived, isPinned, isTrashed, noteDescription } = noteItem;
+  const { noteTitle, isArchived, isPinned, isTrashed } = noteItem;
   const [showModal, setShowModal] = useState({ menu: false, color: false });
 
   return (
@@ -34,30 +39,25 @@ export default function BasicNotecard({
         />
       )}
       {!isTrashed && (
-        <div className="notecard__buttons-container">
-          <Button
-            className="notecard__button color-button"
+        <NotecardButtonsContainer>
+          <ColorDropButton
             label="Change Note Color"
             handleClick={() => setShowModal({ color: true })}
           />
-          <Button
-            className="notecard__button menu-button"
+          <MenuButton
             label="Menu"
             handleClick={() => setShowModal({ menu: true })}
           />
-          <Button
-            className={`notecard__button pin-button ${
-              isPinned ? 'note-pinned' : ''
-            }`}
+          <PinButton
             label="Fix Note"
             handleClick={() => {
               handleDataChange({ isPinned: !isPinned });
             }}
           />
-        </div>
+        </NotecardButtonsContainer>
       )}
-      <Button
-        className={`notecard__pin-button--big ${isPinned ? 'note-pinned' : ''}`}
+      <BigPinButton
+        isPinned={isPinned}
         handleClick={() => handleDataChange({ isPinned: !isPinned })}
         label="Fix Note"
       />
