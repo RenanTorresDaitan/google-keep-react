@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Button from '../Button';
 
 export const NoteCardMenuPanel = styled.div`
-  cursor: pointer;
+ cursor: pointer;
   display: flex;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.5rem;

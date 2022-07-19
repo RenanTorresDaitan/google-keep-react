@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ColorBallContainer from '../ColorBallContainer';
 import MenuPanel from '../MenuPanel';
-import InputField from '../InputField';
 import NoteItemModel from '../../models/NoteItemModel';
 import LowerToolbar from '../MenuPanel/LowerToolbar';
 import {
@@ -16,10 +15,9 @@ import {
 export default function BasicNotecard({
   noteItem,
   handleDataChange,
-  sendNoteData,
-  typeOfNoteEl,
+  children,
 }) {
-  const { noteTitle, isArchived, isPinned, isTrashed } = noteItem;
+  const { isArchived, isPinned, isTrashed } = noteItem;
   const [showModal, setShowModal] = useState({ menu: false, color: false });
 
   return (
@@ -61,15 +59,7 @@ export default function BasicNotecard({
         handleClick={() => handleDataChange({ isPinned: !isPinned })}
         label="Fix Note"
       />
-      <InputField
-        text={noteTitle}
-        className="notecard__title"
-        placeHolder="Title"
-        handleChange={(value) => {
-          sendNoteData({ noteTitle: value });
-        }}
-      />
-      {typeOfNoteEl}
+      {children}
       <LowerToolbar
         noteData={noteItem}
         handleDataChange={handleDataChange}
@@ -81,6 +71,5 @@ export default function BasicNotecard({
 BasicNotecard.propTypes = {
   noteItem: PropTypes.instanceOf(NoteItemModel).isRequired,
   handleDataChange: PropTypes.func.isRequired,
-  sendNoteData: PropTypes.func.isRequired,
-  typeOfNoteEl: PropTypes.node.isRequired,
+  children: PropTypes.element.isRequired,
 };
