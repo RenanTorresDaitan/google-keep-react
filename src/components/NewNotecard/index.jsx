@@ -2,11 +2,15 @@ import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import ColorBallContainer from '../ColorBallContainer';
 import MenuPanel from '../MenuPanel';
-import InputField from '../InputField';
 import db from '../../models/DBManager';
 import ToDoItemsContainer from '../ToDoItemsContainer';
 import { NotesContext } from '../contexts/NotesProvider';
-import { DoneButton, StyledNotecard } from '../Notecard/styles';
+import {
+  Description,
+  DoneButton,
+  StyledNotecard,
+  Title,
+} from '../Notecard/styles';
 import {
   BigPinButton,
   ColorDropButton,
@@ -46,7 +50,7 @@ export default function NewNotecard({ typeOfNote, showHeader }) {
     />
   );
   const noteDescriptionEl = (
-    <InputField
+    <Description
       text={newNoteData.noteDescription}
       placeHolder="Take a note..."
       handleChange={(value) => handleDataChange({ noteDescription: value })}
@@ -108,7 +112,7 @@ export default function NewNotecard({ typeOfNote, showHeader }) {
         }}
         label="Fix Note"
       />
-      <InputField
+      <Title
         text={newNoteData.noteTitle}
         placeHolder="Title"
         handleChange={(value) => handleDataChange({ noteTitle: value })}

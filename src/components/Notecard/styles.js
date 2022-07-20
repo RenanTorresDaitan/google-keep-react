@@ -48,9 +48,7 @@ export const DoneButton = styled(Button)`
 export const StyledInputField = styled(InputField)`
   display: flex;
   flex: 0 1 100%;
-  padding-inline: 1rem;
-  padding-top: 1rem;
-  background-color: red;
+  background-color: transparent;
   outline: 0px;
   border: none;
   resize: none;
@@ -60,7 +58,7 @@ export const StyledInputField = styled(InputField)`
   white-space: pre-wrap;
 `;
 
-const StyledTextArea = css`
+const DefaultStyles = css`
   display: flex;
   background-color: transparent;
   box-sizing: content-box;
@@ -74,49 +72,29 @@ const StyledTextArea = css`
 `;
 
 export const Title = styled(StyledInputField)`
-  font-family: var(--ff-google);
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-overflow: ellipsis;
-  letter-spacing: 0.3px;
-  color: var(--tc-dark-gray);
+  span ,
+  textarea {
+    ${DefaultStyles}
+    padding: 1rem 3.5rem 0 1rem;
+    font-family: var(--ff-google);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    letter-spacing: 0.3px;
+    color: var(--tc-dark-gray);
+  }
 `;
 
 export const Description = styled(StyledInputField)`
-  font-family: var(--ff-roboto);
-  font-weight: 400;
-  font-size: 0.75rem;
-  color: var(--tc-gray-2);
-  background-color: red;
-  > span {
+  span ,
+  textarea {
+    ${DefaultStyles}
     font-size: 0.75rem;
     letter-spacing: 0.3px;
     padding: 0.625rem 1rem 0 1rem;
-  }
-  > textarea {
-    ${StyledTextArea}
+    font-family: var(--ff-roboto);
+    font-weight: 400;
+    font-size: 0.75rem;
+    color: var(--tc-gray-2);
   }
 `;
-
-/*
-
-.notecard__title,
-.notecard__desc {
-}
-.notecard__title,
-.notecard__title-textarea {
-  font-family: var(--ff-google);
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-overflow: ellipsis;
-  letter-spacing: 0.3px;
-  color: var(--tc-dark-gray);
-}
-.notecard__title {
-  padding: 1rem 3.5rem 0 1rem;
-}
-.notecard__title-textarea,
-.notecard__desc-textarea {
-}
-
-*/

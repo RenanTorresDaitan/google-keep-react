@@ -5,8 +5,7 @@ import { NotesContext } from '../contexts/NotesProvider';
 import NoteItemModel from '../../models/NoteItemModel';
 import BasicNotecard from '../BasicNotecard';
 import ToDoItemsContainer from '../ToDoItemsContainer';
-import { DoneButton, StyledNotecard } from './styles';
-import InputField from '../InputField';
+import { Description, DoneButton, StyledNotecard, Title } from './styles';
 
 export default function Notecard({ noteItem }) {
   const { id, color, noteTitle, noteDescription, isToDoList } = noteItem;
@@ -23,7 +22,7 @@ export default function Notecard({ noteItem }) {
   };
 
   const noteTitleEl = (
-    <InputField
+    <Title
       text={noteData.noteTitle}
       placeHolder="Title"
       handleChange={(value) => {
@@ -41,7 +40,7 @@ export default function Notecard({ noteItem }) {
   );
 
   const noteDescriptionEl = (
-    <InputField
+    <Description
       text={noteData.noteDescription}
       placeHolder="Take a note..."
       handleChange={(value) => {

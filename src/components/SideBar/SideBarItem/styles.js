@@ -4,7 +4,7 @@ export const StyledSideBarItem = styled.div`
   cursor: pointer;
   &:hover {
     margin-left: 0rem;
-      width: 100%;
+    width: 100%;
   }
   ${({ expand }) => expand
     && css`
@@ -26,7 +26,7 @@ export const SideBarButton = styled.div`
   transition: width 150ms 350ms;
   transition: border-radius 150ms 350ms;
   transition: padding-left, 150ms 350ms;
-  
+
   ${StyledSideBarItem}:hover > & {
     border-radius: 0vw 100vw 100vw 0vw;
     background-color: var(--c-light-gray);
@@ -55,6 +55,10 @@ export const SideBarButton = styled.div`
 `;
 
 export const SidebarIcon = styled.img`
+  opacity: 0.75;
+  &:hover {
+    opacity: 1;
+  }
   ${({ src }) => css`
     background-image: url(${src});
   `}

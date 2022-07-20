@@ -12,15 +12,17 @@ export default function App() {
     setExpandSideBar((prevState) => !prevState);
   };
   return (
-    <StyledApp>
+    <>
       <GlobalStyle />
-      <NotesProvider>
-        <Header handleMenuClick={handleSideBarExpansion} />
-        <MainSection>
-          <SideBar expand={expandSideBar} />
-          <Content />
-        </MainSection>
-      </NotesProvider>
-    </StyledApp>
+      <StyledApp>
+        <NotesProvider>
+          <Header handleMenuClick={handleSideBarExpansion} />
+          <MainSection>
+            <SideBar expand={expandSideBar} />
+            <Content />
+          </MainSection>
+        </NotesProvider>
+      </StyledApp>
+    </>
   );
 }
