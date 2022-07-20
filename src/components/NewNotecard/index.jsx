@@ -1,13 +1,23 @@
 import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
-import './styles.css';
 import ColorBallContainer from '../ColorBallContainer';
 import MenuPanel from '../MenuPanel';
-import Button from '../Button';
-import InputField from '../InputField';
 import db from '../../models/DBManager';
 import ToDoItemsContainer from '../ToDoItemsContainer';
 import { NotesContext } from '../contexts/NotesProvider';
+import {
+  Description,
+  DoneButton,
+  StyledNotecard,
+  Title,
+} from '../Notecard/styles';
+import {
+  BigPinButton,
+  ColorDropButton,
+  MenuButton,
+  NotecardButtonsContainer,
+  PinButton,
+} from '../BasicNotecard/styles';
 
 export default function NewNotecard({ typeOfNote, showHeader }) {
   const [newNoteData, setNewNoteData] = useState({
@@ -40,9 +50,8 @@ export default function NewNotecard({ typeOfNote, showHeader }) {
     />
   );
   const noteDescriptionEl = (
-    <InputField
+    <Description
       text={newNoteData.noteDescription}
-      className="notecard__desc"
       placeHolder="Take a note..."
       handleChange={(value) => handleDataChange({ noteDescription: value })}
       visible={false}
@@ -58,8 +67,7 @@ export default function NewNotecard({ typeOfNote, showHeader }) {
     setDoneBtnVisible(true);
   }, [newNoteData.noteDescription, newNoteData.noteTitle]);
   return (
-    <div
-      className="notecard"
+    <StyledNotecard
       aria-label={`Keep's Note ${newNoteData.noteTitle}`}
       data-note-id={newNoteData.id}
       data-color={newNoteData.color}
@@ -81,54 +89,44 @@ export default function NewNotecard({ typeOfNote, showHeader }) {
         />
       )}
       {!newNoteData.isTrashed && (
-        <div className="notecard__buttons-container">
-          <Button
-            className="notecard__button color-button"
+        <NotecardButtonsContainer>
+          <ColorDropButton
             label="Change Note Color"
             handleClick={() => setShowModal({ color: true })}
           />
-          <Button
-            className="notecard__button menu-button"
+          <MenuButton
             label="Menu"
             handleClick={() => setShowModal({ menu: true })}
           />
-          <Button
-            className={`notecard__button pin-button ${
-              newNoteData.isPinned ? 'note-pinned' : ''
-            }`}
+          <PinButton
             label="Fix Note"
             handleClick={() => {
               handleDataChange({ isPinned: !newNoteData.isPinned });
             }}
           />
-        </div>
+        </NotecardButtonsContainer>
       )}
-      <Button
-        className={`notecard__pin-button--big ${
-          newNoteData.isPinned ? 'note-pinned' : ''
-        }`}
+      <BigPinButton
         handleClick={() => {
           handleDataChange({ isPinned: !newNoteData.isPinned });
         }}
         label="Fix Note"
       />
-      <InputField
+      <Title
         text={newNoteData.noteTitle}
-        className="notecard__title"
         placeHolder="Title"
         handleChange={(value) => handleDataChange({ noteTitle: value })}
         visible={false}
       />
       {newNoteData.isToDoList ? toDoItemsEl : noteDescriptionEl}
       {doneBtnVisible && (
-        <Button
-          className="notecard__done-button"
+        <DoneButton
           handleClick={() => handleNewNote()}
           label="Done"
           btnText="Done"
         />
       )}
-    </div>
+    </StyledNotecard>
   );
 }
 NewNotecard.propTypes = {

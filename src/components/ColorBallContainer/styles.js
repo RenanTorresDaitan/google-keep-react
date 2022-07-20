@@ -1,6 +1,6 @@
-@import url(../../styles/styles.css);
+import styled from 'styled-components';
 
-.color-ball__container {
+export const StyledColorBallContainer = styled.div`
   background-color: var(--c-off-white-1);
   border: 1px solid var(--c-gray);
   border-radius: 1rem;
@@ -11,12 +11,13 @@
   right: 1.5rem;
   gap: 0.1rem;
   z-index: 2020;
-}
-.color-ball {
+`;
+
+export const ColorBall = styled.div`
   display: flex;
   border: 1px solid var(--c-gray);
   flex-direction: row;
   width: 1rem;
   height: 1rem;
   border-radius: 100%;
-}
+`;

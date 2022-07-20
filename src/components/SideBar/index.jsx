@@ -7,54 +7,49 @@ import bellIcon from '../../assets/svg/bell-icon.svg';
 import pencilIcon from '../../assets/svg/pencil-icon.svg';
 import boxIcon from '../../assets/svg/box-icon.svg';
 import trashIcon from '../../assets/svg/trash-icon.svg';
-import './styles.css';
+import { SideBarContainer, StyledSideBar } from './styles';
 import { NotesContext } from '../contexts/NotesProvider';
 
 export default function SideBar({ expand }) {
   const { sidebarSelected, handleSidebarChange } = useContext(NotesContext);
   return (
-    <div
-      className={`sidebar__container ${
-        expand ? 'sidebar__container--expanded' : ''
-      }`}
-    >
-      <div className={`sidebar ${expand ? 'sidebar--expanded' : ''}`}>
+    <SideBarContainer expand={expand}>
+      <StyledSideBar expand={expand}>
         <SideBarItem
-          active={(sidebarSelected === 'NOTES').toString()}
+          active={sidebarSelected === 'NOTES'}
           icon={lampIcon}
           label="Notes"
           click={handleSidebarChange}
           expand={expand}
         />
         <SideBarItem
-          active={(sidebarSelected === 'REMINDERS').toString()}
+          active={sidebarSelected === 'REMINDERS'}
           icon={bellIcon}
           label="Reminders"
           click={handleSidebarChange}
           expand={expand}
         />
         <SideBarItem
-          active="false"
           icon={pencilIcon}
           label="Edit label"
           expand={expand}
         />
         <SideBarItem
-          active={(sidebarSelected === 'ARCHIVE').toString()}
+          active={sidebarSelected === 'ARCHIVE'}
           icon={boxIcon}
           label="Archive"
           click={handleSidebarChange}
           expand={expand}
         />
         <SideBarItem
-          active={(sidebarSelected === 'TRASH').toString()}
+          active={sidebarSelected === 'TRASH'}
           icon={trashIcon}
           label="Trash"
           click={handleSidebarChange}
           expand={expand}
         />
-      </div>
-    </div>
+      </StyledSideBar>
+    </SideBarContainer>
   );
 }
 

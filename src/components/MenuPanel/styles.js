@@ -1,5 +1,8 @@
-.notecard__menu-panel {
-  cursor: pointer;
+import styled from 'styled-components';
+import Button from '../Button';
+
+export const NoteCardMenuPanel = styled.div`
+ cursor: pointer;
   display: flex;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.5rem;
@@ -13,14 +16,15 @@
   user-select: none;
   overflow: visible;
   z-index: 300;
-}
-.notecard__menu-panel-option {
+`;
+
+export const MenuPanelOption = styled(Button)`
   color: var(--tc-dark-gray);
   font-family: var(--ff-roboto);
   font-size: 13px;
   position: relative;
   padding: 0.375rem 1.5rem 0.375rem 1.5rem;
-}
-.notecard__menu-panel-option:hover {
-  background-color: var(--c-light-gray);
-}
+  &:hover {
+    background-color: var(--c-light-gray);
+  }
+`;

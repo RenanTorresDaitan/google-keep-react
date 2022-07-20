@@ -3,8 +3,13 @@ import PropTypes from 'prop-types';
 import SearchBar from '../SearchBar';
 import PageHeader from '../PageHeader';
 
-import './styles.css';
-import Button from '../Button';
+import {
+  AppHeader,
+  CloseButton,
+  HeaderIcons,
+  OpenNewTabButton,
+  SearchButton,
+} from './styles';
 
 function Header({ handleMenuClick }) {
   const [showSearch, setShowSearch] = useState(false);
@@ -14,25 +19,15 @@ function Header({ handleMenuClick }) {
   };
 
   return (
-    <header className="app-header">
+    <AppHeader>
       <PageHeader handleMenuClick={handleMenuClick} />
       {showSearch && <SearchBar closeSearch={handleShowSearch} />}
-      <div className="header-icons">
-        <Button
-          className="search-panel__button icon-size icon-button"
-          handleClick={handleShowSearch}
-          label="Search"
-        />
-        <Button
-          className="search-panel__open-new-tab icon-size icon-button"
-          label="Open in new tab"
-        />
-        <Button
-          className="search-panel__close-button icon-size icon-button"
-          label="Close"
-        />
-      </div>
-    </header>
+      <HeaderIcons>
+        <SearchButton handleClick={handleShowSearch} label="Search" />
+        <OpenNewTabButton label="Open in new tab" />
+        <CloseButton label="Close" />
+      </HeaderIcons>
+    </AppHeader>
   );
 }
 

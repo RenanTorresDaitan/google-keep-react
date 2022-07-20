@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import Button from '../Button';
 import NewNotecard from '../NewNotecard';
-import './styles.css';
+import { StyledNewNoteHeader, TakeaNoteButton, CreateListButton, NewNoteHeaderContainer } from './styles';
 
 function TakeNewNotesHeader() {
   const [displayHeader, setDisplayHeader] = useState(true);
@@ -16,11 +15,10 @@ function TakeNewNotesHeader() {
     />
   );
   return (
-    <div style={{ display: 'block', margin: 'auto' }}>
+    <NewNoteHeaderContainer>
       {displayHeader ? (
-        <div className="newnote__header">
-          <Button
-            className="newnote__take-a-note"
+        <StyledNewNoteHeader>
+          <TakeaNoteButton
             handleClick={() => {
               handleDisplayHeader(false);
               setTypeOfNewNote('note');
@@ -28,19 +26,18 @@ function TakeNewNotesHeader() {
             label="Take a note..."
             btnText="Take a note..."
           />
-          <Button
-            className="newnote__new-list icon-button icon-size"
+          <CreateListButton
             label="New list"
             handleClick={() => {
               handleDisplayHeader(false);
               setTypeOfNewNote('list');
             }}
           />
-        </div>
+        </StyledNewNoteHeader>
       ) : (
         createNewNote(typeOfNewNote)
       )}
-    </div>
+    </NewNoteHeaderContainer>
   );
 }
 

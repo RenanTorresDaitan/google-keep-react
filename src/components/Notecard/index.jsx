@@ -1,13 +1,11 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import './styles.css';
+import db from '../../models/DBManager';
+import { NotesContext } from '../contexts/NotesProvider';
 import NoteItemModel from '../../models/NoteItemModel';
 import BasicNotecard from '../BasicNotecard';
 import ToDoItemsContainer from '../ToDoItemsContainer';
-import InputField from '../InputField';
-import Button from '../Button';
-import db from '../../models/DBManager';
-import { NotesContext } from '../contexts/NotesProvider';
+import { Description, DoneButton, StyledNotecard, Title } from './styles';
 
 export default function Notecard({ noteItem }) {
   const { id, color, noteTitle, noteDescription, isToDoList } = noteItem;
@@ -22,16 +20,28 @@ export default function Notecard({ noteItem }) {
     db.updateNote(id, data);
     handleUpdate();
   };
+
+  const noteTitleEl = (
+    <Title
+      text={noteData.noteTitle}
+      placeHolder="Title"
+      handleChange={(value) => {
+        setNoteData({ ...noteData, noteTitle: value });
+        setDoneBtnVisible(true);
+      }}
+    />
+  );
+
   const toDoItemsEl = (
     <ToDoItemsContainer
       toDoItems={noteItem.toDoItems}
       handleDataChange={(data) => handleDataChange({ toDoItems: data })}
     />
   );
+
   const noteDescriptionEl = (
-    <InputField
+    <Description
       text={noteData.noteDescription}
-      className="notecard__desc"
       placeHolder="Take a note..."
       handleChange={(value) => {
         setNoteData({ ...noteData, noteDescription: value });
@@ -39,31 +49,27 @@ export default function Notecard({ noteItem }) {
       }}
     />
   );
+
   return (
-    <div
-      className="notecard"
+    <StyledNotecard
       aria-label={`Keep's Note ${noteTitle}`}
       data-note-id={id}
       data-color={color}
     >
-      <BasicNotecard
-        noteItem={noteItem}
-        handleDataChange={handleDataChange}
-        sendNoteData={(data) => {
-          setNoteData({ ...noteData, ...data });
-          setDoneBtnVisible(true);
-        }}
-        typeOfNoteEl={isToDoList ? toDoItemsEl : noteDescriptionEl}
-      />
+      <BasicNotecard noteItem={noteItem} handleDataChange={handleDataChange}>
+        <>
+          {noteTitleEl}
+          {isToDoList ? toDoItemsEl : noteDescriptionEl}
+        </>
+      </BasicNotecard>
       {doneBtnVisible && (
-        <Button
-          className="notecard__done-button"
+        <DoneButton
           handleClick={() => handleDataChange(noteData)}
           label="Done"
           btnText="Done"
         />
       )}
-    </div>
+    </StyledNotecard>
   );
 }
 Notecard.propTypes = {

@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import useDebounce from '../../hooks/useDebounce';
 
 import { NotesContext } from '../contexts/NotesProvider';
-import Button from '../Button';
-import './styles.css';
+import {
+  CancelSearchButton,
+  SearchButton,
+  SearchInput,
+  SearchPanel,
+} from './styles';
 
 function SearchBar({ closeSearch }) {
   const [searchValue, setSearchValue] = useState('');
@@ -14,7 +18,10 @@ function SearchBar({ closeSearch }) {
     const searchList = noteList.filter(
       (note) => note.noteTitle.includes(debouncedValue)
         || note.noteDescription.includes(debouncedValue)
-        || note.toDoItems.map((td) => td.title).join(' ').includes(debouncedValue),
+        || note.toDoItems
+          .map((td) => td.title)
+          .join(' ')
+          .includes(debouncedValue),
     );
     setNotesToRender(searchList);
   }, [debouncedValue, noteList, setNotesToRender]);
@@ -29,25 +36,17 @@ function SearchBar({ closeSearch }) {
   };
 
   return (
-    <div className="search-panel">
-      <Button
-        className="search-panel__button icon-size icon-button"
-        label="Search"
-      />
-      <input
+    <SearchPanel>
+      <SearchButton label="Search" />
+      <SearchInput
         type="text"
-        className="search-panel__input"
         value={searchValue}
         placeholder="Search Keep..."
         onChange={(event) => handleInput(event.target.value)}
         onKeyDown={(event) => (event.code === 'Escape' ? cancelSearch() : null)}
       />
-      <Button
-        className="search-panel__clear-button"
-        handleClick={cancelSearch}
-        label="Clear search"
-      />
-    </div>
+      <CancelSearchButton handleClick={cancelSearch} label="Clear search" />
+    </SearchPanel>
   );
 }
 export default SearchBar;

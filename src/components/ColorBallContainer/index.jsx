@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './styles.css';
+import { ColorBall, StyledColorBallContainer } from './styles';
 
 export default function ColorBallContainer({ changeToColor }) {
   const colors = [
@@ -19,9 +19,8 @@ export default function ColorBallContainer({ changeToColor }) {
   ];
 
   const createColorBall = (color) => (
-    <span
+    <ColorBall
       aria-label={color}
-      className="color-ball"
       role="button"
       tabIndex={0}
       key={color}
@@ -32,9 +31,9 @@ export default function ColorBallContainer({ changeToColor }) {
   );
 
   return (
-    <div className="color-ball__container">
+    <StyledColorBallContainer>
       {colors.map((color) => createColorBall(color))}
-    </div>
+    </StyledColorBallContainer>
   );
 }
 

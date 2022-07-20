@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Notecard from '../Notecard';
-import './styles.css';
 import { NotesContext } from '../contexts/NotesProvider';
+import NotesArea from './styles';
 
 export default function NoteItemsList() {
   const { notesToRender } = useContext(NotesContext);
@@ -9,5 +9,5 @@ export default function NoteItemsList() {
   const notecards = notesToRender.map((noteItem) => (
     <Notecard key={noteItem.id} noteItem={noteItem} />
   ));
-  return <section className="notes-area">{notecards}</section>;
+  return <NotesArea>{notecards}</NotesArea>;
 }

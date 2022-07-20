@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
 import NoteItemsList from '../NoteItemsList';
 import TakeNewNotesHeader from '../TakeNewNotesHeader';
-import './styles.css';
 import NotesAreaHeader from '../NotesAreaHeader';
 import { NotesContext } from '../contexts/NotesProvider';
+import StyledContent from './styles';
 
 export default function Content() {
   const { sidebarSelected } = useContext(NotesContext);
   return (
-    <div className="content">
+    <StyledContent>
       {sidebarSelected !== 'TRASH' && <TakeNewNotesHeader />}
       <NotesAreaHeader />
       <NoteItemsList />
-    </div>
+    </StyledContent>
   );
 }

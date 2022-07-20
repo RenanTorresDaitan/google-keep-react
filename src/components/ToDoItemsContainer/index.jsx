@@ -5,10 +5,18 @@ import React, {
   useMemo,
   useCallback,
 } from 'react';
-import PropTypes, { number, string } from 'prop-types';
-import plusIcon from '../../assets/svg/notecard/plus-icon.svg';
+import PropTypes from 'prop-types';
 import ToDoItem from './ToDoItem';
-import './styles.css';
+import {
+  CompletedItemsArea,
+  CompletedItemsBtn,
+  CompletedItemsToggle,
+  CompletedItemsLabel,
+  CompletedItemsList,
+  CompletedItemsSeparator,
+  StyledToDoItemPlaceholder,
+} from './styles';
+import { StyledTextarea } from './ToDoItem/styles';
 
 function ToDoItemsContainer({ toDoItems, handleDataChange }) {
   const [showCompletedItems, setShowCompletedItems] = useState(false);
@@ -25,6 +33,7 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
     },
     [handleDataChange, toDoItems],
   );
+
   const deleteToDoItem = useCallback(
     (item) => {
       const newToDos = toDoItems.filter((oldItem) => oldItem.id !== item.id);
@@ -36,7 +45,7 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
   const items = useMemo(
     () => ({
       checked: toDoItems
-        .filter((item) => item.checked === 'true')
+        .filter((item) => item.checked)
         .map((item) => (
           <ToDoItem
             toDoItem={item}
@@ -46,16 +55,14 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
           />
         )),
       unchecked: toDoItems
-        .filter((item) => item.checked === 'false')
+        .filter((item) => !item.checked)
         .map((item) => (
           <ToDoItem
             toDoItem={item}
             key={item.id}
             updateToDoItem={updateToDoItem}
             deleteToDoItem={deleteToDoItem}
-            ref={
-              newToDoItemRef.current === item.id ? newToDoItemRef : null
-            }
+            ref={newToDoItemRef.current === item.id ? newToDoItemRef : null}
           />
         )),
     }),
@@ -75,7 +82,7 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
         {
           id: nextId,
           title: event.key,
-          checked: 'false',
+          checked: false,
         },
       ]);
       newToDoItemRef.current = nextId;
@@ -91,7 +98,6 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
 
   return (
     <div
-      className="note-to-do-items"
       onClick={() => setShowPlaceHolder(true)}
       tabIndex={0}
       role="button"
@@ -99,41 +105,34 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
     >
       {items.unchecked}
       {showPlaceHolder && (
-        <div className="to-do-item-placeholder">
-          <img className="svg-icon-large" src={plusIcon} alt="" />
-          <textarea
-            className="to-do-item-textarea"
+        <StyledToDoItemPlaceholder>
+          <StyledTextarea
             placeholder="List item"
             tabIndex={0}
             onKeyDown={(e) => createNewToDoItem(e)}
           />
-        </div>
+        </StyledToDoItemPlaceholder>
       )}
       {items.checked.length > 0 && (
-        <div className="completed-items-area">
-          <div className="completed-items-separator" />
-          <div
+        <CompletedItemsArea>
+          <CompletedItemsSeparator />
+          <CompletedItemsToggle
             role="button"
             tabIndex={0}
-            className="completed-items-div"
             onClick={() => setShowCompletedItems((prevState) => !prevState)}
             onKeyDown={() => {}}
           >
-            <div
-              className={`completed-items-btn ${
-                showCompletedItems ? 'rotate-90-cw' : ''
-              }`}
-            />
-            <span className="completed-items-label">
+            <CompletedItemsBtn show={showCompletedItems} />
+            <CompletedItemsLabel>
               {items.checked.length > 1
                 ? `${items.checked.length} Completed items`
                 : '1 Completed item'}
-            </span>
-          </div>
+            </CompletedItemsLabel>
+          </CompletedItemsToggle>
           {showCompletedItems && (
-            <div className="completed-items-list">{items.checked}</div>
+            <CompletedItemsList>{items.checked}</CompletedItemsList>
           )}
-        </div>
+        </CompletedItemsArea>
       )}
     </div>
   );
@@ -148,9 +147,9 @@ ToDoItemsContainer.defaultProps = {
 ToDoItemsContainer.propTypes = {
   toDoItems: PropTypes.arrayOf(
     PropTypes.shape({
-      id: number,
-      title: string,
-      checked: string,
+      id: PropTypes.number,
+      title: PropTypes.string,
+      checked: PropTypes.bool,
     }),
   ),
   handleDataChange: PropTypes.func.isRequired,

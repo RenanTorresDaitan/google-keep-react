@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect, forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import '../styles.css';
+import { StyledLabel, StyledCheckbox, StyledTextarea, StyledToDoItem, ToDoItemDeleteBtn } from './styles';
 
 function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
   const [showText, setShowText] = useState(true);
   const textarea = useRef();
   const { id, title, checked } = toDoItem;
+
   useEffect(() => {
     if (!showText) {
       textarea.current.focus();
@@ -17,28 +18,27 @@ function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
   }, [showText]);
 
   return (
-    <div className="to-do-item" data-note-id={id}>
-      <div
+    <StyledToDoItem data-note-id={id}>
+      <StyledCheckbox
         aria-labelledby="label"
         role="button"
-        className="to-do-item-checkbox"
         check={checked}
         tabIndex={0}
         onClick={() => {
           updateToDoItem({
             id,
             title,
-            checked: checked === 'true' ? 'false' : 'true',
+            checked: !checked,
           });
         }}
         onKeyDown={(e) => {}}
         name="checkbox"
       />
       {showText && (
-        <span
+        <StyledLabel
           role="button"
+          check={checked}
           htmlFor="checkbox"
-          className="to-do-item-label"
           tabIndex={0}
           ref={ref}
           onClick={() => {
@@ -47,11 +47,10 @@ function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
           onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space' ? setShowText(false) : null)}
         >
           {title}
-        </span>
+        </StyledLabel>
       )}
       {!showText && (
-        <textarea
-          className="to-do-item-textarea"
+        <StyledTextarea
           placeholder="List item"
           value={title}
           ref={textarea}
@@ -67,18 +66,16 @@ function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
           }}
         />
       )}
-      <div
-        className="to-do-item-delete"
+      <ToDoItemDeleteBtn
         role="button"
         tabIndex={0}
-        name="delete-btn"
         onClick={() => deleteToDoItem(toDoItem)}
         onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space'
           ? deleteToDoItem(toDoItem)
           : null)}
         label="delete note"
       />
-    </div>
+    </StyledToDoItem>
   );
 }
 const toDoItemRef = forwardRef(ToDoItem);
@@ -88,7 +85,7 @@ ToDoItem.propTypes = {
   toDoItem: PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
-    checked: PropTypes.string.isRequired,
+    checked: PropTypes.bool.isRequired,
   }).isRequired,
   updateToDoItem: PropTypes.func.isRequired,
   deleteToDoItem: PropTypes.func.isRequired,

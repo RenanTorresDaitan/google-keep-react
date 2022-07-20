@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function InputField({ text, placeHolder, className, handleChange, visible }) {
+function InputField({ className, text, placeHolder, handleChange, visible }) {
   const [showText, setShowText] = useState(visible);
   const [input, setInput] = useState(text);
   const textarea = useRef();
@@ -25,8 +25,8 @@ function InputField({ text, placeHolder, className, handleChange, visible }) {
 
   return (
     <div
-      className={className}
       role="textbox"
+      className={className}
       onClick={handleShowText}
       tabIndex={0}
       onKeyDown={() => {}}
@@ -35,8 +35,6 @@ function InputField({ text, placeHolder, className, handleChange, visible }) {
         <span>{input}</span>
       ) : (
         <textarea
-          className={`${className}-textarea`}
-          id={`${className}-textarea`}
           ref={textarea}
           rows="1"
           maxLength="999"
