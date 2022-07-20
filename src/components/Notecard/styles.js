@@ -10,6 +10,7 @@ export const StyledNotecard = styled.div`
   border-style: solid;
   width: 267px;
   height: 100%;
+  min-height: 3rem;
   margin-top: 0.625rem;
   position: relative;
   transition: box-shadow outline 100ms;
@@ -44,7 +45,7 @@ export const DoneButton = styled(Button)`
   }
 `;
 
-const StyledInputField = css`
+export const StyledInputField = styled(InputField)`
   display: flex;
   flex: 0 1 100%;
   padding-inline: 1rem;
@@ -72,8 +73,7 @@ const StyledTextArea = css`
   color: var(--c-black);
 `;
 
-export const Title = styled(InputField)`
-  ${StyledInputField}
+export const Title = styled(StyledInputField)`
   font-family: var(--ff-google);
   font-size: 0.875rem;
   font-weight: 500;
@@ -82,19 +82,18 @@ export const Title = styled(InputField)`
   color: var(--tc-dark-gray);
 `;
 
-export const Description = styled(InputField)`
-  ${StyledInputField}
+export const Description = styled(StyledInputField)`
   font-family: var(--ff-roboto);
   font-weight: 400;
   font-size: 0.75rem;
   color: var(--tc-gray-2);
   background-color: red;
-  & ~ & span {
+  > span {
     font-size: 0.75rem;
     letter-spacing: 0.3px;
     padding: 0.625rem 1rem 0 1rem;
   }
-  & > & textarea {
+  > textarea {
     ${StyledTextArea}
   }
 `;

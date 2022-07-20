@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Content from './Content';
-import Header from './Header';
-import SideBar from './SideBar';
-import '../styles/styles.css';
-import NotesProvider from './contexts/NotesProvider';
+import Content from '../Content';
+import Header from '../Header';
+import SideBar from '../SideBar';
+import NotesProvider from '../contexts/NotesProvider';
+import { MainSection, StyledApp } from './styles';
 
 export default function App() {
   const [expandSideBar, setExpandSideBar] = useState(false);
@@ -11,16 +11,14 @@ export default function App() {
     setExpandSideBar((prevState) => !prevState);
   };
   return (
-    <div className="app">
+    <StyledApp>
       <NotesProvider>
         <Header handleMenuClick={handleSideBarExpansion} />
-        <section className="main-section">
-          <SideBar
-            expand={expandSideBar}
-          />
+        <MainSection>
+          <SideBar expand={expandSideBar} />
           <Content />
-        </section>
+        </MainSection>
       </NotesProvider>
-    </div>
+    </StyledApp>
   );
 }

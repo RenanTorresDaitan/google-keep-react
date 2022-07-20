@@ -6,6 +6,7 @@ function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
   const [showText, setShowText] = useState(true);
   const textarea = useRef();
   const { id, title, checked } = toDoItem;
+
   useEffect(() => {
     if (!showText) {
       textarea.current.focus();

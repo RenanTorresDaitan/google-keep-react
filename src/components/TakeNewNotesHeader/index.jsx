@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import NewNotecard from '../NewNotecard';
-import { StyledNewNoteHeader, TakeaNoteButton, CreateListButton } from './styles';
+import { StyledNewNoteHeader, TakeaNoteButton, CreateListButton, NewNoteHeaderContainer } from './styles';
 
 function TakeNewNotesHeader() {
   const [displayHeader, setDisplayHeader] = useState(true);
@@ -15,7 +15,7 @@ function TakeNewNotesHeader() {
     />
   );
   return (
-    <div style={{ display: 'block', margin: 'auto' }}>
+    <NewNoteHeaderContainer>
       {displayHeader ? (
         <StyledNewNoteHeader>
           <TakeaNoteButton
@@ -37,7 +37,7 @@ function TakeNewNotesHeader() {
       ) : (
         createNewNote(typeOfNewNote)
       )}
-    </div>
+    </NewNoteHeaderContainer>
   );
 }
 

@@ -5,6 +5,7 @@ import menuCirclesIcon from '../../assets/svg/notecard/menu-circles-icon.svg';
 import colorDropIcon from '../../assets/svg/notecard/drop-icon.svg';
 import largePinIcon from '../../assets/svg/notecard/pin-large-icon.svg';
 import largePinPinnedIcon from '../../assets/svg/notecard/pin-large-pinned-icon.svg';
+import { StyledNotecard } from '../Notecard/styles';
 
 export const NotecardButtonsContainer = styled.div`
   display: flex;
@@ -15,6 +16,10 @@ export const NotecardButtonsContainer = styled.div`
   transition: opacity 100ms linear;
   opacity: 0;
   z-index: 100;
+
+  ${StyledNotecard}:hover & {
+    opacity : 1;
+  }
 
   @media screen and (min-width: 900px) {
     opacity: 0;

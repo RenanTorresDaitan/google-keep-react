@@ -3,6 +3,11 @@ import Button from '../Button';
 import plusIcon from '../../assets/svg/notecard/plus-icon.svg';
 import listIcon from '../../assets/svg/new-list-icon.svg';
 
+export const NewNoteHeaderContainer = styled.div`
+  display: block;
+  margin: auto;
+`;
+
 export const StyledNewNoteHeader = styled.div`
   display: flex;
   flex-direction: row;

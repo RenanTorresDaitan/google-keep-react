@@ -23,20 +23,6 @@ body {
   font-family: var(--ff-roboto);
 }
 
-.main-section {
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  padding: 64px 0px 10px 0px;
-  position: absolute;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-direction: row;
-  flex-wrap: nowrap;
-}
-
 .icon-size {
   height: 1.25rem;
   width: 1.25rem;

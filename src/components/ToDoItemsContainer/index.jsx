@@ -7,7 +7,15 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import ToDoItem from './ToDoItem';
-import { CompletedItemsArea, CompletedItemsBtn, CompletedItemsToggle, CompletedItemsLabel, CompletedItemsList, CompletedItemsSeparator, StyledToDoItemPlaceholder } from './styles';
+import {
+  CompletedItemsArea,
+  CompletedItemsBtn,
+  CompletedItemsToggle,
+  CompletedItemsLabel,
+  CompletedItemsList,
+  CompletedItemsSeparator,
+  StyledToDoItemPlaceholder,
+} from './styles';
 import { StyledTextarea } from './ToDoItem/styles';
 
 function ToDoItemsContainer({ toDoItems, handleDataChange }) {
@@ -25,6 +33,7 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
     },
     [handleDataChange, toDoItems],
   );
+
   const deleteToDoItem = useCallback(
     (item) => {
       const newToDos = toDoItems.filter((oldItem) => oldItem.id !== item.id);
@@ -32,6 +41,7 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
     },
     [handleDataChange, toDoItems],
   );
+
   const items = useMemo(
     () => ({
       checked: toDoItems
@@ -52,14 +62,13 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
             key={item.id}
             updateToDoItem={updateToDoItem}
             deleteToDoItem={deleteToDoItem}
-            ref={
-              newToDoItemRef.current === item.id ? newToDoItemRef : null
-            }
+            ref={newToDoItemRef.current === item.id ? newToDoItemRef : null}
           />
         )),
     }),
     [toDoItems, updateToDoItem, deleteToDoItem],
   );
+
   const createNewToDoItem = (event) => {
     event.preventDefault();
     if (event.keyCode > 60 && event.keyCode < 95) {
@@ -121,7 +130,7 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
             </CompletedItemsLabel>
           </CompletedItemsToggle>
           {showCompletedItems && (
-            <CompletedItemsList className="completed-items-list">{items.checked}</CompletedItemsList>
+            <CompletedItemsList>{items.checked}</CompletedItemsList>
           )}
         </CompletedItemsArea>
       )}
