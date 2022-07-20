@@ -1,3 +1,6 @@
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
 :root {
   --c-light-gray: rgba(60, 64, 67, 0.08);
   --c-gray: rgb(218, 220, 224);
@@ -11,35 +14,15 @@
   --ff-google: 'Google Sans', 'Roboto', sans-serif;
   --ff-roboto: 'Roboto', 'Arial', sans-serif;
 }
-
 * {
   margin: 0%;
   padding: 0%;
   box-sizing: border-box;
 }
-html,
-body {
+  html,
+  body {
   height: 100%;
   font-family: var(--ff-roboto);
-}
-
-.icon-size {
-  height: 1.25rem;
-  width: 1.25rem;
-}
-.icon-button {
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.icon-button {
-  padding: 1.25rem;
-}
-.notecard-pin-button:hover,
-.icon-button:hover {
-  background-color: var(--c-light-gray);
 }
 
 [data-color='red'] {
@@ -90,3 +73,6 @@ body {
   background: #fff;
   border-color: #e0e0e0;
 }
+`;
+
+export default GlobalStyle;

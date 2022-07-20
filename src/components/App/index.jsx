@@ -4,6 +4,7 @@ import Header from '../Header';
 import SideBar from '../SideBar';
 import NotesProvider from '../contexts/NotesProvider';
 import { MainSection, StyledApp } from './styles';
+import GlobalStyle from '../../styles/globalStyles';
 
 export default function App() {
   const [expandSideBar, setExpandSideBar] = useState(false);
@@ -12,6 +13,7 @@ export default function App() {
   };
   return (
     <StyledApp>
+      <GlobalStyle />
       <NotesProvider>
         <Header handleMenuClick={handleSideBarExpansion} />
         <MainSection>
