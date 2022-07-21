@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function InputField({ className, text, placeHolder, handleChange, visible }) {
+const InputField = ({ className, text, placeHolder, handleChange, visible }) => {
   const [showText, setShowText] = useState(visible);
   const [input, setInput] = useState(text);
   const textarea = useRef();
@@ -12,14 +12,17 @@ function InputField({ className, text, placeHolder, handleChange, visible }) {
       setShowText((prevState) => !prevState);
     }
   };
+  const handleTextChange = (e) => {
+    setInput(e.target.value);
+    handleChange(e.target.value);
+  };
 
   useEffect(() => {
     if (!showText) {
+      const textValue = textarea.current.value;
       textarea.current.focus();
-      textarea.current.setSelectionRange(
-        textarea.current.value.length,
-        textarea.current.value.length,
-      );
+      textarea.current.value = '';
+      textarea.current.value = textValue;
     }
   }, [showText]);
 
@@ -36,22 +39,20 @@ function InputField({ className, text, placeHolder, handleChange, visible }) {
       ) : (
         <textarea
           ref={textarea}
-          rows="1"
           maxLength="999"
           placeholder={placeHolder}
-          style={{ height: '1rem' }}
           value={input}
-          onChange={(e) => {
-            setInput(e.target.value);
-            handleChange(e.target.value);
+          onBlur={(e) => {
+            handleTextChange(e);
+            handleShowText();
           }}
+          onChange={handleTextChange}
         />
       )}
     </div>
   );
-}
+};
 
-export default InputField;
 InputField.defaultProps = {
   visible: true,
 };
@@ -63,3 +64,4 @@ InputField.propTypes = {
   handleChange: PropTypes.func.isRequired,
   visible: PropTypes.bool,
 };
+export default InputField;

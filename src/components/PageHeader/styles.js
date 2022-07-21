@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import menuBarsIcon from '../../assets/svg/menu-bars.svg';
-import Button from '../Button';
 import keepIcon from '../../assets/keep-icon.png';
 
 export const HeaderContainer = styled.div`
@@ -11,8 +10,10 @@ export const HeaderContainer = styled.div`
   padding-left: 0rem;
 `;
 
-export const MenuButton = styled(Button)`
+export const MenuButton = styled.button`
   display: none;
+  border: 0;
+  background-color: transparent;
   cursor: pointer;
   background-image: url(${menuBarsIcon});
   background-repeat: no-repeat;

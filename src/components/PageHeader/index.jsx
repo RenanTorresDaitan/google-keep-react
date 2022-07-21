@@ -10,7 +10,7 @@ import {
   MenuButton,
 } from './styles';
 
-function PageHeader({ handleMenuClick }) {
+const PageHeader = ({ handleMenuClick }) => {
   const { sidebarSelected } = useContext(NotesContext);
 
   let title = 'Keep';
@@ -20,10 +20,6 @@ function PageHeader({ handleMenuClick }) {
     case 'NOTES':
       title = 'Keep';
       subtitle = 'Notes';
-      break;
-    case 'REMINDERS':
-      title = 'Reminders';
-      subtitle = '';
       break;
     case 'ARCHIVE':
       title = 'Archive';
@@ -38,7 +34,12 @@ function PageHeader({ handleMenuClick }) {
   }
   return (
     <HeaderContainer>
-      <MenuButton label="Menu" handleClick={handleMenuClick} />
+      <MenuButton
+        aria-label="Menu"
+        data-tooltip-text="Menu"
+        tabIndex={0}
+        onClick={handleMenuClick}
+      />
       {sidebarSelected === 'NOTES' && <HeaderIcon />}
       <HeaderTitleContainer>
         <HeaderTitle tabIndex={-1}>{title}</HeaderTitle>
@@ -46,7 +47,7 @@ function PageHeader({ handleMenuClick }) {
       </HeaderTitleContainer>
     </HeaderContainer>
   );
-}
+};
 
 PageHeader.propTypes = {
   handleMenuClick: PropTypes.func.isRequired,

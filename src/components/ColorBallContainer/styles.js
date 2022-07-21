@@ -13,7 +13,7 @@ export const StyledColorBallContainer = styled.div`
   z-index: 2020;
 `;
 
-export const ColorBall = styled.div`
+export const ColorBall = styled.button`
   display: flex;
   border: 1px solid var(--c-gray);
   flex-direction: row;

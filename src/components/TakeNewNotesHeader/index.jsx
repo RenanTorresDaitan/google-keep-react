@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import NewNotecard from '../NewNotecard';
 import { StyledNewNoteHeader, TakeaNoteButton, CreateListButton, NewNoteHeaderContainer } from './styles';
 
-function TakeNewNotesHeader() {
+const TakeNewNotesHeader = () => {
   const [displayHeader, setDisplayHeader] = useState(true);
   const [typeOfNewNote, setTypeOfNewNote] = useState('note');
   const handleDisplayHeader = (visible) => {
@@ -19,16 +19,21 @@ function TakeNewNotesHeader() {
       {displayHeader ? (
         <StyledNewNoteHeader>
           <TakeaNoteButton
-            handleClick={() => {
+            aria-label="Take a note..."
+            data-tooltip-text="Take a note..."
+            tabIndex={0}
+            onClick={() => {
               handleDisplayHeader(false);
               setTypeOfNewNote('note');
             }}
-            label="Take a note..."
-            btnText="Take a note..."
-          />
+          >
+            Take a note...
+          </TakeaNoteButton>
           <CreateListButton
-            label="New list"
-            handleClick={() => {
+            aria-label="New list"
+            data-tooltip-text="New list"
+            tabIndex={0}
+            onClick={() => {
               handleDisplayHeader(false);
               setTypeOfNewNote('list');
             }}
@@ -39,6 +44,6 @@ function TakeNewNotesHeader() {
       )}
     </NewNoteHeaderContainer>
   );
-}
+};
 
 export default TakeNewNotesHeader;

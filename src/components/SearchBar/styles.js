@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Button from '../Button';
 import searchIcon from '../../assets/svg/search-icon.svg';
 import closeIcon from '../../assets/svg/inverted-close-icon.svg';
 
@@ -24,7 +23,8 @@ export const SearchPanel = styled.div`
   }
 `;
 
-export const SearchButton = styled(Button)`
+export const SearchButton = styled.button`
+  border: 0;
   display: block;
   cursor: pointer;
   background-image: url(${searchIcon});
@@ -33,7 +33,8 @@ export const SearchButton = styled(Button)`
   background-size: 1.375rem;
   opacity: 0.5;
   border-radius: 50%;
-  height: var(--height);
+  height: calc(var(--height) * 0.75);
+  margin-inline: 0.15rem;
   aspect-ratio: 1;
   `;
 
@@ -44,7 +45,7 @@ export const CancelSearchButton = styled(SearchButton)`
     background-color: var(--c-light-gray);
   }
   @media screen and (min-width: 900px) {
-    margin: 0;
+    margin-inline: 0.15rem;
   }
 `;
 

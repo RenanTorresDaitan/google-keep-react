@@ -9,6 +9,8 @@ export const StyledToDoItem = styled.div`
   padding: 0.25rem 0.3125rem 0 0.875rem;
 `;
 export const StyledCheckbox = styled.div`
+border: 0;
+background-color: transparent;
   cursor: pointer;
   display: flex;
   flex: 0 1 auto;
@@ -83,13 +85,14 @@ export const StyledTextarea = styled.textarea`
   }
 `;
 
-export const ToDoItemDeleteBtn = styled.div`
+export const ToDoItemDeleteBtn = styled.button`
   cursor: pointer;
   display: none;
   align-items: flex-end;
   justify-content: center;
   border: 1px solid transparent;
   background-image: url(${closeIcon});
+  background-color: transparent;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 22px 22px;

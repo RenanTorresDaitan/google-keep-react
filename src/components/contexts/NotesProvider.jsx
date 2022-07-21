@@ -9,7 +9,7 @@ const filterNotesList = (predicate) => db.noteItemsList
   .filter(predicate);
 
 export const NotesContext = createContext(null);
-function NotesProvider({ children }) {
+const NotesProvider = ({ children }) => {
   const [sidebarSelected, setSidebarSelected] = useState('NOTES');
   const [notesToRender, setNotesToRender] = useState([]);
   const [update, setUpdate] = useState(Date.now());
@@ -52,7 +52,7 @@ function NotesProvider({ children }) {
   return (
     <NotesContext.Provider value={context}>{children}</NotesContext.Provider>
   );
-}
+};
 
 NotesProvider.propTypes = {
   children: PropTypes.node.isRequired,

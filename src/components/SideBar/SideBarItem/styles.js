@@ -1,6 +1,12 @@
 import styled, { css } from 'styled-components';
 
-export const StyledSideBarItem = styled.div`
+export const StyledSideBarItem = styled.button`
+  border: 0;
+  background-color: transparent;
+  outline: 0;
+  font-family: var(--ff-roboto);
+  font-size: 1rem;
+  transition: margin, 150ms 350ms;
   cursor: pointer;
   &:hover {
     margin-left: 0rem;
@@ -29,14 +35,18 @@ export const SideBarButton = styled.div`
 
   ${StyledSideBarItem}:hover > & {
     border-radius: 0vw 100vw 100vw 0vw;
-    background-color: var(--c-light-gray);
     padding-left: 1.5rem;
     width: 100%;
+  }
+  ${StyledSideBarItem}:hover > &, 
+  ${StyledSideBarItem}:focus > & {
+    background-color: var(--c-light-gray);
   }
   ${({ active }) => active
     && css`
       background-color: #feefc3;
-      ${StyledSideBarItem}:hover > & {
+      ${StyledSideBarItem}:hover > &,
+      ${StyledSideBarItem}:focus > & {
         background-color: #feefc3;
       }
     `};
@@ -46,7 +56,8 @@ export const SideBarButton = styled.div`
       padding-left: 1.5rem;
       width: 100%;
 
-      ${StyledSideBarItem}:hover > & {
+      ${StyledSideBarItem}:hover > &,
+      ${StyledSideBarItem}:focus > & {
         transition: background-color 0ms;
         transition-delay: 0ms;
         background-color: var(--c-light-gray);

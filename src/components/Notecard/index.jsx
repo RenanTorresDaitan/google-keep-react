@@ -7,8 +7,9 @@ import BasicNotecard from '../BasicNotecard';
 import ToDoItemsContainer from '../ToDoItemsContainer';
 import { Description, DoneButton, StyledNotecard, Title } from './styles';
 
-export default function Notecard({ noteItem }) {
+const Notecard = ({ noteItem }) => {
   const { id, color, noteTitle, noteDescription, isToDoList } = noteItem;
+  const emptyNote = noteTitle === '' && noteDescription === '';
   const [doneBtnVisible, setDoneBtnVisible] = useState(false);
   const [noteData, setNoteData] = useState({
     noteTitle,
@@ -42,7 +43,8 @@ export default function Notecard({ noteItem }) {
   const noteDescriptionEl = (
     <Description
       text={noteData.noteDescription}
-      placeHolder="Take a note..."
+      placeHolder={emptyNote ? 'Empty note' : 'Take a note...'}
+      visible={!emptyNote}
       handleChange={(value) => {
         setNoteData({ ...noteData, noteDescription: value });
         setDoneBtnVisible(true);
@@ -60,18 +62,24 @@ export default function Notecard({ noteItem }) {
         <>
           {noteTitleEl}
           {isToDoList ? toDoItemsEl : noteDescriptionEl}
+          {doneBtnVisible && (
+            <DoneButton
+              aria-label="Done"
+              data-tooltip-text="Done"
+              tabIndex={0}
+              onClick={() => handleDataChange(noteData)}
+            >
+              Done
+            </DoneButton>
+          )}
         </>
       </BasicNotecard>
-      {doneBtnVisible && (
-        <DoneButton
-          handleClick={() => handleDataChange(noteData)}
-          label="Done"
-          btnText="Done"
-        />
-      )}
     </StyledNotecard>
   );
-}
+};
+
 Notecard.propTypes = {
   noteItem: PropTypes.instanceOf(NoteItemModel).isRequired,
 };
+
+export default Notecard;

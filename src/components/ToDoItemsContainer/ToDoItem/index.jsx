@@ -1,8 +1,14 @@
 import React, { useState, useRef, useEffect, forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { StyledLabel, StyledCheckbox, StyledTextarea, StyledToDoItem, ToDoItemDeleteBtn } from './styles';
+import {
+  StyledLabel,
+  StyledCheckbox,
+  StyledTextarea,
+  StyledToDoItem,
+  ToDoItemDeleteBtn,
+} from './styles';
 
-function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
+const ToDoItem = ({ toDoItem, updateToDoItem, deleteToDoItem }, ref) => {
   const [showText, setShowText] = useState(true);
   const textarea = useRef();
   const { id, title, checked } = toDoItem;
@@ -67,17 +73,21 @@ function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
         />
       )}
       <ToDoItemDeleteBtn
-        role="button"
+        aria-label="delete note"
+        data-tooltip-text="delete note"
         tabIndex={0}
         onClick={() => deleteToDoItem(toDoItem)}
-        onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space'
-          ? deleteToDoItem(toDoItem)
-          : null)}
-        label="delete note"
+        onKeyDown={(e) => {
+          if (e.code === 'Enter' || e.code === 'Space') {
+            e.preventDefault();
+            deleteToDoItem(toDoItem);
+          }
+        }}
       />
     </StyledToDoItem>
   );
-}
+};
+
 const toDoItemRef = forwardRef(ToDoItem);
 export default toDoItemRef;
 

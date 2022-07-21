@@ -10,7 +10,7 @@ import {
   SearchPanel,
 } from './styles';
 
-function SearchBar({ closeSearch }) {
+const SearchBar = ({ closeSearch }) => {
   const [searchValue, setSearchValue] = useState('');
   const debouncedValue = useDebounce(searchValue, 300);
   const { noteList, setNotesToRender } = useContext(NotesContext);
@@ -45,10 +45,15 @@ function SearchBar({ closeSearch }) {
         onChange={(event) => handleInput(event.target.value)}
         onKeyDown={(event) => (event.code === 'Escape' ? cancelSearch() : null)}
       />
-      <CancelSearchButton handleClick={cancelSearch} label="Clear search" />
+      <CancelSearchButton
+        aria-label="Clear search"
+        data-tooltip-text="Clear search"
+        tabIndex={0}
+        onClick={cancelSearch}
+      />
     </SearchPanel>
   );
-}
+};
 export default SearchBar;
 
 SearchBar.propTypes = {

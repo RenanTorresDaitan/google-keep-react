@@ -2,25 +2,31 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NoteCardMenuPanel, MenuPanelOption } from './styles';
 
-export default function MenuPanel({ options, handleDataChange }) {
+const MenuPanel = ({ options, handleDataChange }) => {
   const { isArchived, isTrashed } = options;
   return (
     <NoteCardMenuPanel>
       <MenuPanelOption
-        handleClick={() => handleDataChange({ isArchived: !isArchived })}
-        label="Archive note"
-        btnText={isArchived ? 'Unarchive' : 'Archive'}
-      />
+        aria-label={isArchived ? 'Unarchive note' : 'Archive note'}
+        data-tooltip-text={isArchived ? 'Unarchive note' : 'Archive note'}
+        tabIndex={0}
+        onClick={() => handleDataChange({ isArchived: !isArchived })}
+      >
+        {isArchived ? 'Unarchive' : 'Archive'}
+      </MenuPanelOption>
       {!isTrashed && (
         <MenuPanelOption
-          handleClick={() => handleDataChange({ isTrashed: true })}
-          label="Delete note"
-          btnText="Delete"
-        />
+          aria-label="Delete note"
+          data-tooltip-text="Delete note"
+          tabIndex={0}
+          onClick={() => handleDataChange({ isTrashed: true })}
+        >
+          Delete
+        </MenuPanelOption>
       )}
     </NoteCardMenuPanel>
   );
-}
+};
 
 MenuPanel.propTypes = {
   options: PropTypes.shape({
@@ -29,3 +35,5 @@ MenuPanel.propTypes = {
   }).isRequired,
   handleDataChange: PropTypes.func.isRequired,
 };
+
+export default MenuPanel;

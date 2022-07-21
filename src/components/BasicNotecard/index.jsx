@@ -12,11 +12,7 @@ import {
   ColorDropButton,
 } from './styles';
 
-export default function BasicNotecard({
-  noteItem,
-  handleDataChange,
-  children,
-}) {
+const BasicNotecard = ({ noteItem, handleDataChange, children }) => {
   const { isArchived, isPinned, isTrashed } = noteItem;
   const [showModal, setShowModal] = useState({ menu: false, color: false });
 
@@ -39,25 +35,33 @@ export default function BasicNotecard({
       {!isTrashed && (
         <NotecardButtonsContainer>
           <ColorDropButton
-            label="Change Note Color"
-            handleClick={() => setShowModal({ color: true })}
+            aria-label="Change Note Color"
+            data-tooltip-text="Change Note Color"
+            tabIndex={0}
+            onClick={() => setShowModal({ color: true })}
           />
           <MenuButton
-            label="Menu"
-            handleClick={() => setShowModal({ menu: true })}
+            aria-label="Menu"
+            data-tooltip-text="Menu"
+            tabIndex={0}
+            onClick={() => setShowModal({ menu: true })}
           />
           <PinButton
-            label="Fix Note"
-            handleClick={() => {
+            aria-label="Fix Note"
+            data-tooltip-text="Fix Note"
+            tabIndex={0}
+            onClick={() => {
               handleDataChange({ isPinned: !isPinned });
             }}
           />
         </NotecardButtonsContainer>
       )}
       <BigPinButton
+        aria-label="Fix Note"
+        data-tooltip-text="Fix Note"
+        tabIndex={0}
+        onClick={() => handleDataChange({ isPinned: !isPinned })}
         isPinned={isPinned}
-        handleClick={() => handleDataChange({ isPinned: !isPinned })}
-        label="Fix Note"
       />
       {children}
       <LowerToolbar
@@ -67,9 +71,11 @@ export default function BasicNotecard({
       />
     </>
   );
-}
+};
+
 BasicNotecard.propTypes = {
   noteItem: PropTypes.instanceOf(NoteItemModel).isRequired,
   handleDataChange: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired,
 };
+export default BasicNotecard;

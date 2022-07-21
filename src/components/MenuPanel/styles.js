@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import Button from '../Button';
 
 export const NoteCardMenuPanel = styled.div`
- cursor: pointer;
+  cursor: pointer;
   display: flex;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.5rem;
@@ -18,7 +17,9 @@ export const NoteCardMenuPanel = styled.div`
   z-index: 300;
 `;
 
-export const MenuPanelOption = styled(Button)`
+export const MenuPanelOption = styled.button`
+  border: 0;
+  background-color: transparent;
   color: var(--tc-dark-gray);
   font-family: var(--ff-roboto);
   font-size: 13px;

@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import Button from '../Button';
 import InputField from '../InputField';
 
 export const StyledNotecard = styled.div`
@@ -13,18 +12,17 @@ export const StyledNotecard = styled.div`
   min-height: 3rem;
   margin-top: 0.625rem;
   position: relative;
+  padding-bottom: 1rem;
   transition: box-shadow outline 100ms;
   &:hover {
     box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
       0 1px 3px 1px rgb(60 64 67 / 15%);
   }
-
-  @media screen and (min-width: 900px) {
-    padding-bottom: 1rem;
-  }
 `;
 
-export const DoneButton = styled(Button)`
+export const DoneButton = styled.button`
+font-family: var(--ff-roboto);
+font-size: 1rem;
   border-radius: 0.375rem;
   border: none;
   display: flex;
@@ -59,20 +57,18 @@ export const StyledInputField = styled(InputField)`
 `;
 
 const DefaultStyles = css`
+  border: 0;
   display: flex;
+  flex: 1 0 auto;
   background-color: transparent;
   box-sizing: content-box;
-  overflow: hidden;
   outline: none;
-  height: 1.0625rem;
-  width: auto;
   resize: none;
-  border: none;
   color: var(--c-black);
 `;
 
 export const Title = styled(StyledInputField)`
-  span ,
+  span,
   textarea {
     ${DefaultStyles}
     padding: 1rem 3.5rem 0 1rem;
@@ -86,15 +82,16 @@ export const Title = styled(StyledInputField)`
 `;
 
 export const Description = styled(StyledInputField)`
-  span ,
+  span,
   textarea {
     ${DefaultStyles}
-    font-size: 0.75rem;
     letter-spacing: 0.3px;
     padding: 0.625rem 1rem 0 1rem;
     font-family: var(--ff-roboto);
     font-weight: 400;
     font-size: 0.75rem;
+    overflow: hidden;
+    height: auto;
     color: var(--tc-gray-2);
   }
 `;

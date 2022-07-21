@@ -19,7 +19,7 @@ import {
   PinButton,
 } from '../BasicNotecard/styles';
 
-export default function NewNotecard({ typeOfNote, showHeader }) {
+const NewNotecard = ({ typeOfNote, showHeader }) => {
   const [newNoteData, setNewNoteData] = useState({
     noteTitle: '',
     color: 'default',
@@ -91,26 +91,34 @@ export default function NewNotecard({ typeOfNote, showHeader }) {
       {!newNoteData.isTrashed && (
         <NotecardButtonsContainer>
           <ColorDropButton
-            label="Change Note Color"
-            handleClick={() => setShowModal({ color: true })}
+            aria-label="Change Note Color"
+            data-tooltip-text="Change Note Color"
+            tabIndex={0}
+            onClick={() => setShowModal({ color: true })}
           />
           <MenuButton
-            label="Menu"
-            handleClick={() => setShowModal({ menu: true })}
+            aria-label="Menu"
+            data-tooltip-text="Menu"
+            tabIndex={0}
+            onClick={() => setShowModal({ menu: true })}
           />
           <PinButton
-            label="Fix Note"
-            handleClick={() => {
+            aria-label="Fix Note"
+            data-tooltip-text="Fix Note"
+            tabIndex={0}
+            onClick={() => {
               handleDataChange({ isPinned: !newNoteData.isPinned });
             }}
           />
         </NotecardButtonsContainer>
       )}
       <BigPinButton
-        handleClick={() => {
+        aria-label="Fix Note"
+        data-tooltip-text="Fix Note"
+        tabIndex={0}
+        onClick={() => {
           handleDataChange({ isPinned: !newNoteData.isPinned });
         }}
-        label="Fix Note"
       />
       <Title
         text={newNoteData.noteTitle}
@@ -121,15 +129,19 @@ export default function NewNotecard({ typeOfNote, showHeader }) {
       {newNoteData.isToDoList ? toDoItemsEl : noteDescriptionEl}
       {doneBtnVisible && (
         <DoneButton
-          handleClick={() => handleNewNote()}
-          label="Done"
-          btnText="Done"
+          aria-label="Done"
+          data-tooltip-text="Done"
+          tabIndex={0}
+          onClick={() => handleNewNote()}
         />
       )}
     </StyledNotecard>
   );
-}
+};
+
 NewNotecard.propTypes = {
   typeOfNote: PropTypes.string.isRequired,
   showHeader: PropTypes.func.isRequired,
 };
+
+export default NewNotecard;

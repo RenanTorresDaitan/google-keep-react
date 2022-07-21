@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import Button from '../Button';
 import pinIcon from '../../assets/svg/notecard/pin-icon.svg';
 import menuCirclesIcon from '../../assets/svg/notecard/menu-circles-icon.svg';
 import colorDropIcon from '../../assets/svg/notecard/drop-icon.svg';
@@ -27,7 +26,7 @@ export const NotecardButtonsContainer = styled.div`
   }
 `;
 
-const NotecardButton = styled(Button)`
+const NotecardButton = styled.button`
   cursor: pointer;
   background-color: transparent;
   background-size: 18px 18px;

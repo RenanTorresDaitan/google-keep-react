@@ -5,7 +5,7 @@ import NotesAreaHeader from '../NotesAreaHeader';
 import { NotesContext } from '../contexts/NotesProvider';
 import StyledContent from './styles';
 
-export default function Content() {
+const Content = () => {
   const { sidebarSelected } = useContext(NotesContext);
   return (
     <StyledContent>
@@ -14,4 +14,6 @@ export default function Content() {
       <NoteItemsList />
     </StyledContent>
   );
-}
+};
+
+export default Content;

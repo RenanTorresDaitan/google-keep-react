@@ -11,7 +11,7 @@ import {
   SearchButton,
 } from './styles';
 
-function Header({ handleMenuClick }) {
+const Header = ({ handleMenuClick }) => {
   const [showSearch, setShowSearch] = useState(false);
 
   const handleShowSearch = () => {
@@ -23,13 +23,21 @@ function Header({ handleMenuClick }) {
       <PageHeader handleMenuClick={handleMenuClick} />
       {showSearch && <SearchBar closeSearch={handleShowSearch} />}
       <HeaderIcons>
-        <SearchButton handleClick={handleShowSearch} label="Search" />
-        <OpenNewTabButton label="Open in new tab" />
-        <CloseButton label="Close" />
+        <SearchButton
+          aria-label="Search"
+          data-tooltip-text="Search"
+          tabIndex={0}
+          onClick={handleShowSearch}
+        />
+        <OpenNewTabButton
+          aria-label="Open in new tab"
+          data-tooltip-text="Open in new tab"
+        />
+        <CloseButton aria-label="Close" data-tooltip-text="Close" />
       </HeaderIcons>
     </AppHeader>
   );
-}
+};
 
 Header.propTypes = {
   handleMenuClick: PropTypes.func.isRequired,

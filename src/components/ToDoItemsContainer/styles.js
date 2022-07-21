@@ -30,8 +30,9 @@ export const CompletedItemsToggle = styled.div`
   justify-content: flex-start;
 `;
 
-export const CompletedItemsBtn = styled.div`
+export const CompletedItemsBtn = styled.button`
   cursor: pointer;
+  background-color: transparent;
   background-image: url(${arrowIcon});
   opacity: 0.5;
   border: 1px solid transparent;

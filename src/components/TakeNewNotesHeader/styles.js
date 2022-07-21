@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Button from '../Button';
 import plusIcon from '../../assets/svg/notecard/plus-icon.svg';
 import listIcon from '../../assets/svg/new-list-icon.svg';
 
@@ -14,7 +13,9 @@ export const StyledNewNoteHeader = styled.div`
   padding: 0.5rem 1rem 0 0.5rem;
 `;
 
-const StyledButton = styled(Button)`
+const StyledButton = styled.button`
+  border: 0;
+  background-color: transparent;
   cursor: pointer;
   display: flex;
   background-repeat: no-repeat;
