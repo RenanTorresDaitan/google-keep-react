@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function InputField({ className, text, placeHolder, handleChange, visible }) {
+const InputField = ({ className, text, placeHolder, handleChange, visible }) => {
   const [showText, setShowText] = useState(visible);
   const [input, setInput] = useState(text);
   const textarea = useRef();
@@ -49,9 +49,8 @@ function InputField({ className, text, placeHolder, handleChange, visible }) {
       )}
     </div>
   );
-}
+};
 
-export default InputField;
 InputField.defaultProps = {
   visible: true,
 };
@@ -63,3 +62,4 @@ InputField.propTypes = {
   handleChange: PropTypes.func.isRequired,
   visible: PropTypes.bool,
 };
+export default InputField;

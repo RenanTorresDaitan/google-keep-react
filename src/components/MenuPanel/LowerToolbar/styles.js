@@ -1,8 +1,6 @@
 import styled, { css } from 'styled-components';
-import Button from '../../Button';
 import restoreIcon from '../../../assets/svg/notecard/restore-note-icon.svg';
 import deleteIcon from '../../../assets/svg/notecard/delete-forever-icon.svg';
-import addReminderIcon from '../../../assets/svg/notecard/add-reminder-icon.svg';
 import colorPaletteIcon from '../../../assets/svg/notecard/color-palette-icon.svg';
 import unarchiveIcon from '../../../assets/svg/notecard/unarchive-note-icon.svg';
 import archiveIcon from '../../../assets/svg/notecard/archive-note-icon.svg';
@@ -22,8 +20,9 @@ export const NoteLowerToolbar = styled.div`
   }
 `;
 
-export const LowerToolbarButton = styled(Button)`
+export const LowerToolbarButton = styled.button`
   cursor: pointer;
+  border : 0;
   display: flex;
   border-radius: 50%;
   align-items: center;
@@ -34,7 +33,7 @@ export const LowerToolbarButton = styled(Button)`
   background-size: 1.5rem 1.5rem;
   background-repeat: no-repeat;
   padding: 1rem;
-  margin-inline: 0.25rem;
+  background-color: transparent;
   &:hover {
     opacity: 1;
     background-color: var(--c-light-gray);
@@ -47,10 +46,6 @@ export const RestoreButton = styled(LowerToolbarButton)`
 
 export const DeleteButton = styled(LowerToolbarButton)`
   background-image: url(${deleteIcon});
-`;
-
-export const AddReminderButton = styled(LowerToolbarButton)`
-  background-image: url(${addReminderIcon});
 `;
 
 export const ColorPaletteButton = styled(LowerToolbarButton)`

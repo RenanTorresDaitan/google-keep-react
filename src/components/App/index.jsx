@@ -6,7 +6,7 @@ import NotesProvider from '../contexts/NotesProvider';
 import { MainSection, StyledApp } from './styles';
 import GlobalStyle from '../../styles/globalStyles';
 
-export default function App() {
+const App = () => {
   const [expandSideBar, setExpandSideBar] = useState(false);
   const handleSideBarExpansion = () => {
     setExpandSideBar((prevState) => !prevState);
@@ -25,4 +25,6 @@ export default function App() {
       </StyledApp>
     </>
   );
-}
+};
+
+export default App;

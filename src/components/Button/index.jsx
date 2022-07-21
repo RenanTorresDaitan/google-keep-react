@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Button({ className, label, handleClick, btnText }) {
-  return (
+const Button = ({ className, label, handleClick, btnText }) => {
+  (
     <div
       role="button"
       className={className}
@@ -16,9 +16,7 @@ function Button({ className, label, handleClick, btnText }) {
       {btnText}
     </div>
   );
-}
-
-export default Button;
+};
 
 Button.defaultProps = {
   btnText: '',
@@ -31,3 +29,5 @@ Button.propTypes = {
   btnText: PropTypes.string,
   handleClick: PropTypes.func,
 };
+
+export default Button;

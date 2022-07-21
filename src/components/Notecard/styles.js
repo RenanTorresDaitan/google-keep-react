@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import Button from '../Button';
 import InputField from '../InputField';
 
 export const StyledNotecard = styled.div`
@@ -24,7 +23,7 @@ export const StyledNotecard = styled.div`
   }
 `;
 
-export const DoneButton = styled(Button)`
+export const DoneButton = styled.button`
   border-radius: 0.375rem;
   border: none;
   display: flex;

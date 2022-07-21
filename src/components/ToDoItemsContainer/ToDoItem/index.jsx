@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { StyledLabel, StyledCheckbox, StyledTextarea, StyledToDoItem, ToDoItemDeleteBtn } from './styles';
 
-function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
+const ToDoItem = ({ toDoItem, updateToDoItem, deleteToDoItem }, ref) => {
   const [showText, setShowText] = useState(true);
   const textarea = useRef();
   const { id, title, checked } = toDoItem;
@@ -77,9 +77,7 @@ function ToDoItem({ toDoItem, updateToDoItem, deleteToDoItem }, ref) {
       />
     </StyledToDoItem>
   );
-}
-const toDoItemRef = forwardRef(ToDoItem);
-export default toDoItemRef;
+};
 
 ToDoItem.propTypes = {
   toDoItem: PropTypes.shape({
@@ -90,3 +88,6 @@ ToDoItem.propTypes = {
   updateToDoItem: PropTypes.func.isRequired,
   deleteToDoItem: PropTypes.func.isRequired,
 };
+
+const toDoItemRef = forwardRef(ToDoItem);
+export default toDoItemRef;

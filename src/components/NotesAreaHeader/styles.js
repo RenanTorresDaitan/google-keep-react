@@ -19,10 +19,12 @@ export const TrashHeader = styled.div`
   margin-inline: auto;
 `;
 
-export const EmptyTrashButton = styled(Button)`
+export const EmptyTrashButton = styled.button`
   cursor: pointer;
   color: rgba(0, 0, 0, 0.87);
   overflow: hidden;
+  border: 0;
+  background-color: white;
   font-family: 'Google Sans', Roboto, Arial, sans-serif;
   font-size: 0.875rem;
   font-style: normal;
@@ -47,7 +49,7 @@ export const StyledNotesAreaHeader = styled.div`
   text-align: center;
   width: 100%;
 
-  & > h4 {
+  h4 {
     margin-top: 0.5rem;
     font-size: 0.8rem;
     font-weight: 200;

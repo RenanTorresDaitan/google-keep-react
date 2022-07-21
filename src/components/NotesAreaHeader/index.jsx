@@ -9,20 +9,23 @@ import {
   TrashHeader,
 } from './styles';
 
-function NotesAreaHeader() {
+const NotesAreaHeader = () => {
   const { sidebarSelected, notesToRender, handleUpdate } = useContext(NotesContext);
 
   const trashHeader = (
     <TrashHeader>
       Notes in Trash are deleted after 7 days.
       <EmptyTrashButton
-        handleClick={() => {
+        aria-label="Empty trash"
+        data-tooltip-text="Empty trash"
+        tabIndex={0}
+        onClick={() => {
           db.deleteTrashedNotes();
           handleUpdate();
         }}
-        label="Empty trash"
-        btnText="Empty Trash"
-      />
+      >
+        Empty trash
+      </EmptyTrashButton>
     </TrashHeader>
   );
   let title = '';
@@ -63,6 +66,6 @@ function NotesAreaHeader() {
       )}
     </>
   );
-}
+};
 
 export default NotesAreaHeader;

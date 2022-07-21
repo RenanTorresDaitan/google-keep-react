@@ -7,23 +7,21 @@ import {
   SidebarIcon,
 } from './styles';
 
-function SideBarItem({ active, icon, label, click, expand }) {
-  return (
-    <StyledSideBarItem
-      role="button"
-      tabIndex={0}
-      onClick={() => click(label.toUpperCase())}
-      onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space'
-        ? click(label.toUpperCase())
-        : null)}
-    >
-      <SideBarButton expand={expand} active={active}>
-        <SidebarIcon src={icon} />
-        <SideBarLabel>{label}</SideBarLabel>
-      </SideBarButton>
-    </StyledSideBarItem>
-  );
-}
+const SideBarItem = ({ active, icon, label, click, expand }) => (
+  <StyledSideBarItem
+    role="button"
+    tabIndex={0}
+    onClick={() => click(label.toUpperCase())}
+    onKeyDown={(e) => (e.code === 'Enter' || e.code === 'Space'
+      ? click(label.toUpperCase())
+      : null)}
+  >
+    <SideBarButton expand={expand} active={active}>
+      <SidebarIcon src={icon} />
+      <SideBarLabel>{label}</SideBarLabel>
+    </SideBarButton>
+  </StyledSideBarItem>
+);
 
 SideBarItem.defaultProps = {
   active: false,

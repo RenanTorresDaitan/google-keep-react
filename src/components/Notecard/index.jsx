@@ -7,7 +7,7 @@ import BasicNotecard from '../BasicNotecard';
 import ToDoItemsContainer from '../ToDoItemsContainer';
 import { Description, DoneButton, StyledNotecard, Title } from './styles';
 
-export default function Notecard({ noteItem }) {
+const Notecard = ({ noteItem }) => {
   const { id, color, noteTitle, noteDescription, isToDoList } = noteItem;
   const [doneBtnVisible, setDoneBtnVisible] = useState(false);
   const [noteData, setNoteData] = useState({
@@ -64,14 +64,18 @@ export default function Notecard({ noteItem }) {
       </BasicNotecard>
       {doneBtnVisible && (
         <DoneButton
-          handleClick={() => handleDataChange(noteData)}
-          label="Done"
-          btnText="Done"
+          aria-label="Done"
+          data-tooltip-text="Done"
+          tabIndex={0}
+          onClick={() => handleDataChange(noteData)}
         />
       )}
     </StyledNotecard>
   );
-}
+};
+
 Notecard.propTypes = {
   noteItem: PropTypes.instanceOf(NoteItemModel).isRequired,
 };
+
+export default Notecard;

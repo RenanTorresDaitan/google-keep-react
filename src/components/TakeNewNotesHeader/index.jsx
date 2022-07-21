@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import NewNotecard from '../NewNotecard';
 import { StyledNewNoteHeader, TakeaNoteButton, CreateListButton, NewNoteHeaderContainer } from './styles';
 
-function TakeNewNotesHeader() {
+const TakeNewNotesHeader = () => {
   const [displayHeader, setDisplayHeader] = useState(true);
   const [typeOfNewNote, setTypeOfNewNote] = useState('note');
   const handleDisplayHeader = (visible) => {
@@ -39,6 +39,6 @@ function TakeNewNotesHeader() {
       )}
     </NewNoteHeaderContainer>
   );
-}
+};
 
 export default TakeNewNotesHeader;

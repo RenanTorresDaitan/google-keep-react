@@ -10,7 +10,7 @@ import {
   SearchPanel,
 } from './styles';
 
-function SearchBar({ closeSearch }) {
+const SearchBar = ({ closeSearch }) => {
   const [searchValue, setSearchValue] = useState('');
   const debouncedValue = useDebounce(searchValue, 300);
   const { noteList, setNotesToRender } = useContext(NotesContext);
@@ -48,7 +48,7 @@ function SearchBar({ closeSearch }) {
       <CancelSearchButton handleClick={cancelSearch} label="Clear search" />
     </SearchPanel>
   );
-}
+};
 export default SearchBar;
 
 SearchBar.propTypes = {

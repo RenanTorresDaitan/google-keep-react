@@ -18,7 +18,7 @@ import {
 } from './styles';
 import { StyledTextarea } from './ToDoItem/styles';
 
-function ToDoItemsContainer({ toDoItems, handleDataChange }) {
+const ToDoItemsContainer = ({ toDoItems, handleDataChange }) => {
   const [showCompletedItems, setShowCompletedItems] = useState(false);
   const [showPlaceHolder, setShowPlaceHolder] = useState(true);
   const newToDoItemRef = useRef(null);
@@ -136,9 +136,7 @@ function ToDoItemsContainer({ toDoItems, handleDataChange }) {
       )}
     </div>
   );
-}
-
-export default ToDoItemsContainer;
+};
 
 ToDoItemsContainer.defaultProps = {
   toDoItems: [],
@@ -154,3 +152,5 @@ ToDoItemsContainer.propTypes = {
   ),
   handleDataChange: PropTypes.func.isRequired,
 };
+
+export default ToDoItemsContainer;

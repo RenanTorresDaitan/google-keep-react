@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ColorBall, StyledColorBallContainer } from './styles';
 
-export default function ColorBallContainer({ changeToColor }) {
+const ColorBallContainer = ({ changeToColor }) => {
   const colors = [
     'red',
     'orange',
@@ -21,12 +21,10 @@ export default function ColorBallContainer({ changeToColor }) {
   const createColorBall = (color) => (
     <ColorBall
       aria-label={color}
-      role="button"
       tabIndex={0}
       key={color}
       data-color={color}
       onClick={() => changeToColor(color)}
-      onKeyDown={(e) => ((e.code === 'Enter' || e.code === 'Space') ? changeToColor(color) : null)}
     />
   );
 
@@ -35,7 +33,9 @@ export default function ColorBallContainer({ changeToColor }) {
       {colors.map((color) => createColorBall(color))}
     </StyledColorBallContainer>
   );
-}
+};
+
+export default ColorBallContainer;
 
 ColorBallContainer.propTypes = {
   changeToColor: PropTypes.func.isRequired,

@@ -10,7 +10,7 @@ import trashIcon from '../../assets/svg/trash-icon.svg';
 import { SideBarContainer, StyledSideBar } from './styles';
 import { NotesContext } from '../contexts/NotesProvider';
 
-export default function SideBar({ expand }) {
+const SideBar = ({ expand }) => {
   const { sidebarSelected, handleSidebarChange } = useContext(NotesContext);
   return (
     <SideBarContainer expand={expand}>
@@ -51,8 +51,10 @@ export default function SideBar({ expand }) {
       </StyledSideBar>
     </SideBarContainer>
   );
-}
+};
 
 SideBar.propTypes = {
   expand: PropTypes.bool.isRequired,
 };
+
+export default SideBar;

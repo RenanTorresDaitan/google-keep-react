@@ -10,7 +10,7 @@ import {
   MenuButton,
 } from './styles';
 
-function PageHeader({ handleMenuClick }) {
+const PageHeader = ({ handleMenuClick }) => {
   const { sidebarSelected } = useContext(NotesContext);
 
   let title = 'Keep';
@@ -46,7 +46,7 @@ function PageHeader({ handleMenuClick }) {
       </HeaderTitleContainer>
     </HeaderContainer>
   );
-}
+};
 
 PageHeader.propTypes = {
   handleMenuClick: PropTypes.func.isRequired,

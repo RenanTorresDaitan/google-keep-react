@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Button from '../Button';
 import searchIcon from '../../assets/svg/search-icon.svg';
 import openNewTabIcon from '../../assets/svg/open-new-tab-icon.svg';
 import closeIcon from '../../assets/svg/close-icon.svg';
@@ -23,8 +22,9 @@ export const HeaderIcons = styled.div`
   justify-content: center;
 `;
 
-const StyledButton = styled(Button)`
+const StyledButton = styled.button`
   cursor: pointer;
+  border: 0;
   display: flex;
   align-items: center;
   justify-content: center;
