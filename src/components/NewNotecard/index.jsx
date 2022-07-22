@@ -71,6 +71,7 @@ const NewNotecard = ({ typeOfNote, showHeader }) => {
       aria-label={`Keep's Note ${newNoteData.noteTitle}`}
       data-note-id={newNoteData.id}
       data-color={newNoteData.color}
+      width="-50%"
     >
       {showModal.color && (
         <ColorBallContainer
@@ -133,7 +134,9 @@ const NewNotecard = ({ typeOfNote, showHeader }) => {
           data-tooltip-text="Done"
           tabIndex={0}
           onClick={() => handleNewNote()}
-        />
+        >
+          Done
+        </DoneButton>
       )}
     </StyledNotecard>
   );

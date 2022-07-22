@@ -6,8 +6,8 @@ import NotesArea from './styles';
 const NoteItemsList = () => {
   const { notesToRender } = useContext(NotesContext);
 
-  const notecards = notesToRender.map((noteItem) => (
-    <Notecard key={noteItem.id} noteItem={noteItem} />
+  const notecards = notesToRender.map((noteItem, index) => (
+    <Notecard key={noteItem.id} noteItem={noteItem} index={index} />
   ));
   return <NotesArea>{notecards}</NotesArea>;
 };

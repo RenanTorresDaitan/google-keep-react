@@ -1,10 +1,12 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import plusIcon from '../../assets/svg/notecard/plus-icon.svg';
 import listIcon from '../../assets/svg/new-list-icon.svg';
 
 export const NewNoteHeaderContainer = styled.div`
-  display: block;
+  display: flex;
   margin: auto;
+  ${({ height }) => css`
+  height: ${height}rem;`}
 `;
 
 export const StyledNewNoteHeader = styled.div`
@@ -38,6 +40,7 @@ export const TakeaNoteButton = styled(StyledButton)`
   font-family: var(--ff-google);
   font-size: 14px;
   font-weight: 500;
+  height: 2.5rem;
   width: 300px;
 `;
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import db from '../../models/DBManager';
 import { NotesContext } from '../contexts/NotesProvider';
@@ -7,10 +7,11 @@ import BasicNotecard from '../BasicNotecard';
 import ToDoItemsContainer from '../ToDoItemsContainer';
 import { Description, DoneButton, StyledNotecard, Title } from './styles';
 
-const Notecard = ({ noteItem }) => {
+const Notecard = ({ noteItem, index }) => {
   const { id, color, noteTitle, noteDescription, isToDoList } = noteItem;
   const emptyNote = noteTitle === '' && noteDescription === '';
   const [doneBtnVisible, setDoneBtnVisible] = useState(false);
+  const [dimensions, setDimensions] = useState({ height: 0, width: 0 });
   const [noteData, setNoteData] = useState({
     noteTitle,
     noteDescription,
@@ -21,6 +22,7 @@ const Notecard = ({ noteItem }) => {
     db.updateNote(id, data);
     handleUpdate();
   };
+  const notecardDimensions = useRef();
 
   const noteTitleEl = (
     <Title
@@ -52,11 +54,23 @@ const Notecard = ({ noteItem }) => {
     />
   );
 
+  useEffect(() => {
+    console.log(notecardDimensions.current);
+    console.log(index);
+    setDimensions({
+      height: notecardDimensions.current.clientHeight,
+      width: (notecardDimensions.current.clientWidth + 8) * index,
+    });
+  }, [notecardDimensions, index]);
+
   return (
     <StyledNotecard
+      ref={notecardDimensions}
       aria-label={`Keep's Note ${noteTitle}`}
       data-note-id={id}
       data-color={color}
+      height={`${dimensions.height}px`}
+      width={`${dimensions.width}px`}
     >
       <BasicNotecard noteItem={noteItem} handleDataChange={handleDataChange}>
         <>
@@ -80,6 +94,7 @@ const Notecard = ({ noteItem }) => {
 
 Notecard.propTypes = {
   noteItem: PropTypes.instanceOf(NoteItemModel).isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default Notecard;

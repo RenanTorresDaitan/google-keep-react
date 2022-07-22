@@ -8,12 +8,16 @@ export const StyledNotecard = styled.div`
   border-width: 1px;
   border-style: solid;
   width: 267px;
-  height: 100%;
+  height: auto;
   min-height: 3rem;
   margin-top: 0.625rem;
-  position: relative;
+  position: absolute;
   padding-bottom: 1rem;
-  transition: box-shadow outline 100ms;
+  ${({ height, width }) => css`
+  transform: translate(${width});
+  `}
+  transition: box-shadow, outline, 100ms;
+  transition: transform, 1s;
   &:hover {
     box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
       0 1px 3px 1px rgb(60 64 67 / 15%);
@@ -21,8 +25,8 @@ export const StyledNotecard = styled.div`
 `;
 
 export const DoneButton = styled.button`
-font-family: var(--ff-roboto);
-font-size: 1rem;
+  font-family: var(--ff-roboto);
+  font-size: 1rem;
   border-radius: 0.375rem;
   border: none;
   display: flex;
