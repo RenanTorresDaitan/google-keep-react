@@ -11,7 +11,7 @@ const TakeNewNotesHeader = () => {
   const [displayHeader, setDisplayHeader] = useState(true);
   const [typeOfNewNote, setTypeOfNewNote] = useState('note');
   const headerDimension = useRef();
-  const [dimensions, setDimensions] = useState({ height: 3, width: 0 });
+  const [height, setHeight] = useState(3);
   const handleDisplayHeader = (visible) => {
     setDisplayHeader(visible);
   };
@@ -20,17 +20,13 @@ const TakeNewNotesHeader = () => {
     <NewNotecard typeOfNote={type} showHeader={() => handle(true)} />
   );
   useEffect(() => {
-    console.log(headerDimension.current.children[0].clientHeight, 'OK');
     if (headerDimension.current !== null) {
-      setDimensions({
-        height: headerDimension.current.children[0].clientHeight / 16 + 1,
-        width: 0,
-      });
+      setHeight(headerDimension.current.children[0].clientHeight / 16 + 1);
     }
   }, [headerDimension, displayHeader]);
 
   return (
-    <NewNoteHeaderContainer height={dimensions.height}>
+    <NewNoteHeaderContainer height={height}>
       <StyledNewNoteHeader ref={headerDimension}>
         {displayHeader ? (
           <>

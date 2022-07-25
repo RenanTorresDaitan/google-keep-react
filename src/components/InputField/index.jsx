@@ -5,7 +5,9 @@ const InputField = ({ className, text, placeHolder, handleChange, visible }) => 
   const [showText, setShowText] = useState(visible);
   const [input, setInput] = useState(text);
   const textarea = useRef();
-  const handleShowText = () => {
+  const handleShowText = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (input === '') {
       setShowText(false);
     } else {
@@ -30,7 +32,7 @@ const InputField = ({ className, text, placeHolder, handleChange, visible }) => 
     <div
       role="textbox"
       className={className}
-      onClick={handleShowText}
+      onClick={(e) => handleShowText(e)}
       tabIndex={0}
       onKeyDown={() => {}}
     >
@@ -42,10 +44,10 @@ const InputField = ({ className, text, placeHolder, handleChange, visible }) => 
           maxLength="999"
           placeholder={placeHolder}
           value={input}
-          onBlur={(e) => {
-            handleTextChange(e);
-            handleShowText();
-          }}
+          // onBlur={(e) => {
+          //   handleTextChange(e);
+          //   handleShowText(e);
+          // }}
           onChange={handleTextChange}
         />
       )}

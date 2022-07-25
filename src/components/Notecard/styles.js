@@ -8,16 +8,11 @@ export const StyledNotecard = styled.div`
   border-width: 1px;
   border-style: solid;
   width: 267px;
-  height: auto;
-  min-height: 3rem;
+  min-height: 6rem;
   margin-top: 0.625rem;
-  position: absolute;
+  position: relative;
   padding-bottom: 1rem;
-  ${({ height, width }) => css`
-  transform: translate(${width});
-  `}
   transition: box-shadow, outline, 100ms;
-  transition: transform, 1s;
   &:hover {
     box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
       0 1px 3px 1px rgb(60 64 67 / 15%);
@@ -38,6 +33,7 @@ export const DoneButton = styled.button`
   outline: 0;
   position: absolute;
   padding: 0.25rem 0.5rem;
+  z-index: 1000;
   transition: background-color, box-shadow, opacity, 100ms;
   &:hover,
   &:focus {
@@ -62,7 +58,7 @@ export const StyledInputField = styled(InputField)`
 
 const DefaultStyles = css`
   border: 0;
-  display: flex;
+  display: block;
   flex: 1 0 auto;
   background-color: transparent;
   box-sizing: content-box;
@@ -75,13 +71,16 @@ export const Title = styled(StyledInputField)`
   span,
   textarea {
     ${DefaultStyles}
-    padding: 1rem 3.5rem 0 1rem;
+    padding: 1rem 3.5rem 0rem 1rem;
     font-family: var(--ff-google);
     font-size: 0.875rem;
     font-weight: 500;
     text-overflow: ellipsis;
     letter-spacing: 0.3px;
     color: var(--tc-dark-gray);
+  }
+  textarea{
+    height: 1rem;
   }
 `;
 

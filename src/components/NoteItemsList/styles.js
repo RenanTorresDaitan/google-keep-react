@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 const NotesArea = styled.section`
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 0.5rem;
   padding-inline: 1rem;

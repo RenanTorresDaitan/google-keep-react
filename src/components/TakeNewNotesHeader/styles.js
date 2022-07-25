@@ -5,6 +5,7 @@ import listIcon from '../../assets/svg/new-list-icon.svg';
 export const NewNoteHeaderContainer = styled.div`
   display: flex;
   margin: auto;
+  transition: height, 250ms;
   ${({ height }) => css`
   height: ${height}rem;`}
 `;
